@@ -1,0 +1,18 @@
+vi:
+  users:
+    new:
+      sign_up: "Đăng ký"
+      create_my_account: "Tạo tài khoản của tôi"
+      select_gender: "Chọn giới tính"
+    show:
+      email: "Email"
+      birthday: "Ngày sinh"
+      gender: "Giới tính"
+      member_since: "Thành viên từ"
+      last_updated: "Cập nhật lần cuối"
+      user_not_found: "Không tìm thấy người dùng"
+      system_error: "Có lỗi xảy ra. Vui lòng thử lại sau"
+    create:
+      signup_success: "Đăng ký thành công! Chào mừng bạn đến với ứng dụng mẫu."
+      signup_failure: "Có lỗi trong form đăng ký của bạn. Vui lòng sửa chúng và thử lại."
+      system_error: "Có lỗi xảy ra trong quá trình đăng ký. Vui lòng thử lại sau"
