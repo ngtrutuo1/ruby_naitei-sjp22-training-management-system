@@ -1,0 +1,18 @@
+en:
+  users:
+    new:
+      sign_up: "Sign up"
+      create_my_account: "Create my account"
+      select_gender: "Select gender"
+    show:
+      email: "Email"
+      birthday: "Birthday"
+      gender: "Gender"
+      member_since: "Member since"
+      last_updated: "Last updated"
+      user_not_found: "User not found"
+      system_error: "An error occurred. Please try again later"
+    create:
+      signup_success: "Sign up successful! Welcome to the sample app."
+      signup_failure: "There were errors in your sign up form. Please correct them and try again."
+      system_error: "An error occurred during registration. Please try again later"
