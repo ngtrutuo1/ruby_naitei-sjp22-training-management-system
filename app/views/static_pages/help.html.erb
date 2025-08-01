@@ -1,9 +1,9 @@
 <% provide(:title, t(".title")) %>
 <h1><%= t(".heading") %></h1>
 <p>
-  <%= t(".description", 
-      help_link: link_to(t(".help_link_text"), @help_link),
-      book_link: link_to(content_tag(:em, t(".book_link_text")), @book_link)
+  <%= t("static_pages.help.description",
+      help_link: link_to(t("static_pages.help.help_link_text"), @help_link),
+      book_link: link_to(content_tag(:em, t("static_pages.help.book_link_text")), @book_link)
     ).html_safe %>
 </p>
 

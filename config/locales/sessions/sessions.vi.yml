@@ -5,6 +5,7 @@ vi:
       heading: "Đăng nhập"
       email_label: "Email"
       password_label: "Mật khẩu"
+      forgot_password_link: "(quên mật khẩu)"
       remember_me_label: "Ghi nhớ tôi trên máy tính này"
       submit_button: "Đăng nhập"
       new_user_text: "Người dùng mới? "
@@ -12,6 +13,7 @@ vi:
     create:
       login_success: "Chào mừng bạn trở lại!"
       login_failed: "Email/mật khẩu không đúng"
+      account_not_activated: "Tài khoản chưa được kích hoạt. Vui lòng kiểm tra email để lấy liên kết kích hoạt."
       missing_credentials: "Vui lòng nhập cả email và mật khẩu"
       system_error: "Có lỗi xảy ra. Vui lòng thử lại sau"
     destroy:

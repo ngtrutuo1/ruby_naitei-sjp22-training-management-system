@@ -1,16 +1,16 @@
 <% provide(:title, t(".title")) %>
 <div class="row">
   <div class="col-md-8">
-    <h1><%= t(".heading") %></h1>
-    
+    <h1><%= t("static_pages.contact.heading") %></h1>
+
     <div class="hello-message">
       <h2><%= t(".hello_name", name: @user_name) %></h2>
     </div>
-    
-    <p><%= t(".description") %></p>
-    
+
+    <p><%= t("static_pages.contact.description") %></p>
+
     <div class="contact-info">
-      <h3><%= t(".contact_info") %></h3>    
+      <h3><%= t("static_pages.contact.contact_info") %></h3>
       <ul class="list-unstyled">
         <li>
           <strong><%= t(".email_label") %></strong>
@@ -26,13 +26,13 @@
         </li>
       </ul>
     </div>
-    
+
     <div class="app-info">
       <h3><%= t(".app_information") %></h3>
       <p><strong><%= t(".app_label") %></strong> <%= @app_name %></p>
     </div>
   </div>
-  
+
   <div class="col-md-4">
     <div class="well">
       <h4><%= t(".quick_links") %></h4>
@@ -42,4 +42,4 @@
       </ul>
     </div>
   </div>
-</div> 
+</div>

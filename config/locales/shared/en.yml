@@ -1,0 +1,5 @@
+en:
+  shared:
+    login_required: "Please log in to continue."
+    not_authorized: "You are not authorized to perform this action."
+    user_not_found: "User not found."
