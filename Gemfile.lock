@@ -104,6 +104,8 @@ GEM
     deep_merge (1.2.2)
     erubi (1.12.0)
     execjs (2.10.0)
+    faker (2.21.0)
+      i18n (>= 1.8.11, < 2)
     ffi (1.17.2-x86_64-linux-gnu)
     globalid (1.1.0)
       activesupport (>= 5.0)
@@ -277,6 +279,7 @@ DEPENDENCIES
   capybara
   config
   debug
+  faker (~> 2.21.0)
   importmap-rails
   jbuilder
   mysql2 (~> 0.5)
