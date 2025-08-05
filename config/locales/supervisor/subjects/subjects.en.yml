@@ -26,6 +26,7 @@ en:
         task: "Tasks"
         no_tasks: "No tasks"
         edit: "Edit"
+        back: "Back"
       edit:
         title: "Edit Subject %{subject_name}"
         page_header: "Editing subject: %{subject_name}"

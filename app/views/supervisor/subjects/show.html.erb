@@ -1,10 +1,8 @@
 <% provide :title, @subject.name %>
 <div class="subject-detail-page">
 
-  <% if manager? %>
-    <%= link_to edit_supervisor_subject_path(@subject), class: "btn btn-primary pull-right" do %>
-      <i class="fa fa-pencil"></i> <%= t(".edit") %>
-    <% end %>
+  <%= link_to edit_supervisor_subject_path(@subject), class: "btn btn-primary pull-right" do %>
+    <i class="fa fa-pencil"></i> <%= t(".edit") %>
   <% end %>
 
   <h2 class="page-header"><%= @subject.name %></h2>
@@ -36,6 +34,11 @@
             <p class="text-muted"><%= t(".no_tasks") %></p>
           <% end %>
         </dd>
+        <div class="form-group text-right">
+          <div class="col-sm-offset-3 col-sm-9">
+            <%= link_to t(".back"), supervisor_subjects_path, class: "btn btn-danger" %>
+          </div>
+        </div>
       </dl>
     </div>
   </div>

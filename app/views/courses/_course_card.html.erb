@@ -5,7 +5,7 @@
         <%= link_to subjects_trainee_course_path(course), class: "course-card-link" do %>
           <div class="course-thumbnail">
             <% if course.image.attached? %>
-              <%= image_tag course.image, alt: course.name, class: "course-image" %>
+              <%= image_tag course.image, class: "course-image" %>
             <% else %>
               <div class="default-thumbnail">
                 <i class="fas fa-graduation-cap"></i>

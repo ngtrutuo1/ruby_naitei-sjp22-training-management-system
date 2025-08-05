@@ -26,6 +26,7 @@ vi:
         task: "Nhiệm vụ"
         no_tasks: "Không có nhiệm vụ"
         edit: "Chỉnh sửa"
+        back: "Trở lại"
       edit:
         title: "Chỉnh sửa môn học %{subject_name}"
         page_header: "Chỉnh sửa môn học: %{subject_name}"
