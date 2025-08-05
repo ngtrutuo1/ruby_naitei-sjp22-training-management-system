@@ -22,12 +22,12 @@ class Subject < ApplicationRecord
   validates :image,
             content_type: {
               in: Settings.subject.allowed_image_types,
-              message: I18n.t("error_messages.invalid_image_type")
+              message: :invalid_image_type
             },
             size: {
               less_than: Settings.subject.max_image_size.megabytes,
-              message: I18n.t("error_messages.image_size_exceeded",
-                              size: Settings.subject.max_image_size.megabytes)
+              message: :image_size_exceeded,
+              size: Settings.subject.max_image_size.megabytes
             }
 
   # Scopes

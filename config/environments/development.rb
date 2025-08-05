@@ -39,7 +39,7 @@ Rails.application.configure do
   # Email settings for development
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.delivery_method = :smtp
-  host = 'localhost'
+  host = "localhost"
   config.action_mailer.default_url_options = { host: host, port: 3000 }
 
   # SMTP settings for gmail

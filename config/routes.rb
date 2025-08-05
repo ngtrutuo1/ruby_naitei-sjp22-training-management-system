@@ -16,7 +16,6 @@ Rails.application.routes.draw do
     resources :users, except: %i(:index, :destroy)
     resources :account_activations, only: :edit
     resources :password_resets, only: %i(new create edit update)
+    resources :daily_reports
   end
-
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 end

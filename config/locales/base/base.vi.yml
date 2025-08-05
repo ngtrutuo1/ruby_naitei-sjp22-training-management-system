@@ -12,3 +12,11 @@ vi:
   locales:
     vi: "Tiếng Việt"
     en: "Tiếng Anh"
+  shared:
+    error_messages:
+      the_form_contains: "Biểu mẫu chứa"
+      one: "lỗi"
+      other: "lỗi"
+      score_cannot_exceed_max: "Điểm không được vượt quá điểm tối đa"
+  messages:
+    permission_denied: "Quyền truy cập bị từ chối"

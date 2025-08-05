@@ -1,0 +1,47 @@
+<% provide(:title, t(".title")) %>
+<div class="container my-4">
+  <div class="card bg-dark text-white border-secondary">
+    <div class="card-body">
+      <h4 class="card-title text-secondary"><%= t(".title") %></h4>
+      <hr class="border-secondary mb-4" />
+      <%= form_with(model: @daily_report, local: true) do |f| %>
+        <%= render "shared/error_messages", object: f.object %>
+        <div class="row mb-3 align-items-center">
+          <%= f.label :course_id, t(".course"), class: "col-sm-3 col-form-label" %>
+          <div class="col-sm-9">
+            <%= f.select :course_id,
+                          options_for_select(current_user.courses.map { |c| [c.name, c.id] }),
+                          { prompt: t(".select_course_placeholder") },
+                          { class: "form-select bg-secondary text-white border-dark" } %>
+          </div>
+        </div>
+        <div class="row mb-3 align-items-center">
+          <%= f.label :created_at, t(".date_submitted"), class: "col-sm-3 col-form-label" %>
+          <div class="col-sm-9">
+            <%= f.text_field :created_at,
+                                class: "form-control bg-secondary text-white border-dark input-date-fixed",
+                                value: Time.zone.now.strftime(Settings.formats.date),
+                                disabled: true %>
+          </div>
+        </div>
+        <div class="mb-3">
+          <%= f.label :content, t(".content_details"), class: "form-label" %>
+          <%= f.text_area :content,
+                              rows: 10,
+                              placeholder: t(".content_placeholder"),
+                              class: "form-control bg-secondary text-white border-dark" %>
+        </div>
+        <%= f.hidden_field :status, value: 0 %>
+        <div class="text-end pt-3 border-top border-secondary">
+          <button type="submit" class="btn btn-secondary me-2" name="commit" value="<%= Settings.daily_report.status.draft %>">
+            <%= t(".draft_button") %>
+          </button>
+          <button type="submit" class="btn btn-primary me-2" name="commit" value="<%= Settings.daily_report.status.submitted %>">
+            <%= t(".submit_button") %>
+          </button>
+          <%= link_to t(".cancel_button"), root_path, class: "btn btn-danger" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

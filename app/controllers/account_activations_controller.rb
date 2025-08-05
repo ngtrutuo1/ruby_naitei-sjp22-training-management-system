@@ -24,6 +24,6 @@ class AccountActivationsController < ApplicationController
 
   def handle_invalid_activation
     flash[:danger] = t(".invalid_activation_link")
-    redirect_to root_url
+    redirect_to login_url
   end
 end

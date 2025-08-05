@@ -1,0 +1,14 @@
+vi:
+  daily_reports:
+    draft_success: "Báo cáo đã được lưu dưới dạng nháp thành công."
+    submit_success: "Báo cáo đã được gửi thành công."
+    new:
+      title: "Thêm báo cáo hàng ngày"
+      course: "Khóa học:"
+      select_course_placeholder: "Chọn Khóa học"
+      date_submitted: "Ngày gửi:"
+      content_details: "Nội dung chi tiết:"
+      content_placeholder: "Nhập nội dung báo cáo chi tiết tại đây..."
+      draft_button: "Lưu nháp"
+      submit_button: "Gửi báo cáo"
+      cancel_button: "Hủy bỏ"

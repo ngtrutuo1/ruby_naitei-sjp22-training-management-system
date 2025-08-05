@@ -3,6 +3,9 @@ en:
     models:
       user: "User"
     attributes:
+      daily_report:
+        course: "Course"
+        content: "Content"
       user:
         name: "Name"
         email: "Email"
@@ -32,13 +35,12 @@ en:
             gender:
               blank: "can't be blank"
               inclusion: "is not included in the list"
-
-  error_messages:
-    the_form_contains: "The form contains"
-    error:
-      one: "error"
-      other: "errors"
-    image_size_exceeded: "must be less than %{size} MB"
-    document_size_exceeded: "must be less than %{size} MB"
-    invalid_document_type: "is not a valid document type"
-    invalid_image_type: "is not a valid image type"
+      messages:
+        member_to_after_member_from: "must be after member from date"
+        finish_date_after_start_date: "must be after start date"
+        image_size_exceeded: "must be less than %{size} MB"
+        document_size_exceeded: "must be less than %{size} MB"
+        invalid_document_type: "is not a valid document type"
+        invalid_image_type: "is not a valid image type"
+        one_report_per_day: "You have already submitted a report for this course today."
+        not_a_valid_course: "You can only submit a report for a course you're enrolled in."

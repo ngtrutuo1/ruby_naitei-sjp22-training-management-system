@@ -44,7 +44,7 @@ module UserLoadable
     return if @user.activated && @user.authenticated?(:reset, params[:id])
 
     flash[:danger] = t("password_resets.edit.user_inactive")
-    redirect_to root_url
+    redirect_to login_url
   end
 
   def check_expiration
