@@ -1,22 +1,21 @@
 Rails.application.routes.draw do
   scope "(:locale)", locale: /vi|en/ do
+
+    root "static_pages#home"
     get "static_pages/home"
     get "static_pages/help"
     get "static_pages/contact"
-
-    root "static_pages#home"
-
-    get "/signup", to: "users#new"
-    post "/signup", to: "users#create"
-
     get "/login", to: "sessions#new"
     post "/login", to: "sessions#create"
     delete "/logout", to: "sessions#destroy"
+    get "/signup", to: "users#new"
+    post "/signup", to: "users#create"
 
-    resources :users, except: %i(:index, :destroy)
     resources :account_activations, only: :edit
     resources :password_resets, only: %i(new create edit update)
-    resources :courses, only: %i(show) do
+    resources :users, only: %i(show edit update)
+
+    resources :courses, only: :show do
       member do
         get :members
         get :subjects
@@ -24,7 +23,22 @@ Rails.application.routes.draw do
     end
 
     namespace :trainee do
-      resources :daily_reports
+      resources :daily_reports 
+    end
+
+    namespace :admin do
+      root "dashboards#show", as: :dashboard
+
+      resources :users
+      resources :courses do
+        member do
+          get :members 
+        end
+      end
+
+      resources :subjects
+      resources :categories
+      resources :daily_reports, only: %i(index show)
     end
   end
 end

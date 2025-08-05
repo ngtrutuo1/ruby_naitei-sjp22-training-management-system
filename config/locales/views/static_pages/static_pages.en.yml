@@ -7,6 +7,9 @@ en:
       link_text: "Ruby on Rails Tutorial"
       sign_up: "Sign up now!"
       version_label: "Version"
+      dashboard_title: "Dashboard"
+      manager_dashboard_title: "Manager Dashboard"
+    
     help:
       title: "Help"
       heading: "Help"

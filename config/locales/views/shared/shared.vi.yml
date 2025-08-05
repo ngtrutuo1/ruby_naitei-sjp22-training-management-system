@@ -1,0 +1,13 @@
+vi:
+  shared:
+    login_required: "Vui lòng đăng nhập để tiếp tục."
+    not_authorized: "Bạn không có quyền thực hiện hành động này."
+    user_not_found: "Không tìm thấy người dùng."
+    courses_list:
+      course_dashboard_title: "Danh sách khóa học"
+      apply: "Áp dụng"
+      all_statuses: "Tất cả"
+      status: "Trạng thái"
+      no_courses_found: "Không tìm thấy khóa học nào"
+    error_messages:
+      filter_error: "Lỗi khi áp dụng bộ lọc. Vui lòng thử lại."

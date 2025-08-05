@@ -1,0 +1,35 @@
+<div class="container py-4">
+  <div class="row">
+    <% @courses.each do |course| %>
+      <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
+        <%= link_to members_course_path(course), class: "course-card-link" do %>
+          <div class="course-thumbnail">
+            <% if course.image.attached? %>
+              <%= image_tag course.image, alt: course.name, class: "course-image" %>
+            <% else %>
+              <div class="default-thumbnail">
+                <i class="fas fa-graduation-cap"></i>
+              </div>
+            <% end %>
+          </div>
+          <div class="card course-card-v2">
+            <div class="card-header-v2">
+              <div class="meta-line">
+                <span><%= l(course.start_date, format: :short) %></span>
+                <span class="status-badge-v2"><%= t("#{course.status}", default: course.status.humanize) %></span>
+              </div>
+              <%= gravatar_for(course, size: Settings.ui.gravatar.list_size) %>
+              <h3 class="course-title-v2"><%= course.name %></h3>
+            </div>
+
+            <div class="card-content-v2">
+              <div class="creator-line">
+                <span class="creator-name-v2"><%= course.user.name %></span>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</div>

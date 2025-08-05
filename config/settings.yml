@@ -1,3 +1,10 @@
+allowed_pagy: 1
+percentage: 100
+avatar: "Avatar"
+
+completion_rate:
+  zero: 0
+
 app:
   name: "Rails Tutorial Sample App"
   version: "1.0.0"
