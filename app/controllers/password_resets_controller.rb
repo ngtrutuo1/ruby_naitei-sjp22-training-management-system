@@ -3,6 +3,7 @@ class PasswordResetsController < ApplicationController
   before_action :load_user_by_email, :valid_user, :check_expiration,
                 only: %i(edit update)
   before_action :check_password_presence, only: :update
+  skip_before_action :logged_in_user, only: %i(new create)
 
   # GET /password_resets/new
   def new; end
@@ -15,7 +16,7 @@ class PasswordResetsController < ApplicationController
     @user.create_reset_digest
     @user.send_password_reset_email
     flash[:info] = t(".email_sent")
-    redirect_to root_url
+    redirect_to login_url
   end
 
   # PATCH /password_resets/:id

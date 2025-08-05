@@ -114,6 +114,12 @@ ActiveRecord::Schema[7.0].define(version: 2025_08_01_100033) do
     t.index ["user_id"], name: "index_daily_reports_on_user_id"
   end
 
+  create_table "microposts", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.text "content"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "subject_categories", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "subject_id", null: false
     t.bigint "category_id", null: false

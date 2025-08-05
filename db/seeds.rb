@@ -66,7 +66,7 @@ ActiveRecord::Base.transaction do
     start_date = Faker::Date.between(from: 6.months.ago, to: 1.month.from_now)
     course = Course.create!(
       user: supervisors.sample,
-      name: "Khóa học #{Faker::ProgrammingLanguage.name} #{start_date.strftime('%m/%Y')}",
+      name: "Khóa học #{Faker::ProgrammingLanguage.name} #{start_date.strftime("%m/%Y")}",
       start_date: start_date,
       finish_date: start_date + rand(3..6).months,
       status: rand(0..2)

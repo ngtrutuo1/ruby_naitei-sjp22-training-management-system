@@ -3,6 +3,9 @@ vi:
     models:
       user: "Người dùng"
     attributes:
+      daily_report:
+        course: "Khóa học"
+        content: "Nội dung"
       user:
         name: "Tên"
         email: "Email"
@@ -16,6 +19,10 @@ vi:
           other: "Khác"
     errors:
       models:
+        daily_report:
+          attributes:
+            course:
+              blank: "không thể để trống"
         user:
           attributes:
             name:
@@ -32,13 +39,12 @@ vi:
             gender:
               blank: "không thể để trống"
               inclusion: "không có trong danh sách"
-
-  error_messages:
-    the_form_contains: "Form chứa"
-    error:
-      one: "lỗi"
-      other: "lỗi"
-    image_size_exceeded: "phải nhỏ hơn %{size} MB"
-    document_size_exceeded: "phải nhỏ hơn %{size} MB"
-    invalid_document_type: "không phải là loại tài liệu hợp lệ"
-    invalid_image_type: "không phải là loại hình ảnh hợp lệ"
+      messages:
+        member_to_after_member_from: "Ngày kết thúc thành viên phải sau ngày bắt đầu thành viên"
+        finish_date_after_start_date: "Ngày kết thúc phải sau ngày bắt đầu"
+        image_size_exceeded: "phải nhỏ hơn %{size} MB"
+        document_size_exceeded: "phải nhỏ hơn %{size} MB"
+        invalid_document_type: "không phải là loại tài liệu hợp lệ"
+        invalid_image_type: "không phải là loại hình ảnh hợp lệ"
+        one_report_per_day: "Bạn đã gửi báo cáo cho môn học này hôm nay rồi."
+        not_a_valid_course: "Bạn chỉ có thể gửi báo cáo cho khóa học bạn tham gia."

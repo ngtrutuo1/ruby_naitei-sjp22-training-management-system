@@ -144,7 +144,7 @@ gender).freeze
     return unless member_to < member_from
 
     errors.add(:member_to,
-               Settings.error_messages.member_to_after_member_from)
+               :member_to_after_member_from)
   end
 
   def downcase_email

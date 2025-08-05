@@ -3,6 +3,7 @@ class SessionsController < ApplicationController
   before_action :load_user_by_session_email, only: :create
   before_action :check_authentication, only: :create
   before_action :check_activation, only: :create
+  skip_before_action :logged_in_user, only: %i(new create)
 
   REMEMBER_ME = "1".freeze
 
@@ -18,7 +19,7 @@ class SessionsController < ApplicationController
   def destroy
     log_out if logged_in?
     flash[:success] = t(".logout_success")
-    redirect_to root_path, status: :see_other
+    redirect_to login_url, status: :see_other
   end
 
   private
@@ -70,6 +71,6 @@ class SessionsController < ApplicationController
 
   def handle_unactivated_user
     flash[:warning] = t(".account_not_activated")
-    redirect_to root_url
+    redirect_to login_url
   end
 end

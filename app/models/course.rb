@@ -24,12 +24,12 @@ class Course < ApplicationRecord
   validates :image,
             content_type: {
               in: Settings.course.allowed_image_types,
-              message: I18n.t("error_messages.invalid_image_type")
+              message: :invalid_image_type
             },
             size: {
               less_than: Settings.course.max_image_size.megabytes,
-              message: I18n.t("error_messages.image_size_exceeded",
-                              size: Settings.course.max_image_size.megabytes)
+              message: :image_size_exceeded,
+              size: Settings.course.max_image_size.megabytes
             }
 
   # Scopes
@@ -45,6 +45,6 @@ class Course < ApplicationRecord
     return unless finish_date < start_date
 
     errors.add(:finish_date,
-               I18n.t("error_messages.finish_date_after_start_date"))
+               I18n.t("shared.error_messages.finish_date_after_start_date"))
   end
 end

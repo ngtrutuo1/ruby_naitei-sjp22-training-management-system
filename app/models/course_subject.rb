@@ -27,6 +27,6 @@ class CourseSubject < ApplicationRecord
     return unless finish_date < start_date
 
     errors.add(:finish_date,
-               I18n.t("error_messages.finish_date_after_start_date"))
+               :finish_date_after_start_date)
   end
 end

@@ -12,3 +12,11 @@ en:
   locales:
     vi: "Vietnamese"
     en: "English"
+  shared:
+    error_messages:
+      the_form_contains: "The form contains"
+      one: "error"
+      other: "errors"
+      score_cannot_exceed_max: "cannot exceed maximum score"
+  messages:
+    permission_denied: "Permission denied"
