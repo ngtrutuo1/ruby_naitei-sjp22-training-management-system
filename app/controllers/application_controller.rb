@@ -8,6 +8,10 @@ class ApplicationController < ActionController::Base
   before_action :set_locale
   before_action :logged_in_user
 
+  protected
+
+  attr_accessor :page_class
+
   private
 
   def set_locale

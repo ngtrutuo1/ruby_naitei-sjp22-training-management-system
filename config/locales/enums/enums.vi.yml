@@ -1,0 +1,12 @@
+vi:
+  enums:
+    user_course:
+      status:
+        not_started: "Chưa bắt đầu"
+        in_progress: "Đang thực hiện"
+        finished: "Đã hoàn thành"
+    course:
+      status:
+        not_started: "Chưa bắt đầu"
+        in_progress: "Đang diễn ra"
+        finished: "Đã hoàn thành"

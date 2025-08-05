@@ -37,6 +37,18 @@ class Course < ApplicationRecord
   scope :completed, -> {where(finish_date: ..Date.current.prev_day)}
   scope :ordered_by_start_date, -> {order(:start_date)}
 
+  def trainee_count
+    user_courses.trainees.count
+  end
+
+  def trainer_count
+    supervisors.count
+  end
+
+  def subject_count
+    subjects.count
+  end
+
   private
 
   def finish_date_after_start_date

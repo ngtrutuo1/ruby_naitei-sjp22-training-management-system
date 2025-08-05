@@ -1,0 +1,12 @@
+en:
+  enums:
+    user_course:
+      status:
+        not_started: "Not Started"
+        in_progress: "In Progress"
+        finished: "Finished"
+    course:
+      status:
+        not_started: "Not Started"
+        in_progress: "In Progress"
+        finished: "Finished"

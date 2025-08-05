@@ -2,6 +2,8 @@ vi:
   activerecord:
     models:
       user: "Người dùng"
+      course: "Khóa học"
+      user_course: "Khóa học của người dùng"
     attributes:
       daily_report:
         course: "Khóa học"
@@ -17,6 +19,15 @@ vi:
           female: "Nữ"
           male: "Nam"
           other: "Khác"
+      course:
+        name: "Tên khóa học"
+        start_date: "Ngày bắt đầu"
+        finish_date: "Ngày kết thúc"
+        status: "Trạng thái"
+      user_course:
+        status: "Trạng thái"
+        joined_at: "Ngày tham gia"
+        finished_at: "Ngày hoàn thành"
     errors:
       models:
         daily_report:

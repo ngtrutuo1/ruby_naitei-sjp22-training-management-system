@@ -3,6 +3,7 @@ class UserCourse < ApplicationRecord
   enum status: {not_started: Settings.user_course.status.not_started,
                 in_progress: Settings.user_course.status.in_progress,
                 finished: Settings.user_course.status.finished}
+
   # Associations
   belongs_to :user
   belongs_to :course
@@ -18,4 +19,7 @@ class UserCourse < ApplicationRecord
   scope :by_user, ->(user) {where(user:)}
   scope :by_course, ->(course) {where(course:)}
   scope :recent, -> {order(joined_at: :desc)}
+  scope :trainees, (lambda do
+    joins(:user).where(users: {role: :trainee}).includes(:user)
+  end)
 end

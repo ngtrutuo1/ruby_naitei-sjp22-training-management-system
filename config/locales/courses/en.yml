@@ -1,0 +1,23 @@
+en:
+  courses:
+    show:
+      title: "Course Details"
+      created_by: "Created by"
+      last_updated: "Last updated"
+      expected: "expected"
+      tabs:
+        subjects: "Subjects"
+        members: "Members"
+    check_course_access:
+      access_denied: "You don't have permission to access this course"
+    members:
+      trainer_list: "Trainer list"
+      trainee_list: "Trainee list"
+      name: "Name"
+      current_status: "Current status"
+      joined_at: "Joined at"
+      course_not_found: "Course not found"
+    subjects:
+      subjects_list: "Subjects list"
+    errors:
+      access_denied: "You don't have permission to access this course"
