@@ -1,0 +1,11 @@
+<tr>
+  <td><%= courses_row.name %></td>
+  <td><%= courses_row.user.name %></td>
+  <td><%= l(courses_row.start_date, format: :long) %></td>
+  <td><%= l(courses_row.finish_date, format: :long) %></td>
+  <td><%= courses_row.trainees_count %></td>
+  <td><%= courses_row.trainers_count %></td>
+  <td>
+    <%= link_to t(".view_action"), admin_course_path(courses_row), class: "action-view-link" %>
+  </td>
+</tr>

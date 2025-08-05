@@ -1,22 +1,72 @@
 <aside class="sidebar">
-  <ul class="sidebar-menu">
-    <li class="<%= "active" if current_page?(root_path) %>">
-      <%= link_to root_path do %>
-        <i class="fas fa-book-open"></i>
-        <span><%= t(".my_courses") %></span>
+  <% if manager? %>
+    <ul class="sidebar-menu">
+      <li class="<%= "active" if current_page? root_path %>">
+        <%= link_to root_path do %>
+          <i class="fas fa-tachometer-alt"></i>
+          <span><%= t(".dashboard") %></span>
+        <% end %>
+      </li>
+      <li>
+        <%= link_to "#" do %>
+          <i class="fas fa-user-graduate"></i>
+          <span><%= t("trainees") %></span>
+        <% end %>
+      </li>
+      <li>
+        <%= link_to "#" do %>
+          <i class="fas fa-user-tie"></i>
+          <span><%= t(".supervisors") %></span>
+        <% end %>
+      </li>
+      <% if current_user.admin? %>
+        <li>
+          <%= link_to "#" do %>
+            <i class="fas fa-user-tie"></i>
+            <span><%= t(".admin") %></span>
+          <% end %>
+        </li>
       <% end %>
-    </li>
-    <li>
-      <%= link_to trainee_daily_reports_path do %>
-        <i class="fas fa-history"></i>
-        <span><%= t(".report_history") %></span>
-      <% end %>
-    </li>
-    <li>
-      <%= link_to new_trainee_daily_report_path do %>
-        <i class="fas fa-calendar-alt"></i>
-        <span><%= t(".daily_report") %></span>
-      <% end %>
-    </li>
-  </ul>
+      <li>
+        <%= link_to "#" do %>
+          <i class="fas fa-book"></i>
+          <span><%= t(".courses") %></span>
+        <% end %>
+      </li>
+      <li>
+        <%= link_to "#" do %>
+          <i class="fas fa-inbox"></i>
+          <span><%= t(".reports") %></span>
+        <% end %>
+      </li>
+      <li>
+        <%= link_to "#" do %>
+          <i class="fas fa-inbox"></i>
+          <span><%= t(".requests") %></span>
+        <% end %>
+      </li>
+    </ul>
+
+  <% else %>
+    <ul class="sidebar-menu">
+      <li class="<%= "active" if current_page?(root_path) %>">
+        <%= link_to root_path do %>
+          <i class="fas fa-book-open"></i>
+          <span><%= t(".my_courses") %></span>
+        <% end %>
+      </li>
+      <li>
+        <%= link_to trainee_daily_report_path(current_user) do %>
+          <i class="fas fa-history"></i>
+          <span><%= t(".report_history") %></span>
+        <% end %>
+      </li>
+      <li>
+        <%= link_to new_trainee_daily_report_path do %>
+          <i class="fas fa-calendar-alt"></i>
+          <span><%= t(".daily_report") %></span>
+        <% end %>
+      </li>
+    </ul>
+  <% end %>
 </aside>

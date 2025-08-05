@@ -9,4 +9,10 @@ module ApplicationHelper
   def page_class
     controller.instance_variable_get(:@page_class)
   end
+
+  def manager?
+    return false unless current_user
+
+    current_user.admin? || current_user.supervisor?
+  end
 end

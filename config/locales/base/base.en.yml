@@ -1,6 +1,5 @@
 en:
   base_title: "Ruby on Rails Tutorial Sample App"
-
   # Courses Attributes
   finished: "Finished"
   not_started: "Not started"
@@ -46,11 +45,13 @@ en:
     invalid_date_format: "Invalid date format. Please enter the date in DD-MM-YYYY format."
   layouts:
     sidebar:
+      dashboard: "Dashboard"
       my_courses: "My Courses"
       daily_report: "Daily Report"
       report_history: "Report History"
       trainees: "Trainees"
       supervisors: "Supervisors"
+      admin: "Admins"
       courses: "Courses"
       requests: "Requests"
       reports: "Reports"

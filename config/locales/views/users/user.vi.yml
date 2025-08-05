@@ -1,0 +1,8 @@
+vi:
+  users:
+    show:
+      email: "Email"
+      birthday: "Ngày sinh"
+      gender: "Giới tính"
+      member_since: "Thành viên từ"
+      last_updated: "Cập nhật lần cuối"
