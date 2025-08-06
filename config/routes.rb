@@ -15,15 +15,14 @@ Rails.application.routes.draw do
     resources :password_resets, only: %i(new create edit update)
     resources :users, only: %i(show edit update)
 
-    resources :courses, only: :show do
-      member do
-        get :members
-        get :subjects
-      end
-    end
-
     namespace :trainee do
-      resources :daily_reports 
+      resources :daily_reports
+      resources :courses, only: %i(show) do
+        member do
+          get :members
+          get :subjects
+        end
+      end
     end
 
     namespace :admin do
@@ -32,7 +31,7 @@ Rails.application.routes.draw do
       resources :users
       resources :courses do
         member do
-          get :members 
+          get :members
         end
       end
 

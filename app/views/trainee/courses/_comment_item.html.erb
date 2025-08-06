@@ -1,0 +1,16 @@
+<div class="comment-item">
+  <div class="comment-header">
+    <div class="supervisor-avatar">
+      <%= gravatar_for comment.user, size: Settings.ui.gravatar.small_size %>
+    </div>
+    <div class="comment-meta">
+      <div class="supervisor-name"><%= comment.user.name %></div>
+      <div class="comment-time">
+        <%= comment.created_at.strftime(Settings.formats.datetime) %>
+      </div>
+    </div>
+  </div>
+  <div class="comment-content">
+    <%= simple_format(comment.content) %>
+  </div>
+</div>

@@ -1,0 +1,41 @@
+<!-- Assessment Dropdown -->
+<% comment_count = user_subject&.comment_count || Settings.defaults.zero %>
+<div class="dropdown assessment-dropdown">
+  <button class="btn btn-info dropdown-toggle assessment-btn" type="button"
+          data-toggle="dropdown" aria-expanded="false">
+    <%= t("courses.subjects.assessments", count: comment_count) %>
+  </button>
+  <div class="dropdown-menu assessment-dropdown-menu">
+    <div class="assessment-container">
+      <!-- Score Info -->
+      <div class="score-info-section">
+        <div class="score-display">
+          <div class="score-label"><%= t("courses.subjects.assessments_popup.score") %>:</div>
+          <div class="score-value">
+            <span class="current-score"><%= user_subject&.score&.to_i || Settings.defaults.zero %></span>
+            <span class="score-separator">/</span>
+            <span class="max-score"><%= course_subject.subject.max_score %></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Comments Section -->
+      <div class="comments-section">
+        <h6 class="comments-title">
+          <%= t("courses.subjects.assessments_popup.comments_title") %>
+        </h6>
+        <div class="comments-list">
+          <% if user_subject&.comments&.any? %>
+            <% user_subject.comments.sort_by { |c| -c.created_at.to_i }.each do |comment| %>
+              <%= render "comment_item", comment: comment %>
+            <% end %>
+          <% else %>
+            <div class="no-comments">
+              <%= t("courses.subjects.no_comments") %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

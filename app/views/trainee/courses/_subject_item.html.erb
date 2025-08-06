@@ -1,0 +1,30 @@
+<% user_subject = @user_subjects_for_current_course.find { |us| us.course_subject_id == course_subject.id } %>
+<% subject_status = user_subject&.display_status || Settings.defaults.subject_status_not_started %>
+
+<div class="subject-item" data-subject-id="<%= course_subject.id %>">
+  <!-- Subject Container -->
+  <div class="subject-container">
+    <%= render "subject_info", course_subject: course_subject, user_subject: user_subject %>
+
+    <!-- Status and Assessment Section -->
+    <div class="status-assessment-section">
+      <!-- Status Progress Bar -->
+      <div class="status-progress-container"
+           data-toggle="tooltip"
+           data-placement="top"
+           title="<%= t("courses.subjects.subject_status.#{subject_status}") %>">
+        <div class="status-progress-bar">
+          <div class="status-progress-fill status-<%= subject_status %>"></div>
+        </div>
+        <div class="status-label">
+          <%= t("courses.subjects.subject_status.#{subject_status}") %>
+        </div>
+      </div>
+
+      <!-- Assessment Actions -->
+      <div class="assessment-actions">
+        <%= render "assessment_dropdown", course_subject: course_subject, user_subject: user_subject %>
+      </div>
+    </div>
+  </div>
+</div>

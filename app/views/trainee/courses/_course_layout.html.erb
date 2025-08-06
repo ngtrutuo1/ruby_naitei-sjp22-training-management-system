@@ -43,13 +43,13 @@
   <div class="course-tabs">
     <ul class="nav nav-tabs">
       <li class="nav-item">
-        <%= link_to subjects_course_path(@course),
+        <%= link_to subjects_trainee_course_path(@course),
             class: "nav-link #{"active" if action_name == "subjects"}" do %>
           <%= t("courses.show.tabs.subjects") %> (<%= @subject_count %>)
         <% end %>
       </li>
       <li class="nav-item">
-        <%= link_to members_course_path(@course),
+        <%= link_to members_trainee_course_path(@course),
             class: "nav-link #{"active" if action_name == "members"}" do %>
           <%= t("courses.show.tabs.members") %> (<%= @trainee_count + (@trainer_count || Settings.defaults.count) %>)
         <% end %>
