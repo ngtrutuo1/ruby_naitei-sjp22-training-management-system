@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2025_08_01_100033) do
+ActiveRecord::Schema[7.0].define(version: 2025_08_05_165415) do
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -43,7 +43,6 @@ ActiveRecord::Schema[7.0].define(version: 2025_08_01_100033) do
     t.string "name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["name"], name: "index_categories_on_name"
   end
 
   create_table "comments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -55,7 +54,6 @@ ActiveRecord::Schema[7.0].define(version: 2025_08_01_100033) do
     t.datetime "updated_at", null: false
     t.index ["commentable_type", "commentable_id"], name: "index_comments_on_commentable"
     t.index ["commentable_type", "commentable_id"], name: "index_comments_on_commentable_type_and_commentable_id"
-    t.index ["created_at"], name: "index_comments_on_created_at"
     t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
@@ -69,9 +67,6 @@ ActiveRecord::Schema[7.0].define(version: 2025_08_01_100033) do
     t.datetime "updated_at", null: false
     t.index ["course_id", "subject_id"], name: "index_course_subjects_on_course_id_and_subject_id", unique: true
     t.index ["course_id"], name: "index_course_subjects_on_course_id"
-    t.index ["finish_date"], name: "index_course_subjects_on_finish_date"
-    t.index ["position"], name: "index_course_subjects_on_position"
-    t.index ["start_date"], name: "index_course_subjects_on_start_date"
     t.index ["subject_id"], name: "index_course_subjects_on_subject_id"
   end
 
@@ -93,10 +88,6 @@ ActiveRecord::Schema[7.0].define(version: 2025_08_01_100033) do
     t.integer "status", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["finish_date"], name: "index_courses_on_finish_date"
-    t.index ["name"], name: "index_courses_on_name"
-    t.index ["start_date"], name: "index_courses_on_start_date"
-    t.index ["status"], name: "index_courses_on_status"
     t.index ["user_id"], name: "index_courses_on_user_id"
   end
 
@@ -108,16 +99,8 @@ ActiveRecord::Schema[7.0].define(version: 2025_08_01_100033) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["course_id"], name: "index_daily_reports_on_course_id"
-    t.index ["created_at"], name: "index_daily_reports_on_created_at"
-    t.index ["status"], name: "index_daily_reports_on_status"
     t.index ["user_id", "course_id"], name: "index_daily_reports_on_user_id_and_course_id"
     t.index ["user_id"], name: "index_daily_reports_on_user_id"
-  end
-
-  create_table "microposts", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.text "content"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
   create_table "subject_categories", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -127,7 +110,6 @@ ActiveRecord::Schema[7.0].define(version: 2025_08_01_100033) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["category_id"], name: "index_subject_categories_on_category_id"
-    t.index ["position"], name: "index_subject_categories_on_position"
     t.index ["subject_id", "category_id"], name: "index_subject_categories_on_subject_id_and_category_id", unique: true
     t.index ["subject_id"], name: "index_subject_categories_on_subject_id"
   end
@@ -138,9 +120,6 @@ ActiveRecord::Schema[7.0].define(version: 2025_08_01_100033) do
     t.integer "estimated_time_days"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["estimated_time_days"], name: "index_subjects_on_estimated_time_days"
-    t.index ["max_score"], name: "index_subjects_on_max_score"
-    t.index ["name"], name: "index_subjects_on_name"
   end
 
   create_table "tasks", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -149,7 +128,6 @@ ActiveRecord::Schema[7.0].define(version: 2025_08_01_100033) do
     t.string "name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["name"], name: "index_tasks_on_name"
     t.index ["taskable_type", "taskable_id"], name: "index_tasks_on_taskable"
     t.index ["taskable_type", "taskable_id"], name: "index_tasks_on_taskable_type_and_taskable_id"
   end
@@ -159,12 +137,10 @@ ActiveRecord::Schema[7.0].define(version: 2025_08_01_100033) do
     t.bigint "course_id", null: false
     t.datetime "joined_at"
     t.datetime "finished_at"
-    t.integer "status"
+    t.integer "status", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["course_id"], name: "index_user_courses_on_course_id"
-    t.index ["finished_at"], name: "index_user_courses_on_finished_at"
-    t.index ["joined_at"], name: "index_user_courses_on_joined_at"
     t.index ["user_id", "course_id"], name: "index_user_courses_on_user_id_and_course_id", unique: true
     t.index ["user_id"], name: "index_user_courses_on_user_id"
   end
@@ -179,11 +155,7 @@ ActiveRecord::Schema[7.0].define(version: 2025_08_01_100033) do
     t.datetime "completed_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["completed_at"], name: "index_user_subjects_on_completed_at"
     t.index ["course_subject_id"], name: "index_user_subjects_on_course_subject_id"
-    t.index ["score"], name: "index_user_subjects_on_score"
-    t.index ["started_at"], name: "index_user_subjects_on_started_at"
-    t.index ["status"], name: "index_user_subjects_on_status"
     t.index ["user_course_id", "course_subject_id", "user_id"], name: "idx_us_on_ucid_csid_uid", unique: true
     t.index ["user_course_id"], name: "index_user_subjects_on_user_course_id"
     t.index ["user_id"], name: "index_user_subjects_on_user_id"
@@ -197,8 +169,6 @@ ActiveRecord::Schema[7.0].define(version: 2025_08_01_100033) do
     t.float "spent_time"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["spent_time"], name: "index_user_tasks_on_spent_time"
-    t.index ["status"], name: "index_user_tasks_on_status"
     t.index ["task_id"], name: "index_user_tasks_on_task_id"
     t.index ["user_id", "task_id"], name: "index_user_tasks_on_user_id_and_task_id", unique: true
     t.index ["user_id"], name: "index_user_tasks_on_user_id"
@@ -221,7 +191,6 @@ ActiveRecord::Schema[7.0].define(version: 2025_08_01_100033) do
     t.datetime "reset_sent_at"
     t.integer "role", default: 0
     t.index ["email"], name: "index_users_on_email", unique: true
-    t.index ["role"], name: "index_users_on_role"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"

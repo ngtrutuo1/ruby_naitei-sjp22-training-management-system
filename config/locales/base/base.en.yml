@@ -20,3 +20,4 @@ en:
       score_cannot_exceed_max: "cannot exceed maximum score"
   messages:
     permission_denied: "Permission denied"
+    invalid_date_format: "Invalid date format. Please enter the date in DD-MM-YYYY format."

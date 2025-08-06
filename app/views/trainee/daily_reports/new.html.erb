@@ -4,7 +4,7 @@
     <div class="card-body">
       <h4 class="card-title text-secondary"><%= t(".title") %></h4>
       <hr class="border-secondary mb-4" />
-      <%= form_with(model: @daily_report, local: true) do |f| %>
+      <%= form_with(model: @daily_report, url: trainee_daily_reports_path, local: true) do |f| %>
         <%= render "shared/error_messages", object: f.object %>
         <div class="row mb-3 align-items-center">
           <%= f.label :course_id, t(".course"), class: "col-sm-3 col-form-label" %>
@@ -31,7 +31,6 @@
                               placeholder: t(".content_placeholder"),
                               class: "form-control bg-secondary text-white border-dark" %>
         </div>
-        <%= f.hidden_field :status, value: 0 %>
         <div class="text-end pt-3 border-top border-secondary">
           <button type="submit" class="btn btn-secondary me-2" name="commit" value="<%= Settings.daily_report.status.draft %>">
             <%= t(".draft_button") %>
@@ -39,7 +38,7 @@
           <button type="submit" class="btn btn-primary me-2" name="commit" value="<%= Settings.daily_report.status.submitted %>">
             <%= t(".submit_button") %>
           </button>
-          <%= link_to t(".cancel_button"), root_path, class: "btn btn-danger" %>
+          <%= link_to t(".cancel_button"), trainee_daily_reports_path, class: "btn btn-danger" %>
         </div>
       <% end %>
     </div>

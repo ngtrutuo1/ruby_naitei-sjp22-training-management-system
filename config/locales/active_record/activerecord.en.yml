@@ -54,4 +54,4 @@ en:
         invalid_document_type: "is not a valid document type"
         invalid_image_type: "is not a valid image type"
         one_report_per_day: "You have already submitted a report for this course today."
-        not_a_valid_course: "You can only submit a report for a course you're enrolled in."
+        not_a_valid_course: "is not valid. You can only submit a report for a course you are enrolled in."

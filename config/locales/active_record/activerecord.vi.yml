@@ -58,4 +58,4 @@ vi:
         invalid_document_type: "không phải là loại tài liệu hợp lệ"
         invalid_image_type: "không phải là loại hình ảnh hợp lệ"
         one_report_per_day: "Bạn đã gửi báo cáo cho môn học này hôm nay rồi."
-        not_a_valid_course: "Bạn chỉ có thể gửi báo cáo cho khóa học bạn tham gia."
+        not_a_valid_course: "không hợp lệ. Bạn chỉ có thể gửi báo cáo cho khóa học mà bạn tham gia"

@@ -2,8 +2,8 @@ class DailyReport < ApplicationRecord
   DAILY_REPORT_PARAMS = [:user_id, :course_id, :content, :status].freeze
 
   # Enums
-  enum is_done: {draft: Settings.daily_report.status.draft,
-                 submitted: Settings.daily_report.status.submitted}
+  enum status: {draft: Settings.daily_report.status.draft,
+                submitted: Settings.daily_report.status.submitted}
 
   # Associations
   belongs_to :user
@@ -16,7 +16,8 @@ class DailyReport < ApplicationRecord
               maximum: Settings.daily_report.max_content_length
             }
   validate :one_report_per_day, on: :create
-  validate :check_user_course_association, on: :create
+  validate :check_user_course_association, on: :create,
+            if: -> {course_id.present?}
 
   # Scopes
   scope :completed, -> {where(is_done: true)}
@@ -24,6 +25,17 @@ class DailyReport < ApplicationRecord
   scope :recent, -> {order(created_at: :desc)}
   scope :by_user, ->(user) {where(user:)}
   scope :by_course, ->(course) {where(course:)}
+  scope :by_courses, ->(course_ids) {where(course_ids:)}
+  scope :on_day, (lambda do |date|
+    return if date.blank?
+
+    processed_date = Date.strptime(date, Settings.params.date)
+    where(created_at: processed_date
+    .beginning_of_day..processed_date.end_of_day)
+  end)
+  scope :by_course, (lambda do |course_id|
+    where(course_id:) if course_id.present?
+  end)
 
   private
 

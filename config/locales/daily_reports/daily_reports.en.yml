@@ -1,14 +1,20 @@
 en:
-  daily_reports:
-    draft_success: "Report was successfully saved as a draft."
-    submit_success: "Report was successfully submitted."
-    new:
-      title: "Daily report add"
-      course: "Course:"
-      select_course_placeholder: "Select Course"
-      date_submitted: "Date submitted:"
-      content_details: "Content details:"
-      content_placeholder: "Enter detailed report content here..."
-      draft_button: "Save Draft"
-      submit_button: "Submit Report"
-      cancel_button: "Cancel"
+  trainee:
+    daily_reports:
+      draft_success: "Report was successfully saved as a draft."
+      submit_success: "Report was successfully submitted."
+      new:
+        title: "Daily report add"
+        course: "Course:"
+        select_course_placeholder: "Select Course"
+        date_submitted: "Date submitted:"
+        content_details: "Content details:"
+        content_placeholder: "Enter detailed report content here..."
+        draft_button: "Save Draft"
+        submit_button: "Submit Report"
+        cancel_button: "Cancel"
+      index:
+        title: "Daily Reports"
+        manager_header: "Daily Report Manager"
+      destroy_success: "Report was successfully deleted."
+      destroy_failed: "Could not delete the report."

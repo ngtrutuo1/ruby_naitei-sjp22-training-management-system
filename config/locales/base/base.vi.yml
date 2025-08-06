@@ -20,3 +20,4 @@ vi:
       score_cannot_exceed_max: "Điểm không được vượt quá điểm tối đa"
   messages:
     permission_denied: "Quyền truy cập bị từ chối"
+    invalid_date_format: "Định dạng ngày không hợp lệ. Vui lòng nhập theo định dạng DD/MM/YYYY."
