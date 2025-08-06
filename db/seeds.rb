@@ -1,4 +1,22 @@
-require "faker"
+def associate_course_relations(course, supervisors, trainees)
+  course.supervisors = supervisors.sample(rand(1..2))
+  course.users = trainees.sample(rand(10..20))
+
+  subjects_for_course = Subject.all.sample(rand(5..10))
+  subjects_for_course.each_with_index do |subject, index|
+    cs_start = course.start_date + (index * 10).days
+    finish_offset = rand(7..14)
+    cs_finish = [cs_start + finish_offset.days, course.finish_date].min
+    cs_start = cs_finish if cs_start > cs_finish
+
+    course.course_subjects.create!(
+      subject: subject,
+      position: index + 1,
+      start_date: cs_start,
+      finish_date: cs_finish
+    )
+  end
+end
 
 ActiveRecord::Base.transaction do
   # --- Users ---
@@ -48,80 +66,131 @@ ActiveRecord::Base.transaction do
   trainees = User.trainee
 
   # --- Subjects & Categories ---
-  20.times do
+  5.times do
     Category.create!(name: Faker::Hobby.unique.activity)
   end
 
   50.times do
     Subject.create!(
       name: Faker::Educator.unique.course_name,
-      max_score: 100,
+      max_score: 10,
       estimated_time_days: rand(5..15),
-      categories: Category.all.sample(rand(1..2))
+      categories: Category.all.sample(rand(1..5))
     )
   end
 
-  # --- Courses & Relationships ---
-  20.times do
-    start_date = Faker::Date.between(from: 6.months.ago, to: 1.month.from_now)
+  puts "  -> Creating 8 FINISHED courses..."
+  8.times do
+    finish_date = Faker::Date.between(from: 6.months.ago, to: 8.days.ago)
+    start_date = finish_date - rand(2..4).months
     course = Course.create!(
       user: supervisors.sample,
-      name: "Khóa học #{Faker::ProgrammingLanguage.name} #{start_date.strftime("%m/%Y")}",
+      name: "#{Faker::ProgrammingLanguage.name} #{start_date.strftime("%m/%Y")}",
       start_date: start_date,
-      finish_date: start_date + rand(3..6).months,
-      status: rand(0..2)
+      finish_date: finish_date,
+      status: 2
     )
-    course.supervisors = supervisors.sample(rand(1..2))
-    course.users = trainees.sample(rand(10..20))
-    subjects_for_course = Subject.all.sample(rand(5..10))
-    subjects_for_course.each_with_index do |subject, index|
-      cs_start = course.start_date + (index * 10).days
-      course.course_subjects.create!(
-        subject: subject,
-        position: index + 1,
-        start_date: cs_start,
-        finish_date: cs_start + rand(7..14).days
-      )
-    end
+    associate_course_relations(course, supervisors, trainees)
   end
+
+  puts "  -> Creating 10 IN-PROGRESS courses..."
+  10.times do
+    start_date = Faker::Date.between(from: 3.months.ago, to: 1.day.ago)
+    finish_date = Faker::Date.between(from: Time.zone.today - 6.days, to: 3.months.from_now)
+    course = Course.create!(
+      user: supervisors.sample,
+      name: "#{Faker::ProgrammingLanguage.name} #{start_date.strftime("%m/%Y")}",
+      start_date: start_date,
+      finish_date: finish_date,
+      status: 1
+    )
+    associate_course_relations(course, supervisors, trainees)
+  end
+
+  puts "  -> Creating 12 PENDING courses..."
+  12.times do
+    start_date = Faker::Date.between(from: 1.day.from_now, to: 2.months.from_now)
+    finish_date = start_date + rand(2..4).months
+    course = Course.create!(
+      user: supervisors.sample,
+      name: "#{Faker::ProgrammingLanguage.name} #{start_date.strftime("%m/%Y")}",
+      start_date: start_date,
+      finish_date: finish_date,
+      status: 0
+    )
+    associate_course_relations(course, supervisors, trainees)
+  end
+
 
   # --- Tasks ---
   CourseSubject.all.each do |course_subject|
     rand(2..5).times do |i|
       course_subject.tasks.create!(
-        name: "Nhiệm vụ #{i+1}: #{Faker::Hacker.verb} the #{Faker::Hacker.noun}"
+        name: "#{Faker::Hacker.verb}, #{Faker::Hacker.noun}"
       )
     end
   end
 
-  # --- User Progress (UserSubjects, UserTasks) ---
+  # --- User_Courses ---
   UserCourse.all.each do |user_course|
     user = user_course.user
     course = user_course.course
+
     course.course_subjects.each do |course_subject|
+      user_subject_status = 0
+      user_score = nil
+
+      if course.finished?
+        user_subject_status = 2
+        user_score = rand(6..10)
+      elsif course.in_progress?
+        user_subject_status = rand(0..2)
+        user_score = user_subject_status == 2 ? rand(5..10) : rand(0..5)
+      else
+        user_subject_status = 0
+        user_score = nil
+      end
+
       user_subject = user_course.user_subjects.create!(
         user: user,
         course_subject: course_subject,
-        status: rand(0..5),
-        score: rand(0..10)
+        status: user_subject_status,
+        score: user_score
       )
-      course_subject.tasks.each do |task|
-        user_subject.user_tasks.create!(
-          user: user,
-          task: task,
-          status: rand(0..1)
-        )
+
+      if user_subject.status != 0
+        course_subject.tasks.each do |task|
+          task_status = [2, 3, 4].include?(user_subject.status) ? 1 : 0
+          user_subject.user_tasks.create!(
+            user: user,
+            task: task,
+            status: task_status
+          )
+        end
       end
     end
   end
 
   # --- Daily Reports ---
-  UserCourse.all.each do |user_course|
-    rand(3..10).times do
-      user_course.user.daily_reports.create!(
-        course: user_course.course,
-        content: Faker::Lorem.paragraph(sentence_count: 4),
-        is_done: rand(0..1)
+ UserCourse.all.each do |user_course|
+    user = user_course.user
+    course = user_course.course
+    start_day = course.start_date
+    end_day = [Time.zone.today, course.finish_date].min
+
+    next if start_day > end_day
+
+    (start_day..end_day).each do |date|
+      next if rand > 0.8
+      report_status = rand > 0.15 ? 1 : 0
+
+      DailyReport.create!(
+        user: user,
+        course: course,
+        content: Faker::Lorem.paragraph(sentence_count: rand(3..6)),
+        status: report_status,
+        created_at: date.at_beginning_of_day, # Gán ngày tạo là ngày đang lặp
+        updated_at: date.at_beginning_of_day
       )
     end
   end

@@ -54,6 +54,7 @@ comment:
 daily_report:
   min_content_length: 10
   max_content_length: 5000
+  truncate_length: 100
   status:
     draft: 0
     submitted: 1
@@ -141,6 +142,9 @@ links:
 formats:
   date: "%d/%m/%Y"
   datetime: "%d/%m/%Y %H:%M:%S"
+
+params:
+  date: "%Y-%m-%d"
 
 pagination:
   default_per_page: 10

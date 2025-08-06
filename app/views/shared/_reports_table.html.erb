@@ -1,0 +1,13 @@
+<h5 class="my-4"><i class="bi bi-list-task me-2"></i><%= t(".my_reports_list") %></h5>
+
+<div class="list-group">
+  <% if @daily_reports.any? %>
+    <%= render partial: "shared/daily_report", collection: @daily_reports, as: :daily_report %>
+  <% else %>
+    <div class="alert alert-info"><%= t(".no_reports_found") %></div>
+  <% end %>
+</div>
+
+<div class="text-center mt-4">
+  <%== pagy_bootstrap_nav @pagy %>
+</div>

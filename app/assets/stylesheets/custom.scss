@@ -115,6 +115,10 @@ textarea {
   }
 }
 
+.form-select {
+  max-width: 300px;
+}
+
 .gravatar {
   float: left;
   margin-right: 10px;
@@ -122,6 +126,10 @@ textarea {
 
 .gravatar_edit {
   margin-top: 15px;
+}
+
+.input-date-fixed {
+  max-width: 300px;
 }
 
 /* language switcher */
@@ -200,6 +208,10 @@ textarea {
       }
     }
   }
+}
+
+.list-group-item {
+  border-radius: 0.5rem;
 }
 
 .users {
