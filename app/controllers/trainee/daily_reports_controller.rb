@@ -1,5 +1,5 @@
 class Trainee::DailyReportsController < TraineeController
-  before_action :load_daily_report, only: %i(destroy)
+  before_action :load_daily_report, only: %i(edit update destroy)
 
   IGNORED_PARAMS = %i(id _method authenticity_token controller action
 commit).freeze
@@ -35,12 +35,39 @@ commit).freeze
     end
   end
 
+  # GET /daily_reports/:id/edit
+  def edit; end
+
+  # PATCH /trainee/daily_reports/:id
+  def update
+    case params[:commit]&.strip
+    when Settings.daily_report.status.draft.to_s
+      update_as_draft
+    when Settings.daily_report.status.submitted.to_s
+      update_and_submit_report
+    else
+      render :edit, status: :unprocessable_entity
+    end
+  end
+
   # DELETE /trainee/daily_reports/:id
   def destroy
     handle_report_destroy
     redirect_to trainee_daily_reports_path(params: request.parameters.except(
       *IGNORED_PARAMS
     ))
+  end
+
+  # GET /daily_reports/:id
+  def show
+    @daily_report = current_user.daily_reports
+                                .find_by(id: params[:id],
+                                         status: Settings.daily_report
+                                         .status.submitted)
+    return if @daily_report
+
+    flash[:danger] = t(".report_not_found")
+    redirect_to trainee_daily_reports_path
   end
 
   def permitted_filter_params
@@ -50,7 +77,7 @@ commit).freeze
   private
 
   def daily_report_params
-    params.require(:daily_report).permit DailyReport::DAILY_REPORT_PARAMS
+    params.require(:daily_report)&.permit DailyReport::DAILY_REPORT_PARAMS
   end
 
   def save_as_draft
@@ -67,6 +94,20 @@ commit).freeze
     )
   end
 
+  def update_as_draft
+    handle_update(
+      status: Settings.daily_report.status.draft,
+      success_message: t(".draft_success")
+    )
+  end
+
+  def update_and_submit_report
+    handle_update(
+      status: Settings.daily_report.status.submitted,
+      success_message: t(".submit_success")
+    )
+  end
+
   def handle_report_submission status:, success_message:
     @daily_report.status = status
     if @daily_report.save
@@ -74,6 +115,15 @@ commit).freeze
       redirect_to trainee_daily_reports_path
     else
       render :new, status: :unprocessable_entity
+    end
+  end
+
+  def handle_update status:, success_message:
+    if @daily_report.update(daily_report_params.merge(status:))
+      flash[:success] = success_message
+      redirect_to trainee_daily_reports_path
+    else
+      render :edit, status: :unprocessable_entity
     end
   end
 

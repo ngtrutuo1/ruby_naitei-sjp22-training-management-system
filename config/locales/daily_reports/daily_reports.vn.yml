@@ -3,19 +3,29 @@ vi:
     daily_reports:
       draft_success: "Báo cáo đã được lưu dưới dạng nháp thành công."
       submit_success: "Báo cáo đã được gửi thành công."
-      new:
+      report_not_found: "Không tìm thấy báo cáo."
+      form:
         title: "Thêm báo cáo hàng ngày"
         course: "Khóa học:"
         select_course_placeholder: "Chọn Khóa học"
-        date_submitted: "Ngày gửi:"
-        content_details: "Nội dung chi tiết:"
         content_placeholder: "Nhập nội dung báo cáo chi tiết tại đây..."
         draft_button: "Lưu nháp"
         submit_button: "Gửi báo cáo"
         cancel_button: "Hủy bỏ"
+        date_submitted: "Ngày gửi:"
+        content_details: "Nội dung chi tiết:"
+      new:
+        title: "Thêm báo cáo hàng ngày"
       index:
         title: "Báo cáo hàng ngày"
         manager_header: "Quản lý báo cáo hàng ngày"
+      show:
+        course: "Khóa học:"
+        title: "Chi tiết báo cáo"
+        date_submitted: "Ngày gửi:"
+        content_details: "Nội dung chi tiết:"
+      edit:
+        title: "Chỉnh sửa báo cáo"
       destroy:
         destroy_success: "Báo cáo đã được xóa thành công."
         destroy_failed: "Không thể xóa báo cáo này."

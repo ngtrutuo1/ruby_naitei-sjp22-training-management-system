@@ -3,18 +3,29 @@ en:
     daily_reports:
       draft_success: "Report was successfully saved as a draft."
       submit_success: "Report was successfully submitted."
-      new:
+      report_not_found: "Report not found."
+      form:
         title: "Daily report add"
         course: "Course:"
         select_course_placeholder: "Select Course"
-        date_submitted: "Date submitted:"
-        content_details: "Content details:"
         content_placeholder: "Enter detailed report content here..."
         draft_button: "Save Draft"
         submit_button: "Submit Report"
         cancel_button: "Cancel"
+        date_submitted: "Date submitted:"
+        content_details: "Content details:"
+      new:
+        title: "Daily Report Add"
       index:
         title: "Daily Reports"
         manager_header: "Daily Report Manager"
-      destroy_success: "Report was successfully deleted."
-      destroy_failed: "Could not delete the report."
+      show:
+        course: "Course:"
+        title: "Report detail"
+        date_submitted: "Date submitted:"
+        content_details: "Content details:"
+      edit:
+        title: "Report edit"
+      destroy:
+        destroy_success: "Report was successfully deleted."
+        destroy_failed: "Could not delete the report."
