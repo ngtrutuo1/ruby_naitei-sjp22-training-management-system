@@ -2,6 +2,8 @@ en:
   activerecord:
     models:
       user: "User"
+      course: "Course"
+      user_course: "User Course"
     attributes:
       daily_report:
         course: "Course"
@@ -17,6 +19,15 @@ en:
           female: "Female"
           male: "Male"
           other: "Other"
+      course:
+        name: "Course Name"
+        start_date: "Start Date"
+        finish_date: "Finish Date"
+        status: "Status"
+      user_course:
+        status: "Status"
+        joined_at: "Joined At"
+        finished_at: "Finished At"
     errors:
       models:
         user:

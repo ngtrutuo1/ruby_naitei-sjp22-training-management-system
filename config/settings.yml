@@ -119,6 +119,7 @@ ui:
   gravatar:
     default_size: 80
     list_size: 50
+    small_size: 32
 
 features:
   registration: true
@@ -139,3 +140,16 @@ links:
 
 formats:
   date: "%d/%m/%Y"
+  datetime: "%d/%m/%Y %H:%M:%S"
+
+pagination:
+  default_per_page: 10
+  course_members_per_page: 10
+  max_per_page: 100
+  min_pages_to_show: 1
+
+page_classes:
+  courses: "courses_page"
+
+defaults:
+  count: 0

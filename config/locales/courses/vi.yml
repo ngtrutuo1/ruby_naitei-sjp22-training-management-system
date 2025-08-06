@@ -1,0 +1,23 @@
+vi:
+  courses:
+    show:
+      title: "Chi tiết khóa học"
+      created_by: "Được tạo bởi"
+      last_updated: "Lần cuối cập nhật là"
+      expected: "dự kiến"
+      tabs:
+        subjects: "Môn học"
+        members: "Thành viên"
+    check_course_access:
+      access_denied: "Bạn không có quyền truy cập khóa học này"
+    members:
+      trainer_list: "Danh sách trainer"
+      trainee_list: "Danh sách trainee"
+      name: "Họ và tên"
+      current_status: "Trạng thái hiện tại"
+      joined_at: "Ngày tham gia"
+      course_not_found: "Không tìm thấy khóa học"
+    subjects:
+      subjects_list: "Danh sách môn học"
+    errors:
+      access_denied: "Bạn không có quyền truy cập khóa học này"
