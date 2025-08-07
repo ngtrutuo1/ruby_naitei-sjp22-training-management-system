@@ -1,6 +1,9 @@
 <%= render "course_layout" do %>
-  <div class="subject-list-section">
-    <h3>Subjects content (to be implemented)</h3>
-    <p>placeholder for subjecct tab</p>
+  <div class="subjects-content">
+    <div class="subjects-list">
+      <% @course_subjects.each do |course_subject| %>
+        <%= render "subject_item", course_subject: course_subject %>
+      <% end %>
+    </div>
   </div>
 <% end %>

@@ -1,14 +1,25 @@
-class CoursesController < ApplicationController
+class Trainee::CoursesController < TraineeController
+  COURSE_SUBJECTS_PRELOAD = [
+    :subject,
+    :tasks,
+    {user_subjects: [:user, :comments]}
+  ].freeze
+
+  USER_SJ_PRELOAD = [
+    :course_subject,
+    :user_tasks,
+    {comments: :user}
+  ].freeze
   before_action :find_course, only: %i(show members subjects)
   before_action :check_course_access, only: %i(show members subjects)
   before_action :set_courses_page_class
 
-  # GET /courses/:id
+  # GET /trainee/courses/:id
   def show
-    redirect_to members_course_path @course
+    redirect_to subjects_trainee_course_path @course
   end
 
-  # GET /courses/:id/members
+  # GET /trainee/courses/:id/members
   def members
     @trainers = @course.supervisors.includes :user_courses
     @pagy, @trainees = pagy(@course.user_courses.trainees,
@@ -18,11 +29,15 @@ class CoursesController < ApplicationController
     @subject_count = @course.subjects.count
   end
 
-  # GET /courses/:id/subjects
+  # GET /trainee/courses/:id/subjects
   def subjects
-    @subjects = @course.course_subjects.includes :subject
-    @subject_count = @subjects.count
+    @course_subjects = @course.course_subjects.includes(COURSE_SUBJECTS_PRELOAD)
+                              .ordered_by_position
+    @subject_count = @course_subjects.count
     @trainee_count = @course.trainee_count
+    @user_subjects_for_current_course = current_user.user_subjects
+                                                    .for_course(@course)
+                                                    .includes(USER_SJ_PRELOAD)
   end
 
   private

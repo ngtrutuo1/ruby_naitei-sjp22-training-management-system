@@ -1,0 +1,22 @@
+<!-- Task Overview Dropdown -->
+<div class="dropdown task-dropdown">
+  <button class="btn btn-outline-secondary dropdown-toggle task-overview-btn" type="button"
+          data-toggle="dropdown" aria-expanded="false">
+    <%= t("courses.subjects.task_overview") %>
+  </button>
+  <div class="dropdown-menu task-dropdown-menu">
+    <div class="task-list-container">
+      <% if course_subject.tasks.any? %>
+        <% course_subject.tasks.each do |task| %>
+          <% user_task = user_subject&.user_tasks&.find { |ut| ut.task_id == task.id } %>
+          <% task_completed = user_task&.done? %>
+          <%= render "task_item", task: task, task_completed: task_completed %>
+        <% end %>
+      <% else %>
+        <div class="no-tasks-message">
+          <%= t("courses.subjects.no_tasks") %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

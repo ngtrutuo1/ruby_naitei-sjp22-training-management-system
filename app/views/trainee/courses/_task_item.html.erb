@@ -1,0 +1,12 @@
+<div class="task-item">
+  <div class="task-status-icon">
+    <% if task_completed %>
+      <i class="fas fa-check-circle task-completed"></i>
+    <% else %>
+      <i class="far fa-circle task-pending"></i>
+    <% end %>
+  </div>
+  <div class="task-content">
+    <div class="task-title"><%= task.name %></div>
+  </div>
+</div>

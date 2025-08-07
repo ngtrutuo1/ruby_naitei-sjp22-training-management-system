@@ -1,0 +1,40 @@
+<!-- Subject Thumbnail -->
+<div class="subject-thumbnail">
+  <% if course_subject.subject.image.attached? %>
+    <%= image_tag course_subject.subject.image, alt: course_subject.subject.name, class: "subject-image" %>
+  <% else %>
+    <div class="default-subject-thumbnail">
+      <i class="fas fa-book"></i>
+    </div>
+  <% end %>
+</div>
+
+<!-- Subject Info -->
+<div class="subject-info">
+  <!-- Dates -->
+  <div class="subject-dates">
+    <%= course_subject.start_date&.strftime(Settings.formats.date) || "" %> →
+    <%= course_subject.finish_date&.strftime(Settings.formats.date) || "" %>
+  </div>
+
+  <!-- Subject Name (clickable) -->
+  <div class="subject-name">
+    <%= link_to course_subject.subject.name, "#", class: "subject-link" %>
+  </div>
+
+  <!-- Duration -->
+  <div class="subject-duration">
+    <% if course_subject.subject.estimated_time_days %>
+      <% if I18n.locale.to_s == "en" && course_subject.subject.estimated_time_days == Settings.defaults.min_estimated_time_days %>
+        <%= t("courses.subjects.time_label", days: course_subject.subject.estimated_time_days) %>
+      <% else %>
+        <%= t("courses.subjects.time_label_plural", days: course_subject.subject.estimated_time_days) %>
+      <% end %>
+    <% end %>
+  </div>
+
+  <!-- Dropdown and Actions -->
+  <div class="subject-actions">
+    <%= render "task_dropdown", course_subject: course_subject, user_subject: user_subject %>
+  </div>
+</div>

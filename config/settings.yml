@@ -90,6 +90,13 @@ user_subject:
     finished_ontime: 3
     finished_but_overdue: 4
     overdue_and_not_finished: 5
+  display_status:
+    not_started: "not_started"
+    in_progress: "in_progress"
+    finished_early: "finished_early"
+    finished_ontime: "finished_ontime"
+    finished_but_overdue: "finished_but_overdue"
+    overdue_and_not_finished: "overdue_and_not_finished"
 
 user_course:
   status:
@@ -164,3 +171,6 @@ page_classes:
 
 defaults:
   count: 0
+  min_estimated_time_days: 1
+  subject_status_not_started: "not_started"
+  zero: 0
