@@ -44,7 +44,6 @@ en:
   messages:
     permission_denied: "Permission denied"
     invalid_date_format: "Invalid date format. Please enter the date in DD-MM-YYYY format."
-
   layouts:
     sidebar:
       my_courses: "My Courses"
