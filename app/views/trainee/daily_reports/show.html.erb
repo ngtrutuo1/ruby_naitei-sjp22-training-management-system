@@ -1,0 +1,29 @@
+<% provide(:title, t(".title")) %>
+<div class="container my-4">
+  <div class="card bg-dark text-white border-secondary">
+    <div class="card-body">
+      <h4 class="card-title text-secondary"><%= t(".title") %></h4>
+      <hr class="border-secondary mb-4" />
+      <div class="row mb-3 align-items-center">
+        <label class="col-xs-3 col-form-label"><%= t(".course") %></label>
+        <div class="col-xs-9">
+          <p class="form-control-static"><%= @daily_report.course_name  %></p>
+        </div>
+      </div>
+      <div class="row mb-3 align-items-center">
+        <label class="col-xs-3 col-form-label"><%= t(".date_submitted") %></label>
+        <div class="col-xs-9">
+          <p class="form-control-static"><%= l @daily_report.created_at, format: Settings.formats.date %></p>
+        </div>
+      </div>
+      <div class="mb-3">
+        <div class="row">
+          <label class="col-xs-3 col-form-label"><%= t(".content_details") %></label>
+          <div class="col-xs-9">
+            <p class="form-control-static content-details-text"><%= @daily_report.content %></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

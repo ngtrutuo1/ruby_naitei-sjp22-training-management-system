@@ -9,6 +9,8 @@ class DailyReport < ApplicationRecord
   belongs_to :user
   belongs_to :course
 
+  delegate :name, to: :course, prefix: true
+
   # Validations
   validates :content,
             length: {
@@ -16,13 +18,13 @@ class DailyReport < ApplicationRecord
               maximum: Settings.daily_report.max_content_length
             }
   validate :one_report_per_day, on: :create
-  validate :check_user_course_association, on: :create,
+  validate :check_user_course_association, on: %i(create update),
             if: -> {course_id.present?}
 
   # Scopes
   scope :completed, -> {where(is_done: true)}
   scope :pending, -> {where(is_done: false)}
-  scope :recent, -> {order(created_at: :desc)}
+  scope :recent, -> {order(updated_at: :desc)}
   scope :by_user, ->(user) {where(user:)}
   scope :by_course, ->(course) {where(course:)}
   scope :by_courses, ->(course_ids) {where(course_ids:)}

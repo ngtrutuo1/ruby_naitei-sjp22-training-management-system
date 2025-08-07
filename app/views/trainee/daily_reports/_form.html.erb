@@ -1,0 +1,37 @@
+<%= form_with(model: [:trainee, @daily_report], local: true) do |f| %>
+  <%= render "shared/error_messages", object: f.object %>
+  <div class="row mb-3 align-items-center">
+    <%= f.label :course_id, t(".course"), class: "col-sm-3 col-form-label" %>
+    <div class="col-sm-9">
+      <%= f.select :course_id,
+                    options_for_select(current_user.courses.map {|c| [c.name, c.id]}, f.object.course_id),
+                    { prompt: t(".select_course_placeholder") },
+                    { class: "form-select bg-secondary text-white border-dark" } %>
+    </div>
+  </div>
+  <div class="row mb-3 align-items-center">
+    <%= f.label :created_at, t(".date_submitted"), class: "col-sm-3 col-form-label" %>
+    <div class="col-sm-9">
+      <%= f.text_field :created_at,
+                        class: "form-control bg-secondary text-white border-dark input-date-fixed",
+                        value: Time.zone.now.strftime(Settings.formats.date),
+                        disabled: true %>
+    </div>
+  </div>
+  <div class="mb-3">
+    <%= f.label :content, t(".content_details"), class: "form-label" %>
+    <%= f.text_area :content,
+                        rows: 10,
+                        placeholder: t(".content_placeholder"),
+                        class: "form-control bg-secondary text-white border-dark" %>
+  </div>
+  <div class="text-end pt-3 border-top border-secondary">
+    <button type="submit" class="btn btn-secondary me-2" name="commit" value="<%= Settings.daily_report.status.draft %>">
+      <%= t(".draft_button") %>
+    </button>
+    <button type="submit" class="btn btn-primary me-2" name="commit" value="<%= Settings.daily_report.status.submitted %>">
+      <%= t(".submit_button") %>
+    </button>
+    <%= link_to t(".cancel_button"), trainee_daily_reports_path, class: "btn btn-danger" %>
+  </div>
+<% end %>
