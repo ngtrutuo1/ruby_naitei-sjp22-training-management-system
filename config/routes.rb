@@ -14,7 +14,7 @@ Rails.application.routes.draw do
 
     resources :account_activations, only: :edit
     resources :password_resets, only: %i(new create edit update)
-    resources :users, only: %i(show edit update)
+    resources :users, only: %i(show edit update new create)
 
     namespace :trainee do
       resources :daily_reports
@@ -24,6 +24,10 @@ Rails.application.routes.draw do
           get :subjects
         end
       end
+    end
+
+    namespace :supervisor do
+      resources :daily_reports, only: %i(index show)
     end
 
     namespace :admin do

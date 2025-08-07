@@ -1,5 +1,6 @@
 class DailyReport < ApplicationRecord
   DAILY_REPORT_PARAMS = [:user_id, :course_id, :content, :status].freeze
+  EAGER_LOADING_PARAMS = [:user, :course].freeze
 
   # Enums
   enum status: {draft: Settings.daily_report.status.draft,
@@ -25,7 +26,7 @@ class DailyReport < ApplicationRecord
   scope :completed, -> {where(is_done: true)}
   scope :pending, -> {where(is_done: false)}
   scope :recent, -> {order(updated_at: :desc)}
-  scope :by_user, ->(user) {where(user:)}
+  scope :by_user, ->(user_id) {where(user_id:) if user_id.present?}
   scope :by_course, ->(course) {where(course:)}
   scope :by_courses, ->(course_ids) {where(course_ids:)}
   scope :on_day, (lambda do |date|
@@ -35,7 +36,7 @@ class DailyReport < ApplicationRecord
     where(created_at: processed_date
     .beginning_of_day..processed_date.end_of_day)
   end)
-  scope :by_course, (lambda do |course_id|
+  scope :by_course_filter, (lambda do |course_id|
     where(course_id:) if course_id.present?
   end)
 

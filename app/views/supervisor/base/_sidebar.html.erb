@@ -1,0 +1,34 @@
+<aside class="sidebar">
+    <ul class="sidebar-menu">
+      <li class="<%= "active" if current_page? root_path %>">
+        <%= link_to root_path do %>
+          <i class="fas fa-tachometer-alt"></i>
+          <span><%= t("supervisor.sidebar.dashboard") %></span>
+        <% end %>
+      </li>
+      <li>
+        <%= link_to "#" do %>
+          <i class="fas fa-user-graduate"></i>
+          <span><%= t("supervisor.sidebar.trainees") %></span>
+        <% end %>
+      </li>
+      <li>
+        <%= link_to "#" do %>
+          <i class="fas fa-user-tie"></i>
+          <span><%= t("supervisor.sidebar.supervisors") %></span>
+        <% end %>
+      </li>
+      <li>
+        <%= link_to "#" do %>
+          <i class="fas fa-book"></i>
+          <span><%= t("supervisor.sidebar.courses") %></span>
+        <% end %>
+      </li>
+      <li>
+        <%= link_to supervisor_daily_reports_path do %>
+          <i class="fas fa-inbox"></i>
+          <span><%= t("supervisor.sidebar.reports") %></span>
+        <% end %>
+      </li>
+    </ul>
+</aside>

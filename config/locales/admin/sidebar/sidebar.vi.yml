@@ -1,0 +1,12 @@
+vi:
+  admin:
+    sidebar:
+      dashboard: "Bảng điều khiển"
+      my_courses: "Khóa học của tôi"
+      daily_report: "Báo cáo hằng ngày"
+      report_history: "Lịch sử báo cáo"
+      trainees: "Học viên"
+      supervisors: "Giám sát viên"
+      admin: "Quản trị viên"
+      courses: "Khóa học"
+      reports: "Báo cáo"

@@ -15,10 +15,14 @@
   <body class="<%= @page_class %>">
     <%= render "layouts/header" %>
     <div class= "<%= logged_in? ? "app-container-wrapper" : "app-container" %>">
-      <% if logged_in? %>
-        <%= render "layouts/sidebar" %>
+      <% if logged_in? && current_user.trainee? %>
+        <%= render "trainee/base/sidebar" %>
+      <% elsif logged_in? && current_user.admin? %>
+        <%= render "admin/base/sidebar" %>
+      <% elsif logged_in? && current_user.supervisor? %>
+        <%= render "supervisor/base/sidebar" %>
       <% end %>
-      <main class="main-content-wrapper">
+      <main class="main-content">
         <div class="container">
           <% flash.each do |type, message| %>
             <div class="alert alert-<%= type %>">

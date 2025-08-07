@@ -1,5 +1,6 @@
 en:
-  base_title: "Ruby on Rails Tutorial Sample App"
+  base_title: "Training System"
+
   # Courses Attributes
   finished: "Finished"
   not_started: "Not started"
@@ -23,7 +24,7 @@ en:
     help: "Help"
     contact: "Contact"
     log_in: "Log in"
-    sample_app: "sample app"
+    sample_app: "Training System"
     profile: "Profile"
     setting: "Settings"
     logout: "Log out"

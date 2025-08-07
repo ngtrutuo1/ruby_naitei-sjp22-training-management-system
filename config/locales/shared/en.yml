@@ -3,8 +3,10 @@ en:
     login_required: "Please log in to continue."
     not_authorized: "You are not authorized to perform this action."
     user_not_found: "User not found."
+    already_login: "Already logged in"
     filter:
       select_course_placeholder: "Select Course"
+      select_user_placeholder: "Select Trainee"
       apply_filter: "Apply Filter"
       create_report_button: "+ New Report"
     reports_table:
@@ -14,6 +16,7 @@ en:
       my_reports_list: "My Reports List"
       course: "Course"
       submit_report_button: "Submit Report"
+      sender: "Sender"
       edit_report_button: "Edit Report"
       delete_report_button: "Delete"
       view_report_button: "View Report Details"

@@ -2,9 +2,9 @@ vi:
   user_mailer:
     account_activation:
       subject: "Kích hoạt tài khoản"
-      app_name: "Sample App"
+      app_name: "Training System"
       greeting: "Xin chào %{name},"
-      welcome_message: "Chào mừng bạn đến với Sample App! Nhấp vào liên kết bên dưới để kích hoạt tài khoản của bạn:"
+      welcome_message: "Chào mừng bạn đến với Training System! Nhấp vào liên kết bên dưới để kích hoạt tài khoản của bạn:"
       activate_button: "Kích hoạt"
     password_reset:
       subject: "Đặt lại mật khẩu"

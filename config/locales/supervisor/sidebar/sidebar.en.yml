@@ -1,0 +1,10 @@
+en:
+  supervisor:
+    sidebar:
+      my_courses: "My Courses"
+      daily_report: "Daily Report"
+      report_history: "Report History"
+      trainees: "Trainees"
+      supervisors: "Supervisors"
+      courses: "Courses"
+      reports: "Reports"

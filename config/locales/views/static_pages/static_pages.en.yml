@@ -2,18 +2,18 @@ en:
   static_pages:
     home:
       title: "Home"
-      welcome: "Welcome to the Sample App"
-      description: "This is the home page for the %{link} sample application."
+      welcome: "Welcome to the Training System"
+      description: "This is the home page for the %{link} Training System."
       link_text: "Ruby on Rails Tutorial"
       sign_up: "Sign up now!"
       version_label: "Version"
       dashboard_title: "Dashboard"
       manager_dashboard_title: "Manager Dashboard"
-    
+
     help:
       title: "Help"
       heading: "Help"
-      description: "Get help on the Ruby on Rails Tutorial at the %{help_link}. To get help on this sample app, see the %{book_link}."
+      description: "Get help on the Ruby on Rails Tutorial at the %{help_link}. To get help on this Training System, see the %{book_link}."
       help_link_text: "Rails Tutorial help section"
       book_link_text: "Ruby on Rails Tutorial"
       book_emphasis: "book"
@@ -31,4 +31,4 @@ en:
       hello_name: "Hello %{name}!"
       contact_info: "Contact information"
       app_information: "App Information"
-      app_label: "App:" 
+      app_label: "App:"
