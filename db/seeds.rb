@@ -1,208 +1,231 @@
-def associate_course_relations(course, supervisors, trainees)
-  course.supervisors = supervisors.sample(rand(1..2))
-  course.users = trainees.sample(rand(10..20))
-
-  subjects_for_course = Subject.all.sample(rand(5..10))
-  subjects_for_course.each_with_index do |subject, index|
-    cs_start = course.start_date + (index * 10).days
-    finish_offset = rand(7..14)
-    cs_finish = [cs_start + finish_offset.days, course.finish_date].min
-    cs_start = cs_finish if cs_start > cs_finish
-
-    course.course_subjects.create!(
-      subject: subject,
-      position: index + 1,
-      start_date: cs_start,
-      finish_date: cs_finish
-    )
-  end
-end
-
-ActiveRecord::Base.transaction do
-  # --- Users ---
-  5.times do |n|
-    User.create!(
-      name: "Admin User",
-      email: "admin-#{n+1}@example.com",
-      birthday: 30.years.ago,
-      gender: 1, # male
-      role: 2,   # admin
-      password: "password",
-      password_confirmation: "password",
-      activated: true,
-      activated_at: Time.zone.now
-    )
+class CourseSeederService
+  def initialize(course, all_supervisors, all_trainees)
+    @course = course
+    @all_supervisors = all_supervisors
+    @all_trainees = all_trainees
+    @today = Time.zone.today
   end
 
-  10.times do |n|
-    User.create!(
-      name: Faker::Name.name,
-      email: "supervisor-#{n+1}@example.com",
-      birthday: Faker::Date.birthday(min_age: 25, max_age: 50),
-      gender: rand(0..2),
-      role: 1, # supervisor
-      password: "password",
-      password_confirmation: "password",
-      activated: true,
-      activated_at: Time.zone.now
-    )
+  def seed!
+    puts "    -> Bắt đầu tạo dữ liệu cho Khóa học: '#{@course.name}'"
+    seed_supervisors
+    seed_course_subjects_and_tasks
+    seed_trainees_and_all_related_data
+    puts "    -> Hoàn tất dữ liệu cho Khóa học: '#{@course.name}'\n"
   end
 
-  89.times do |n|
-    User.create!(
-      name: Faker::Name.name,
-      email: "trainee-#{n+1}@example.com",
-      birthday: Faker::Date.birthday(min_age: 18, max_age: 25),
-      gender: rand(0..2),
-      role: 0, # trainee
-      password: "password",
-      password_confirmation: "password",
-      activated: true,
-      activated_at: Time.zone.now
-    )
+  private
+
+  def seed_supervisors
+    @course.supervisors = @all_supervisors.sample(rand(1..2))
   end
 
-  supervisors = User.supervisor
-  trainees = User.trainee
+  def seed_course_subjects_and_tasks
+    subjects_for_course = Subject.all.sample(rand(6..12))
+    subjects_for_course.each_with_index do |subject, index|
+      estimated_days = subject.estimated_time_days || 10
+      cs_start = @course.start_date + (index * estimated_days).days
+      cs_finish = cs_start + (estimated_days - 1).days
+      cs_finish = [@course.finish_date, cs_finish].min
+      cs_start = cs_finish if cs_start > cs_finish
 
-  # --- Subjects & Categories ---
-  5.times do
-    Category.create!(name: Faker::Hobby.unique.activity)
-  end
-
-  50.times do
-    Subject.create!(
-      name: Faker::Educator.unique.course_name,
-      max_score: 10,
-      estimated_time_days: rand(5..15),
-      categories: Category.all.sample(rand(1..5))
-    )
-  end
-
-  puts "  -> Creating 8 FINISHED courses..."
-  8.times do
-    finish_date = Faker::Date.between(from: 6.months.ago, to: 8.days.ago)
-    start_date = finish_date - rand(2..4).months
-    course = Course.create!(
-      user: supervisors.sample,
-      name: "#{Faker::ProgrammingLanguage.name} #{start_date.strftime("%m/%Y")}",
-      start_date: start_date,
-      finish_date: finish_date,
-      status: 2
-    )
-    associate_course_relations(course, supervisors, trainees)
-  end
-
-  puts "  -> Creating 10 IN-PROGRESS courses..."
-  10.times do
-    start_date = Faker::Date.between(from: 3.months.ago, to: 1.day.ago)
-    finish_date = Faker::Date.between(from: Time.zone.today - 6.days, to: 3.months.from_now)
-    course = Course.create!(
-      user: supervisors.sample,
-      name: "#{Faker::ProgrammingLanguage.name} #{start_date.strftime("%m/%Y")}",
-      start_date: start_date,
-      finish_date: finish_date,
-      status: 1
-    )
-    associate_course_relations(course, supervisors, trainees)
-  end
-
-  puts "  -> Creating 12 PENDING courses..."
-  12.times do
-    start_date = Faker::Date.between(from: 1.day.from_now, to: 2.months.from_now)
-    finish_date = start_date + rand(2..4).months
-    course = Course.create!(
-      user: supervisors.sample,
-      name: "#{Faker::ProgrammingLanguage.name} #{start_date.strftime("%m/%Y")}",
-      start_date: start_date,
-      finish_date: finish_date,
-      status: 0
-    )
-    associate_course_relations(course, supervisors, trainees)
-  end
-
-
-  # --- Tasks ---
-  CourseSubject.all.each do |course_subject|
-    rand(2..5).times do |i|
-      course_subject.tasks.create!(
-        name: "#{Faker::Hacker.verb}, #{Faker::Hacker.noun}"
+      course_subject = @course.course_subjects.create!(
+        subject: subject, position: index + 1,
+        start_date: cs_start, finish_date: cs_finish
       )
+      rand(3..8).times do
+        course_subject.tasks.create!(
+          name: "#{Faker::Hacker.verb.capitalize} the #{Faker::Hacker.adjective} #{Faker::Hacker.noun}"
+        )
+      end
+    end
+    @course.reload
+  end
+
+  def seed_trainees_and_all_related_data
+    trainees_for_course = @all_trainees.sample(rand(20..30))
+    trainees_for_course.each do |trainee|
+      user_course = @course.user_courses.create!(user: trainee, joined_at: @course.start_date, status: @course.status)
+      seed_user_subjects_and_tasks_for(user_course)
+      seed_daily_reports_for(user_course)
     end
   end
 
-  # --- User_Courses ---
-  UserCourse.all.each do |user_course|
-    user = user_course.user
-    course = user_course.course
+  def seed_user_subjects_and_tasks_for(user_course)
+    trainee = user_course.user
+    user_course.course.course_subjects.each do |cs|
+      status, started_at, completed_at = determine_user_subject_status_and_dates(cs)
 
-    course.course_subjects.each do |course_subject|
-      user_subject_status = 0
-      user_score = nil
-
-      if course.finished?
-        user_subject_status = 2
-        user_score = rand(6..10)
-      elsif course.in_progress?
-        user_subject_status = rand(0..2)
-        user_score = user_subject_status == 2 ? rand(5..10) : rand(0..5)
-      else 
-        user_subject_status = 0
-        user_score = nil
-      end
+      finished_statuses = [
+        Settings.user_subject.status.finished_early,
+        Settings.user_subject.status.finished_ontime,
+        Settings.user_subject.status.finished_but_overdue
+      ]
+      score = finished_statuses.include?(status) ? rand(5.0..10.0).round(1) : nil
 
       user_subject = user_course.user_subjects.create!(
-        user: user,
-        course_subject: course_subject,
-        status: user_subject_status,
-        score: user_score
+        user: trainee, course_subject: cs, status: status,
+        score: score, started_at: started_at, completed_at: completed_at
       )
-      
-      if user_subject.status != 0
-        course_subject.tasks.each do |task|
-          task_status = [2, 3, 4].include?(user_subject.status) ? 1 : 0
-          user_subject.user_tasks.create!(
-            user: user,
-            task: task,
-            status: task_status
-          )
-        end
+
+      next if user_subject.not_started?
+      cs.tasks.each do |task|
+        task_status = finished_statuses.include?(user_subject.status_before_type_cast) ?
+                      Settings.user_task.status.done :
+                      [Settings.user_task.status.not_done, Settings.user_task.status.done].sample
+        user_subject.user_tasks.create!(user: trainee, task: task, status: task_status)
       end
     end
   end
 
-  # --- Daily Reports ---
- UserCourse.all.each do |user_course|
-    user = user_course.user
-    course = user_course.course
-    start_day = course.start_date
-    end_day = [Time.zone.today, course.finish_date].min 
-
-    next if start_day > end_day
-
-    (start_day..end_day).each do |date|
-      next if rand > 0.8
-      report_status = rand > 0.15 ? 1 : 0
-
-      DailyReport.create!(
-        user: user,
-        course: course,
-        content: Faker::Lorem.paragraph(sentence_count: rand(3..6)),
-        status: report_status,
-        created_at: date.at_beginning_of_day, # Gán ngày tạo là ngày đang lặp
-        updated_at: date.at_beginning_of_day
-      )
+  def determine_user_subject_status_and_dates(cs)
+    if @course.not_started? || @today < cs.start_date
+      return [Settings.user_subject.status.not_started, nil, nil]
     end
+
+    started_at = cs.start_date + rand(-1..1).days
+    completed_at = case rand
+                   when 0...0.6 then cs.finish_date - rand(1..3).days
+                   when 0.6...0.9 then cs.finish_date
+                   else cs.finish_date + rand(1..5).days
+                   end
+
+    if @today > cs.finish_date
+      return [Settings.user_subject.status.overdue_and_not_finished, started_at, nil] if rand < 0.05
+      status = if completed_at < cs.finish_date
+                 Settings.user_subject.status.finished_early
+               elsif completed_at == cs.finish_date
+                 Settings.user_subject.status.finished_ontime
+               else
+                 Settings.user_subject.status.finished_but_overdue
+               end
+      return [status, started_at, completed_at]
+    end
+
+    if rand < 0.2
+      if completed_at < @today
+        return [Settings.user_subject.status.finished_early, started_at, completed_at]
+      else
+        return [Settings.user_subject.status.in_progress, started_at, nil]
+      end
+    end
+    [Settings.user_subject.status.in_progress, started_at, nil]
   end
 
-  # --- Comments ---
-  commentable_items = UserCourse.all.sample(20) + UserSubject.all.sample(30)
-  commentable_items.each do |item|
-    rand(1..2).times do
-      item.comments.create!(
-        user: supervisors.sample,
-        content: Faker::Lorem.sentence
+  def seed_daily_reports_for(user_course)
+    trainee = user_course.user
+    course = user_course.course
+    start_day = course.start_date
+    end_day = [@today, course.finish_date].min
+    return if start_day > end_day
+
+    (start_day..end_day).each do |date|
+      next if date.saturday? || date.sunday?
+      next if rand > 0.85
+
+      report_status = rand > 0.2 ? Settings.daily_report.status.submitted : Settings.daily_report.status.draft
+      DailyReport.create!(
+        user: trainee, course: course, content: Faker::Lorem.paragraph(sentence_count: rand(3..6)),
+        status: report_status,
+        created_at: date.at_beginning_of_day, updated_at: date.at_beginning_of_day
       )
     end
   end
 end
+
+
+puts "======================================================"
+puts "=> Bắt đầu quá trình seeding dữ liệu..."
+
+ActiveRecord::Base.transaction do
+
+  puts "-> Đang tạo Users (Admins, Supervisors, Trainees)..."
+  5.times do |n|
+  User.create!(name: "Admin User", email: "admin-#{n+1}@example.com", password: "password", password_confirmation: "password",
+               role: Settings.user.roles.admin, gender: Settings.user.genders.male, birthday: 30.years.ago, activated: true, activated_at: Time.zone.now)
+  end
+
+  20.times do |n|
+    User.create!(name: "Supervisor #{n + 1}", email: "supervisor-#{n+1}@example.com", password: "password", password_confirmation: "password",
+                 role: Settings.user.roles.supervisor, gender: User.genders.keys.sample, birthday: Faker::Date.birthday(min_age: 28, max_age: 50),
+                 activated: true, activated_at: Time.zone.now)
+  end
+
+  200.times do |n|
+    User.create!(name: Faker::Name.name, email: "trainee-#{n+1}@example.com", password: "password", password_confirmation: "password",
+                 role: Settings.user.roles.trainee, gender: User.genders.keys.sample, birthday: Faker::Date.birthday(min_age: 20, max_age: 24),
+                 activated: true, activated_at: Time.zone.now)
+  end
+  supervisors = User.supervisor.to_a
+  trainees = User.trainee.to_a
+
+  puts "-> Đang tạo Categories và Subjects..."
+  categories = 10.times.map { Category.create!(name: Faker::Educator.unique.subject.capitalize) }
+  100.times do
+    subject = Subject.create!(name: "#{Faker::ProgrammingLanguage.name}: #{Faker::Educator.course_name}",
+                              max_score: Settings.user_subject.max_score, estimated_time_days: rand(5..15))
+    subject.categories = categories.sample(rand(1..3))
+  end
+
+  puts "\n-> Đang tạo các Khóa học và dữ liệu liên quan..."
+  10.times do
+    finish_date = Faker::Date.between(from: 8.months.ago, to: 1.week.ago)
+    start_date = finish_date - rand(3..4).months
+    course = Course.create!(user: supervisors.sample, name: "#{Faker::Company.industry.capitalize} (Finished)",
+                           start_date: start_date, finish_date: finish_date, status: Settings.course.status.finished)
+    CourseSeederService.new(course, supervisors, trainees).seed!
+  end
+  20.times do
+    start_date = Faker::Date.between(from: 3.months.ago, to: 2.weeks.ago)
+    finish_date = Faker::Date.between(from: 1.week.from_now, to: 4.months.from_now)
+    course = Course.create!(user: supervisors.sample, name: "#{Faker::Company.industry.capitalize} (In-Progress)",
+                           start_date: start_date, finish_date: finish_date, status: Settings.course.status.in_progress)
+    CourseSeederService.new(course, supervisors, trainees).seed!
+  end
+  8.times do
+    start_date = Faker::Date.between(from: 1.week.from_now, to: 2.months.from_now)
+    finish_date = start_date + rand(3..4).months
+    course = Course.create!(user: supervisors.sample, name: "#{Faker::Company.industry.capitalize} (Pending)",
+                           start_date: start_date, finish_date: finish_date, status: Settings.course.status.not_started)
+    CourseSeederService.new(course, supervisors, trainees).seed!
+  end
+
+  puts "\n-> Đang tạo Comments với logic nghiệp vụ..."
+  finished_or_overdue_user_subjects = UserSubject.where.not(status: [
+    Settings.user_subject.status.not_started,
+    Settings.user_subject.status.in_progress
+  ])
+
+  finished_or_overdue_user_subjects.each do |user_subject|
+    supervisor = user_subject.user_course.course.supervisors.sample
+    next unless supervisor
+    comment_content = case user_subject.status
+                      when Settings.user_subject.status.finished_early
+                        "Excellent work! Finished well ahead of schedule. Keep it up!"
+                      when Settings.user_subject.status.finished_ontime
+                        "Good job, completed on time. Solid performance."
+                      when Settings.user_subject.status.finished_but_overdue
+                        "Completed, but please pay more attention to deadlines next time."
+                      when Settings.user_subject.status.overdue_and_not_finished
+                        "This subject is overdue and still not finished. Please complete it as soon as possible."
+                      else "General feedback on your progress."
+                      end
+    user_subject.comments.create!(user: supervisor, content: comment_content)
+  end
+
+  in_progress_items = UserSubject.in_progress.sample(150) + UserCourse.in_progress.sample(80)
+  in_progress_items.each do |item|
+    if rand < 0.7
+      course = item.is_a?(UserCourse) ? item.course : item.user_course.course
+      supervisor = course.supervisors.sample
+      next unless supervisor
+      item.comments.create!(user: supervisor, content: "Just checking in on your progress.")
+    end
+    if rand < 0.3
+      item.comments.create!(user: item.user, content: Faker::Lorem.sentence(word_count: rand(8..20)))
+    end
+  end
+end
+
+puts "\n=> Hoàn thành seeding dữ liệu, đã tuân thủ settings.yml."
+puts "=========================================================="

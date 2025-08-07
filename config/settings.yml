@@ -174,3 +174,8 @@ defaults:
   min_estimated_time_days: 1
   subject_status_not_started: "not_started"
   zero: 0
+
+cron:
+  delete_drafts_interval_in_minutes: 1
+  delete_drafts_interval_in_day: 1
+  delete_time: "12:00 am"

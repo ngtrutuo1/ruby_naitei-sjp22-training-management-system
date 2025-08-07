@@ -53,8 +53,8 @@ gem "pagy"
 
 # Figaro for environment variables management
 gem "figaro"
-
 gem "mini_magick"
+gem "whenever", require: false
 
 gem "image_processing", "1.12.2"
 
