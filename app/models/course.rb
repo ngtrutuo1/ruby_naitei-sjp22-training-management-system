@@ -36,6 +36,13 @@ class Course < ApplicationRecord
   scope :upcoming, -> {where(start_date: Date.current.next_day..)}
   scope :completed, -> {where(finish_date: ..Date.current.prev_day)}
   scope :ordered_by_start_date, -> {order(:start_date)}
+  scope :by_status, ->(status) {where(status:) if status.present?}
+  scope :search_by_name, lambda {|query|
+                           if query.present?
+                             where("name LIKE ?",
+                                   "%#{sanitize_sql_like(query)}%")
+                           end
+                         }
 
   def trainee_count
     user_courses.trainees.count

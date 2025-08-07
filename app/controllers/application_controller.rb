@@ -43,4 +43,10 @@ class ApplicationController < ActionController::Base
     flash[:danger] = t("shared.not_authorized")
     redirect_to root_path
   end
+
+  def manager?
+    return false unless current_user
+
+    current_user.admin? || current_user.supervisor?
+  end
 end

@@ -146,7 +146,7 @@ ActiveRecord::Base.transaction do
       elsif course.in_progress?
         user_subject_status = rand(0..2)
         user_score = user_subject_status == 2 ? rand(5..10) : rand(0..5)
-      else
+      else 
         user_subject_status = 0
         user_score = nil
       end
@@ -157,7 +157,7 @@ ActiveRecord::Base.transaction do
         status: user_subject_status,
         score: user_score
       )
-
+      
       if user_subject.status != 0
         course_subject.tasks.each do |task|
           task_status = [2, 3, 4].include?(user_subject.status) ? 1 : 0
@@ -176,7 +176,7 @@ ActiveRecord::Base.transaction do
     user = user_course.user
     course = user_course.course
     start_day = course.start_date
-    end_day = [Time.zone.today, course.finish_date].min
+    end_day = [Time.zone.today, course.finish_date].min 
 
     next if start_day > end_day
 

@@ -7,6 +7,8 @@ vi:
       link_text: "Ruby on Rails Tutorial"
       sign_up: "Đăng ký ngay!"
       version_label: "Phiên bản"
+      dashboard_title: "Bảng điều khiển"
+      manager_dashboard_title: "Bảng điều khiển Quản lý"
     help:
       title: "Trợ giúp"
       heading: "Trợ giúp"

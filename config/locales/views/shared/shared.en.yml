@@ -1,0 +1,13 @@
+en:
+  shared:
+    login_required: "Please log in to continue."
+    not_authorized: "You are not authorized to perform this action."
+    user_not_found: "User not found."
+    courses_list:
+      course_dashboard_title: "Dashboard"
+      apply: "Apply"
+      all_statuses: "All statuses"
+      status: "Status"
+      no_courses_found: "No courses found"
+    error_messages:
+      filter_error: "Error applying filter. Please try again."

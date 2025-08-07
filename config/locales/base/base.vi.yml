@@ -1,11 +1,34 @@
 vi:
   site_title: "Ứng dụng mẫu Ruby on Rails Tutorial"
+  # Courses Attributes
+  finished: "Đã hoàn thành"
+  not_started: "Chưa bắt đầu"
+  in_progress: "Đang tiến hành"
+  detail: "Chi tiết"
+
+  #Dashboard tables attributes
+  trainers: "Huấn luyện viên"
+  trainees: "Học viên"
+  active_courses: "Khóa học đang hoạt động"
+  completion_rate: "Tỷ lệ hoàn thành"
+  creators: "Người tạo"
+  courses: "Khóa học"
+  start_date: "Ngày bắt đầu"
+  end_date: "Ngày kết thúc"
+  action: "Hành động"
+  overview: "Tổng quan"
+
   navigation:
+    account: "Tài khoản"
     home: "Trang chủ"
     help: "Trợ giúp"
     contact: "Liên hệ"
     log_in: "Đăng nhập"
     sample_app: "ứng dụng mẫu"
+    profile: "Hồ sơ"
+    setting: "Cài đặt"
+    logout: "Đăng xuất"
+
   app_information: "Thông tin ứng dụng"
   app_label: "Ứng dụng:"
   quick_links: "Liên kết nhanh"
@@ -21,3 +44,14 @@ vi:
   messages:
     permission_denied: "Quyền truy cập bị từ chối"
     invalid_date_format: "Định dạng ngày không hợp lệ. Vui lòng nhập theo định dạng DD/MM/YYYY."
+  layouts:
+    sidebar:
+      dashboard: "Bảng điều khiển"
+      my_courses: "Khóa học của tôi"
+      daily_report: "Báo cáo hằng ngày"
+      report_history: "Lịch sử báo cáo"
+      trainees: "Học viên"
+      supervisors: "Giám sát viên"
+      courses: "Khóa học"
+      requests: "Yêu cầu"
+      reports: "Báo cáo"

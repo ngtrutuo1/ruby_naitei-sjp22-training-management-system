@@ -1,11 +1,34 @@
 en:
   base_title: "Ruby on Rails Tutorial Sample App"
+
+  # Courses Attributes
+  finished: "Finished"
+  not_started: "Not started"
+  in_progress: "In progress"
+  detail: "Detail"
+
+  # Dashboard tables attributes
+  trainers: "Trainers"
+  trainees: "Trainees"
+  active_courses: "Active Courses"
+  completion_rate: "Completion Rate"
+  creators: "Creators"
+  courses: "Courses"
+  start_date: "Start Date"
+  end_date: "End Date"
+  action: "Action"
+
   navigation:
+    account: "Account"
     home: "Home"
     help: "Help"
     contact: "Contact"
     log_in: "Log in"
     sample_app: "sample app"
+    profile: "Profile"
+    setting: "Settings"
+    logout: "Log out"
+
   app_information: "App Information"
   app_label: "App:"
   quick_links: "Quick Links"
@@ -21,3 +44,14 @@ en:
   messages:
     permission_denied: "Permission denied"
     invalid_date_format: "Invalid date format. Please enter the date in DD-MM-YYYY format."
+
+  layouts:
+    sidebar:
+      my_courses: "My Courses"
+      daily_report: "Daily Report"
+      report_history: "Report History"
+      trainees: "Trainees"
+      supervisors: "Supervisors"
+      courses: "Courses"
+      requests: "Requests"
+      reports: "Reports"

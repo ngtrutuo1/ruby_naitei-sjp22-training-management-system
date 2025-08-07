@@ -1,12 +1,9 @@
 .courses_page {
-  /* Course Detail Page Styles */
   .course-detail-page {
     margin: 0 auto;
     max-width: 1200px;
     padding: 20px;
   }
-
-  /* Course Info Header (A) */
   .course-info-header {
     background: #fff;
     border-radius: 8px;
@@ -318,7 +315,6 @@
     font-size: 14px;
   }
 
-  /* Responsive Design */
   @media (max-width: 768px) {
     .course-info-header {
       flex-direction: column;

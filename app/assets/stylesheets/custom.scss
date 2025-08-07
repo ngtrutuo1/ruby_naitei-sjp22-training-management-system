@@ -1,5 +1,6 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
+@import "sidebar";
 
 /* universal */
 body {
@@ -55,15 +56,15 @@ textarea {
   resize: vertical;
 }
 
-/* header */
 #logo {
   color: #fff;
   float: left;
   font-size: 1.7em;
   font-weight: bold;
   letter-spacing: -1px;
-  margin-right: 10px;
-  padding-top: 9px;
+  margin-right: 10px; 
+  margin-left: 45px;
+  padding: 9px 0; 
   text-transform: uppercase;
 
   &:hover {
