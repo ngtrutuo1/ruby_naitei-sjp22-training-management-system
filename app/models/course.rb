@@ -44,7 +44,6 @@ class Course < ApplicationRecord
                            end
                          }
   scope :supervised_by, ->(user_id) {where(supervisor_id: user_id)}
-
   scope :with_counts, (lambda do
     select(
       "courses.*",
@@ -58,10 +57,15 @@ class Course < ApplicationRecord
         AND users.role = #{User.roles[:supervisor]}) AS trainers_count"
     )
   end)
+  scope :recent, -> {order(created_at: :desc)}
 
   def trainees_count
     self[:trainees_count] || user_courses
       .joins(:user.where(users: {role: :trainee})).count
+  end
+
+  def trainee_count
+    user_courses.trainees.count
   end
 
   def trainers_count

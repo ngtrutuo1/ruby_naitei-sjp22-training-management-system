@@ -29,8 +29,12 @@ user:
     male: 1
     other: 2
   status:
-    active: 0
-    inactive: 1
+    active: 1
+    inactive: 0
+  status_label:
+    active: "active"
+    inactive: "inactive"
+  birthday_format: "%d/%m/%Y"
 
 course:
   max_name_length: 200
@@ -170,6 +174,7 @@ pagination:
 
 page_classes:
   courses: "courses_page"
+  trainee_manager: "trainee-manager-page"
 
 defaults:
   count: 0
@@ -187,3 +192,9 @@ trainee:
   subjects:
     min_tasks: 0
     default_progress: 0
+
+views:
+  supervisor:
+    users:
+      index:
+        selected_count: "0"

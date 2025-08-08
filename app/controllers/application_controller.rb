@@ -56,4 +56,11 @@ class ApplicationController < ActionController::Base
 
     current_user.admin? || current_user.supervisor?
   end
+
+  def require_manager
+    return if manager?
+
+    flash[:danger] = t("messages.permission_denied")
+    redirect_to root_path
+  end
 end
