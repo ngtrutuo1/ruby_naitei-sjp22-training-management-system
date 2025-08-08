@@ -43,6 +43,7 @@ class Course < ApplicationRecord
                                    "%#{sanitize_sql_like(query)}%")
                            end
                          }
+  scope :supervised_by, ->(user_id) {where(supervisor_id: user_id)}
 
   scope :with_counts, (lambda do
     select(

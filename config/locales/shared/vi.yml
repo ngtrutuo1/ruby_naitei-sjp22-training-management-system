@@ -3,8 +3,10 @@ vi:
     login_required: "Vui lòng đăng nhập để tiếp tục."
     not_authorized: "Bạn không có quyền thực hiện hành động này."
     user_not_found: "Người dùng không tồn tại."
+    already_logged_in: "Bạn đã đăng nhập rồi"
     filter:
       select_course_placeholder: "Chọn Khóa học"
+      select_user_placeholder: "Chọn học viên"
       apply_filter: "Apply bộ lọc"
       create_report_button: "+ Tạo báo cáo mới"
     reports_table:
@@ -14,6 +16,7 @@ vi:
       my_reports_list: "Danh sách báo cáo của tôi"
       course: "Khóa học"
       submit_report_button: "Gửi báo cáo"
+      sender: "Người gửi"
       edit_report_button: "Edit báo cáo"
       delete_report_button: "Xóa"
       view_report_button: "Xem chi tiết báo cáo"

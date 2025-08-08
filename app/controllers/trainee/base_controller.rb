@@ -1,4 +1,4 @@
-class TraineeController < ApplicationController
+class Trainee::BaseController < ApplicationController
   before_action :check_trainee_role
 
   def check_trainee_role

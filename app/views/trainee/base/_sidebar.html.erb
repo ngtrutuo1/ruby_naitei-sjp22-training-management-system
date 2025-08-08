@@ -1,0 +1,22 @@
+<aside class="sidebar">
+  <ul class="sidebar-menu">
+    <li class="<%= "active" if current_page?(root_path) %>">
+      <%= link_to root_path do %>
+        <i class="fas fa-book-open"></i>
+        <span><%= t("trainee.sidebar.my_courses") %></span>
+      <% end %>
+    </li>
+    <li>
+      <%= link_to trainee_daily_reports_path do %>
+        <i class="fas fa-history"></i>
+        <span><%= t("trainee.sidebar.report_history") %></span>
+      <% end %>
+    </li>
+    <li>
+      <%= link_to new_trainee_daily_report_path do %>
+        <i class="fas fa-calendar-alt"></i>
+        <span><%= t("trainee.sidebar.daily_report") %></span>
+      <% end %>
+    </li>
+  </ul>
+</aside>

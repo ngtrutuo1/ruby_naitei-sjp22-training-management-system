@@ -1,0 +1,2 @@
+<%= form.select :course_id, options_for_select(current_user.supervised_courses.map {|c| [c.name, c.id]}, params[:course_id]), {prompt: t(".select_course_placeholder")}, {class: "form-control form-select"} %>
+<%= form.select :user_id, options_for_select(User.trainee.by_course(current_user.supervised_course_ids).map {|c| [c.name, c.id]}, params[:user_id]), {prompt: t(".select_user_placeholder")}, {class: "form-control form-select"} %>

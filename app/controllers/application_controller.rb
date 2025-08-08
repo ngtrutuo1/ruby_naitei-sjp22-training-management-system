@@ -37,6 +37,13 @@ class ApplicationController < ActionController::Base
     redirect_to login_url
   end
 
+  def logged_out_user
+    return unless logged_in?
+
+    flash[:info] = t("shared.already_logged_in")
+    redirect_to root_url
+  end
+
   def correct_user
     return if current_user?(@user)
 

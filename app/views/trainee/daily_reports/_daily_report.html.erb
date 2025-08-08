@@ -1,0 +1,28 @@
+<div class="list-group-item bg-dark text-white border-secondary mb-3">
+  <div class="clearfix">
+    <h6 class="mb-1 pull-left">
+      <strong><i class="bi bi-journal-text me-2"></i><%= t("shared.daily_report.title") %></strong>
+    </h6>
+    <small class="pull-right"><%= l daily_report.updated_at, format: :short %></small>
+  </div>
+  <p class="mb-1 mt-2">
+    <strong><i class="bi bi-book me-2"></i><%= t("shared.daily_report.course") %>:</strong> <%= daily_report.course.name %>
+  </p>
+  <p class="mb-1">
+    <strong><i class="bi bi-person me-2"></i><%= t("shared.daily_report.sender") %>:</strong> <%= daily_report.user.name %>
+  </p>
+  <p class="mb-1">
+    <i class="bi bi-chat-square-text me-2"></i><%= truncate(daily_report.content, length: Settings.daily_report.truncate_length) %>
+  </p>
+  <div class="clearfix">
+    <div class="pull-right">
+      <% if daily_report.draft? %>
+        <%= button_to t("shared.daily_report.submit_report_button"), trainee_daily_report_path(daily_report, params: {commit: Settings.daily_report.status.submitted}, daily_report: {status: Settings.daily_report.status.submitted}), method: :patch, class: "btn btn-sm btn-primary me-2" %>
+        <%= link_to t("shared.daily_report.edit_report_button"), edit_trainee_daily_report_path(daily_report), class: "btn btn-sm btn-outline-info me-2" %>
+        <%= link_to t("shared.daily_report.delete_report_button"), trainee_daily_report_path(daily_report, permitted_filter_params), data: { turbo_method: :delete, turbo_confirm: t("shared.daily_report.confirm_delete") }, class: "btn btn-sm btn-outline-danger" %>
+      <% else %>
+        <%= link_to t("shared.daily_report.view_report_button"), trainee_daily_report_path(daily_report), class: "btn btn-sm btn-outline-secondary me-2" %>
+      <% end %>
+    </div>
+  </div>
+</div>

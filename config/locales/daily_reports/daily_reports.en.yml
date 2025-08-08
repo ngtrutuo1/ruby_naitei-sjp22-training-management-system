@@ -29,3 +29,25 @@ en:
       destroy:
         destroy_success: "Report was successfully deleted."
         destroy_failed: "Could not delete the report."
+  admin:
+    daily_reports:
+      index:
+        title: "Daily Reports"
+        manager_header: "Daily Report Manager"
+      show:
+        course: "Course:"
+        title: "Report detail"
+        date_submitted: "Date submitted:"
+        content_details: "Content details:"
+      report_not_found: "Report not found."
+  supervisor:
+    daily_reports:
+      index:
+        title: "Daily Reports"
+        manager_header: "Daily Report Manager"
+      show:
+        course: "Course:"
+        title: "Report detail"
+        date_submitted: "Date submitted:"
+        content_details: "Content details:"
+      report_not_found: "Report not found."

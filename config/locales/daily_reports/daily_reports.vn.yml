@@ -29,3 +29,25 @@ vi:
       destroy:
         destroy_success: "Báo cáo đã được xóa thành công."
         destroy_failed: "Không thể xóa báo cáo này."
+  admin:
+    daily_reports:
+      index:
+        title: "Báo cáo hàng ngày"
+        manager_header: "Quản lý báo cáo hàng ngày"
+      show:
+        course: "Khóa học:"
+        title: "Chi tiết báo cáo"
+        date_submitted: "Ngày gửi:"
+        content_details: "Nội dung chi tiết:"
+      report_not_found: "Không tìm thấy báo cáo."
+  supervisor:
+    daily_reports:
+      index:
+        title: "Báo cáo hàng ngày"
+        manager_header: "Quản lý báo cáo hàng ngày"
+      show:
+        course: "Khóa học:"
+        title: "Chi tiết báo cáo"
+        date_submitted: "Ngày gửi:"
+        content_details: "Nội dung chi tiết:"
+      report_not_found: "Không tìm thấy báo cáo."

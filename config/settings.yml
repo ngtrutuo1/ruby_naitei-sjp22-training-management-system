@@ -6,7 +6,7 @@ completion_rate:
   zero: 0
 
 app:
-  name: "Rails Tutorial Sample App"
+  name: "Training System"
   version: "1.0.0"
   description: "A sample Ruby on Rails tutorial application"
   author: "Rails Tutorial"

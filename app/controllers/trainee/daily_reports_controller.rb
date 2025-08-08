@@ -1,5 +1,6 @@
-class Trainee::DailyReportsController < TraineeController
-  before_action :load_daily_report, only: %i(edit update destroy)
+class Trainee::DailyReportsController < Trainee::BaseController
+  before_action :load_draft_daily_report, only: %i(edit update destroy)
+  before_action :load_submitted_daily_report, only: %i(show)
 
   IGNORED_PARAMS = %i(id _method authenticity_token controller action
 commit).freeze
@@ -10,7 +11,7 @@ commit).freeze
   # GET /daily_reports
   def index
     all_reports = current_user.daily_reports.recent.includes(:course)
-                              .by_course(params[:course_id])
+                              .by_course_filter(params[:course_id])
                               .on_day(params[:filter_date])
 
     @pagy, @daily_reports = pagy(all_reports)
@@ -59,16 +60,7 @@ commit).freeze
   end
 
   # GET /daily_reports/:id
-  def show
-    @daily_report = current_user.daily_reports
-                                .find_by(id: params[:id],
-                                         status: Settings.daily_report
-                                         .status.submitted)
-    return if @daily_report
-
-    flash[:danger] = t(".report_not_found")
-    redirect_to trainee_daily_reports_path
-  end
+  def show; end
 
   def permitted_filter_params
     params.permit(*PERMITTED_FILTER_PARAMS)
@@ -135,12 +127,23 @@ commit).freeze
     end
   end
 
-  def load_daily_report
+  def load_draft_daily_report
     @daily_report = current_user.daily_reports
                                 .find_by(id: params[:id],
                                          status: Settings
                                          .daily_report.status.draft)
 
+    return if @daily_report
+
+    flash[:danger] = t(".report_not_found")
+    redirect_to trainee_daily_reports_path
+  end
+
+  def load_submitted_daily_report
+    @daily_report = current_user.daily_reports
+                                .find_by(id: params[:id],
+                                         status: Settings.daily_report
+                                         .status.submitted)
     return if @daily_report
 
     flash[:danger] = t(".report_not_found")

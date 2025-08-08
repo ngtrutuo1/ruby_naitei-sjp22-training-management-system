@@ -42,6 +42,14 @@ gender).freeze
   scope :sort_by_name, -> {order(:name)}
   scope :trainers, -> {where(role: :supervisor).count}
   scope :trainees, -> {where(role: :trainee).count}
+  scope :supervised_by, (lambda do |user_id|
+    joins(:supervised_courses).where(supervised_courses: {user_id:})
+  end)
+  scope :by_course, (lambda do |course_ids|
+    return none if course_ids.blank?
+
+    joins(:courses).where(courses: {id: course_ids})
+  end)
 
   before_save :downcase_email
   before_create :create_activation_digest
