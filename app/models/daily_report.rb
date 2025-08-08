@@ -33,8 +33,7 @@ class DailyReport < ApplicationRecord
     return if date.blank?
 
     processed_date = Date.strptime(date, Settings.params.date)
-    where(created_at: processed_date
-    .beginning_of_day..processed_date.end_of_day)
+    where(created_at: processed_date.all_day)
   end)
   scope :by_course_filter, (lambda do |course_id|
     where(course_id:) if course_id.present?
@@ -44,8 +43,7 @@ class DailyReport < ApplicationRecord
 
   def one_report_per_day
     if DailyReport.exists?(user_id:, course_id:,
-                           created_at: Time.zone.now.beginning_of_day..
-                           Time.zone.now.end_of_day)
+                           created_at: Time.zone.now.all_day)
       errors.add(:base, :one_report_per_day)
     end
   end

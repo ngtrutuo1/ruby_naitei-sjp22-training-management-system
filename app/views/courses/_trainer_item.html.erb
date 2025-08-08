@@ -1,0 +1,43 @@
+<div class="trainer-item">
+  <div class="trainer-avatar">
+    <%= gravatar_for trainer %>
+  </div>
+  <div class="trainer-name">
+    <%= link_to trainer.name, user_path(trainer), class: "trainer-link" %>
+  </div>
+  <div class="trainer-actions">
+    <div class="dropdown">
+      <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+        <%= t("courses.members.actions") %>
+      </button>
+      <ul class="dropdown-menu">
+        <li>
+          <%= link_to t("courses.members.view_profile"),
+              user_path(trainer),
+              class: "dropdown-item" %>
+        </li>
+        <% if admin_role? %>
+          <li>
+            <%= button_to t("courses.members.remove_from_course"),
+                destroy_supervisor_path_for(course, supervisor_id: trainer.id),
+                method: :delete,
+                data: {confirm: t("courses.members.confirm_remove_trainer")},
+                form: {class: "inline-form"},
+                class: "dropdown-item text-danger" %>
+          </li>
+        <% else %>
+          <% if trainer == current_user && can_leave_course?(course) %>
+            <li>
+              <%= button_to t("courses.leave.leave_course"),
+                  leave_course_path_for(course),
+                  method: :delete,
+                  data: {confirm: t("courses.leave.confirm_leave")},
+                  form: {class: "inline-form"},
+                  class: "dropdown-item text-danger" %>
+            </li>
+          <% end %>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+</div>

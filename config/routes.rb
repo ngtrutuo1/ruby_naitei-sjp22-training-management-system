@@ -60,6 +60,14 @@ Rails.application.routes.draw do
       resources :courses do
         member do
           get :members
+          get :subjects
+          get :supervisors
+          delete :leave
+        end
+        resources :user_courses, only: [:destroy]
+        resources :supervisors, only: [:destroy]
+        resources :course_subjects, only: [:destroy] do
+          post :finish, on: :member
         end
       end
     end
@@ -71,12 +79,8 @@ Rails.application.routes.draw do
       resources :subjects
       resources :categories
       resources :daily_reports, only: %i(index show)
-      resources :courses do
-        member do
-          get :members
-        end
-      end
-      resources :daily_reports, only: %i(index show)
+      
+
     end
   end
 end

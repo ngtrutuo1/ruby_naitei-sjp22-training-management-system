@@ -18,11 +18,11 @@ module Trainee::SubjectsHelper
       Settings.percentage
   end
 
-  def get_unfinished_tasks user_subject
+  def unfinished_tasks user_subject
     current_user.user_tasks.by_user_subject(user_subject).not_done
   end
 
-  def get_status_user_subject actual_end_date, plan_end_date
+  def status_user_subject actual_end_date, plan_end_date
     return if actual_end_date.blank?
 
     if actual_end_date == plan_end_date

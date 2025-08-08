@@ -125,7 +125,9 @@ class Course < ApplicationRecord
 
   def trainees_count
     self[:trainees_count] || user_courses
-      .joins(:user.where(users: {role: :trainee})).count
+      .joins(:user)
+      .where(users: {role: :trainee})
+      .count
   end
 
   def trainee_count
@@ -134,7 +136,9 @@ class Course < ApplicationRecord
 
   def trainers_count
     self[:trainers_count] || course_supervisors
-      .joins(:user).where(users: {role: :supervisor}).count
+      .joins(:user)
+      .where(users: {role: :supervisor})
+      .count
   end
 
   def subjects_count

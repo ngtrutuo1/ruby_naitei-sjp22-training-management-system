@@ -1,11 +1,11 @@
 class Trainee::UserSubjectsController < Trainee::BaseController
-  before_action :find_user_subject_by_id, only: %i(update)
+  before_action :load_user_subject, only: %i(update)
 
   USER_SUBJECT_PARAMS = %i(started_at completed_at status).freeze
 
   # PATCH /trainee/user_subjects/:id
   def update
-    flash[:success] = t(".subject_updated") if handle_update
+    flash[:success] = t(".subject_updated") if update?
 
     redirect_to trainee_courses_path(course_id: @user_subject.course_id)
   end
@@ -19,7 +19,7 @@ class Trainee::UserSubjectsController < Trainee::BaseController
     end
   end
 
-  def find_user_subject_by_id
+  def load_user_subject
     @user_subject = current_user.user_subjects.find_by(id: params[:id])
     return if @user_subject
 
@@ -27,7 +27,7 @@ class Trainee::UserSubjectsController < Trainee::BaseController
     redirect_to trainee_courses_path
   end
 
-  def handle_update
+  def update?
     return true if @user_subject.update(user_subject_params)
 
     flash[:danger] = t(".update_failed")

@@ -1,0 +1,69 @@
+vi:
+  courses:
+    show:
+      trainer_count: "huấn luyện viên"
+      course_name: "Tên Khóa Học"
+      title: "Tiêu Đề Khóa Học"
+      time_period: "Thời Gian"
+      last_updated: "Cập Nhật Lần Cuối"
+      trainers: "Huấn Luyện Viên"
+      link_to_course: "Liên Kết Khóa Học"
+      tabs:
+        subjects: "Môn Học"
+        members: "Thành Viên"
+        supervisors: "Huấn Luyện Viên"
+    members:
+      actions: "Hành động"
+      view_profile: "Xem hồ sơ"
+      view_reports: "Xem báo cáo"
+      remove_from_course: "Xóa khỏi khóa học"
+      leave_course: "Rời khóa học"
+      confirm_remove_trainer: "Bạn có chắc chắn?"
+      confirm_remove_trainee: "Bạn có chắc chắn?"
+      confirm_leave: "Bạn có chắc chắn?"
+      trainer_list: "Danh Sách Huấn Luyện Viên"
+      trainee_list: "Danh Sách Học Viên"
+      name: "Tên"
+      current_status: "Trạng Thái Hiện Tại"
+      joined_at: "Tham Gia Lúc"
+    subjects:
+      actions: "Hành động"
+      edit: "Chỉnh sửa"
+      finish: "Hoàn thành môn học"
+      delete: "Xóa"
+      confirm_finish: "Bạn có chắc chắn?"
+      confirm_delete: "Bạn có chắc chắn?"
+      tasks_preview: "Xem trước nhiệm vụ"
+      task_overview: "Tổng quan nhiệm vụ"
+      and_more: "và %{count} nhiệm vụ khác"
+      time_to_finish: "Thời gian: %{days} ngày"
+      status:
+        not_started: "Chưa bắt đầu"
+        in_progress: "Đang thực hiện"
+        finished: "Đã hoàn thành"
+      subject_status:
+        not_started: "Chưa bắt đầu"
+        in_progress: "Đang thực hiện"
+        finished: "Đã hoàn thành"
+    leave:
+      leave_course: "Rời khóa học"
+      confirm_leave: "Bạn có chắc chắn?"
+    destroy_course_subject:
+      success: "Xóa môn học khỏi khóa học thành công"
+      failed: "Xóa môn học khỏi khóa học thất bại"
+    finish_course_subject:
+      success: "Đánh dấu hoàn thành môn học thành công"
+      failed: "Đánh dấu hoàn thành môn học thất bại"
+    destroy_user_course:
+      success: "Xóa thành viên khỏi khóa học thành công"
+      failed: "Xóa thành viên khỏi khóa học thất bại"
+    destroy_supervisor:
+      success: "Xóa huấn luyện viên khỏi khóa học thành công"
+      failed: "Xóa huấn luyện viên khỏi khóa học thất bại"
+      must_have_another_supervisor: "Khóa học phải còn ít nhất 1 huấn luyện viên"
+    errors:
+      course_not_found: "Không tìm thấy khóa học"
+      course_subject_not_found: "Không tìm thấy môn học trong khóa"
+      user_course_not_found: "Không tìm thấy người dùng trong khóa học"
+      supervisor_not_found: "Không tìm thấy huấn luyện viên"
+      access_denied: "Bạn không có quyền truy cập vào khóa học này"

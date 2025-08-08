@@ -1,0 +1,69 @@
+en:
+  courses:
+    show:
+      trainer_count: "trainers"
+      course_name: "Course Name"
+      title: "Course Title"
+      time_period: "Time Period"
+      last_updated: "Last Updated"
+      trainers: "Trainers"
+      link_to_course: "Course Link"
+      tabs:
+        subjects: "Subjects"
+        members: "Members"
+        supervisors: "Supervisors"
+    members:
+      actions: "Actions"
+      view_profile: "View Profile"
+      view_reports: "View Reports"
+      remove_from_course: "Remove from Course"
+      leave_course: "Leave course"
+      confirm_remove_trainer: "Are you sure?"
+      confirm_remove_trainee: "Are you sure?"
+      confirm_leave: "Are you sure?"
+      trainer_list: "Trainer List"
+      trainee_list: "Trainee List"
+      name: "Name"
+      current_status: "Current Status"
+      joined_at: "Joined At"
+    subjects:
+      actions: "Actions"
+      edit: "Edit"
+      finish: "Finish Subject"
+      delete: "Delete"
+      confirm_finish: "Are you sure?"
+      confirm_delete: "Are you sure?"
+      tasks_preview: "Task preview"
+      task_overview: "Task overview"
+      and_more: "and %{count} more"
+      time_to_finish: "Time: %{days} days"
+      status:
+        not_started: "Not Started"
+        in_progress: "In Progress"
+        finished: "Finished"
+      subject_status:
+        not_started: "Not Started"
+        in_progress: "In Progress"
+        finished: "Finished"
+    leave:
+      leave_course: "Leave course"
+      confirm_leave: "Are you sure?"
+    destroy_course_subject:
+      success: "Subject removed from course successfully"
+      failed: "Failed to remove subject from course"
+    finish_course_subject:
+      success: "Marked subject as finished successfully"
+      failed: "Failed to mark subject as finished"
+    destroy_user_course:
+      success: "Removed member from course successfully"
+      failed: "Failed to remove member from course"
+    destroy_supervisor:
+      success: "Removed trainer from course successfully"
+      failed: "Failed to remove trainer from course"
+      must_have_another_supervisor: "The course must have at least one trainer remaining"
+    errors:
+      course_not_found: "Course not found"
+      course_subject_not_found: "Course subject not found"
+      user_course_not_found: "User course not found"
+      supervisor_not_found: "Supervisor not found"
+      access_denied: "You don't have permission to access this course"

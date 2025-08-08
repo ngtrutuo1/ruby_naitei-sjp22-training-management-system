@@ -10,7 +10,7 @@ class Trainee::CoursesController < Trainee::BaseController
     :user_tasks,
     {comments: :user}
   ].freeze
-  before_action :find_course, only: %i(show members subjects)
+  before_action :load_course, only: %i(show members subjects)
   before_action :check_course_access, only: %i(show members subjects)
   before_action :set_courses_page_class
 
@@ -46,7 +46,7 @@ class Trainee::CoursesController < Trainee::BaseController
     self.page_class = Settings.page_classes.courses
   end
 
-  def find_course
+  def load_course
     @course = Course.find_by id: params[:id]
     return if @course
 
