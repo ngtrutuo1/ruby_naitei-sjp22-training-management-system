@@ -1,20 +1,31 @@
-$sidebar-width: 250px;
-$header-height: 50px;
-$sidebar-bg: #222;
-$sidebar-text: #ecf0f1;
-$sidebar-text-hover: #ffffff;
-$active-border: #e67e22;
+$qcm-sidebar-width: 250px;
+$qcm-header-height: 50px;
+$qcm-sidebar-bg: hsl(216, 91%, 68%);
+$qcm-sidebar-text: #ecf0f1;
+$qcm-sidebar-text-hover: #ffffff;
+$qcm-active-border-color: #e67e22;
+
+.app-container-wrapper {
+  display: grid;
+  grid-template-columns: $qcm-sidebar-width 1fr;
+}
+
+.main-content-wrapper {
+  padding: 30px;
+  padding-top: $qcm-header-height + 30px;
+}
+
+body {
+  min-width: 400px;
+  padding-top: $qcm-header-height;
+}
 
 .sidebar {
- background-color: $sidebar-bg;
-  position: fixed;
-  top: $header-height; 
-  bottom: 0;
-  left: 0;
-  width: $sidebar-width;
-  z-index: 1000;
-  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s;
+  position: sticky;
+  top: $qcm-header-height; 
+  height: calc(100vh - #{$qcm-header-height}); 
+  overflow-y: auto; 
+  background-color: $qcm-sidebar-bg;
 }
 
 .sidebar-menu {
@@ -23,40 +34,30 @@ $active-border: #e67e22;
   padding: 20px 0;
 
   li a {
-    color: $sidebar-text;
+    border-left: 4px solid transparent;
+    color: $qcm-sidebar-text;
     display: block;
+    font-size: 1.1em;
     padding: 12px 25px;
     text-decoration: none;
-    font-size: 1.1em;
     transition: all 0.2s ease-in-out;
-    border-left: 4px solid transparent;
+    white-space: nowrap;
   }
 
   li a:hover {
-    background-color: lighten($sidebar-bg, 5%);
-    color: $sidebar-text-hover;
+    background-color: lighten($qcm-sidebar-bg, 5%);
+    color: $qcm-sidebar-text-hover;
   }
 
   li.active a {
-    background-color: lighten($sidebar-bg, 7%);
-    color: $sidebar-text-hover;
-    border-left-color: $active-border;
+    background-color: lighten($qcm-sidebar-bg, 7%);
+    color: $qcm-sidebar-text-hover;
+    border-left-color: $qcm-active-border-color;
   }
 
   li a i {
     margin-right: 15px;
-    width: 20px;
     text-align: center;
-  }
-}
-
-.main-content {
-  padding: 30px;
-  transition: margin-left 0.3s ease-in-out;
-}
-
-body.sidebar-active {
-  .main-content {
-    margin-left: $sidebar-width;
+    width: 20px;
   }
 }

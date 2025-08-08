@@ -44,16 +44,32 @@ class Course < ApplicationRecord
                            end
                          }
 
-  def trainee_count
-    user_courses.trainees.count
+  scope :with_counts, (lambda do
+    select(
+      "courses.*",
+      "(SELECT COUNT(*) FROM user_courses
+        INNER JOIN users ON users.id = user_courses.user_id
+        WHERE user_courses.course_id = courses.id
+        AND users.role = #{User.roles[:trainee]}) AS trainees_count",
+      "(SELECT COUNT(*) FROM course_supervisors
+        INNER JOIN users ON users.id = course_supervisors.user_id
+        WHERE course_supervisors.course_id = courses.id
+        AND users.role = #{User.roles[:supervisor]}) AS trainers_count"
+    )
+  end)
+
+  def trainees_count
+    self[:trainees_count] || user_courses
+      .joins(:user.where(users: {role: :trainee})).count
   end
 
-  def trainer_count
-    supervisors.count
+  def trainers_count
+    self[:trainers_count] || course_supervisors
+      .joins(:user).where(users: {role: :supervisor}).count
   end
 
-  def subject_count
-    subjects.count
+  def subjects_count
+    Course.subjects.count
   end
 
   private

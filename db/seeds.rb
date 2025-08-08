@@ -77,7 +77,6 @@ class CourseSeederService
       end
     end
   end
-
   def determine_user_subject_status_and_dates(cs)
     if @course.not_started? || @today < cs.start_date
       return [Settings.user_subject.status.not_started, nil, nil]
@@ -126,7 +125,7 @@ class CourseSeederService
       report_status = rand > 0.2 ? Settings.daily_report.status.submitted : Settings.daily_report.status.draft
       DailyReport.create!(
         user: trainee, course: course, content: Faker::Lorem.paragraph(sentence_count: rand(3..6)),
-        status: report_status,
+        status: report_status, 
         created_at: date.at_beginning_of_day, updated_at: date.at_beginning_of_day
       )
     end
@@ -138,13 +137,11 @@ puts "======================================================"
 puts "=> Bắt đầu quá trình seeding dữ liệu..."
 
 ActiveRecord::Base.transaction do
-
   puts "-> Đang tạo Users (Admins, Supervisors, Trainees)..."
   5.times do |n|
   User.create!(name: "Admin User", email: "admin-#{n+1}@example.com", password: "password", password_confirmation: "password",
                role: Settings.user.roles.admin, gender: Settings.user.genders.male, birthday: 30.years.ago, activated: true, activated_at: Time.zone.now)
   end
-
   20.times do |n|
     User.create!(name: "Supervisor #{n + 1}", email: "supervisor-#{n+1}@example.com", password: "password", password_confirmation: "password",
                  role: Settings.user.roles.supervisor, gender: User.genders.keys.sample, birthday: Faker::Date.birthday(min_age: 28, max_age: 50),
@@ -189,7 +186,6 @@ ActiveRecord::Base.transaction do
                            start_date: start_date, finish_date: finish_date, status: Settings.course.status.not_started)
     CourseSeederService.new(course, supervisors, trainees).seed!
   end
-
   puts "\n-> Đang tạo Comments với logic nghiệp vụ..."
   finished_or_overdue_user_subjects = UserSubject.where.not(status: [
     Settings.user_subject.status.not_started,

@@ -1,0 +1,8 @@
+en:
+  users:
+    show:
+      email: "Email"
+      birthday: "Birthday" 
+      gender: "Gender"
+      member_since: "Member Since"
+      last_updated: "Last Updated"

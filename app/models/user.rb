@@ -40,6 +40,8 @@ gender).freeze
 
   scope :recent, -> {order(created_at: :desc)}
   scope :sort_by_name, -> {order(:name)}
+  scope :trainers, -> {where(role: :supervisor).count}
+  scope :trainees, -> {where(role: :trainee).count}
 
   before_save :downcase_email
   before_create :create_activation_digest
