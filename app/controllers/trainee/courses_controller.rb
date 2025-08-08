@@ -11,7 +11,7 @@ class Trainee::CoursesController < Trainee::BaseController
   USER_SJ_PRELOAD = [
     :course_subject,
     :user_tasks,
-    {comments: :user}
+    :comments
   ].freeze
   before_action :load_course, only: %i(show members subjects)
   before_action :check_course_access, only: %i(show members subjects)

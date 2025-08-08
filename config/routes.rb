@@ -15,9 +15,12 @@ Rails.application.routes.draw do
     resources :password_resets, only: %i(new create edit update)
     resources :users, only: %i(show edit update)
 
+    # Subject search API (accessible to all authenticated users)
+    resources :subjects, only: :index
+
     # --- Trainee Namespace ---
     namespace :trainee do
-      resources :daily_reports, only: %i(index show new create edit update)
+      resources :daily_reports, only: %i(index show new create edit update destroy)
 
       resources :courses, only: %i(show) do
         member do
@@ -36,12 +39,12 @@ Rails.application.routes.draw do
           delete :destroy_document, path: "document"
         end
       end
-      resources :daily_reports
     end
 
     # --- Supervisor Namespace ---
     namespace :supervisor do
       resources :daily_reports, only: %i(index show)
+      resources :subjects
       resources :tasks
       resources :categories
       resources :users, only: %i(index show update) do
@@ -54,12 +57,13 @@ Rails.application.routes.draw do
           patch :bulk_deactivate
         end
       end
-      resources :courses do
+      resources :courses, only: %i(index show new create edit update) do
         member do
           get :members
           get :subjects
           get :supervisors
           delete :leave
+          post :add_subject
         end
         resources :user_courses, only: [:destroy]
         resources :supervisors, only: [:destroy]

@@ -8,7 +8,19 @@ class Course < ApplicationRecord
     :link_to_course,
     :image,
     {supervisor_ids: []},
-    {course_subjects_attributes: [:id, :subject_id, :position, :_destroy]}
+    {course_subjects_attributes: [
+      :id,
+      :subject_id,
+      :position,
+      :start_date,
+      :finish_date,
+      :_destroy,
+      {tasks_attributes: [
+        :id,
+        :name,
+        :_destroy
+      ]}
+    ]}
   ].freeze
   IMAGE_DISPLAY_SIZE = [120, 80].freeze
   URL_FORMAT = %r{\Ahttps://.*}

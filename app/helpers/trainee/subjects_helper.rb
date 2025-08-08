@@ -33,4 +33,7 @@ module Trainee::SubjectsHelper
       Settings.user_subject.status.finished_early
     end
   end
+
+  # Alias for backward compatibility
+  alias get_status_user_subject status_user_subject
 end

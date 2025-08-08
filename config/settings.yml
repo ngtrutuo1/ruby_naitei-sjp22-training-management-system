@@ -61,6 +61,8 @@ category:
 
 task:
   max_name_length: 200
+  taskable_type:
+    course_subject: "CourseSubject"
 
 comment:
   max_content_length: 5000
@@ -117,6 +119,8 @@ user_course:
     not_started: "not_started"
     in_progress: "in_progress"
     finished: "finished"
+  supervisors:
+    min_supervisors: 1
 
 validation_messages:
   required: "is required"
@@ -198,9 +202,12 @@ templates:
   courses:
     members: "courses/members"
     subjects: "courses/subjects"
+    edit: "courses/edit"
 
 ui_limits:
   subject_tasks_preview_count: 3
+  trainee_manager: "trainee-manager-page"
+  subject_search_limit: 10
 
 defaults:
   count: 0

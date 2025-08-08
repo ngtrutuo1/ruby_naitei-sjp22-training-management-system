@@ -53,7 +53,7 @@
             <span class="badge badge-pill badge-primary badge-large-custom"><%= count_process_tasks(@tasks) %>%</span>
           </div>
           <div class="progress progress-custom">
-            <div class="progress-bar bg-primary" role="progressbar" style="width: <%= count_process_tasks(@tasks) %>%" aria-valuenow="<%= count_process_tasks(@tasks) %>" aria-valuemin="0" aria-valuemax="100"></div>
+            <div class="progress-bar bg-primary" role="progressbar" data-progress-width="<%= count_process_tasks(@tasks) %>" aria-valuenow="<%= count_process_tasks(@tasks) %>" aria-valuemin="0" aria-valuemax="100"></div>
           </div>
         </div>
       </div>
@@ -98,8 +98,7 @@
               </div>
               <div class="flex-grow-1">
                 <div class="progress progress-score-custom">
-                  <div class="progress-bar bg-success" role="progressbar" style="width: <%= count_score_subject(@user_subject) %>%"
-                      aria-valuenow="<%= count_score_subject(@user_subject) %>" aria-valuemin="0" aria-valuemax="100"></div>
+                  <div class="progress-bar bg-success" role="progressbar" data-progress-width="<%= count_score_subject(@user_subject) %>" aria-valuenow="<%= count_score_subject(@user_subject) %>" aria-valuemin="0" aria-valuemax="100"></div>
                 </div>
               </div>
             </div>
@@ -167,7 +166,7 @@
                         <i class="fas fa-calendar-day text-primary"></i>
                       </span>
                     </div>
-                    <% if @user_subject.status == Settings.user_subject.display_status.in_progress %>
+                    <% if @user_subject.display_status == Settings.user_subject.display_status.in_progress %>
                       <input type="date" id="actual_start_date" class="form-control border" value="<%= @user_subject.started_at&.to_date %>">
                     <% else %>
                       <input type="date" id="actual_start_date" class="form-control border" value="<%= @user_subject.started_at&.to_date %>" disabled>
@@ -184,7 +183,7 @@
                         <i class="fas fa-calendar-check text-primary"></i>
                       </span>
                     </div>
-                    <% if @user_subject.status == Settings.user_subject.display_status.in_progress %>
+                    <% if @user_subject.display_status == Settings.user_subject.display_status.in_progress %>
                       <input type="date" id="actual_end_date" class="form-control border" value="<%= @user_subject.completed_at&.to_date %>">
                     <% else %>
                       <input type="date" id="actual_end_date" class="form-control border" value="<%= @user_subject.completed_at&.to_date %>" disabled>
@@ -196,7 +195,8 @@
           </div>
             <div class="text-center mb-4 mt-5">
             <h5 class="font-weight-bold text-uppercase text-dark letter-spacing-1 mb-3"><%= t(".subject_status") %></h5>
-            <% if @user_subject.status == Settings.user_subject.display_status.in_progress %>
+            <% display_status = @user_subject.display_status %>
+            <% if display_status == Settings.user_subject.display_status.in_progress || display_status == Settings.user_subject.display_status.overdue_and_not_finished %>
               <button class="btn btn-success btn-block font-weight-bold" onclick="toggleFinishConfirm()">
                 <i class="fas fa-check mr-2"></i><%= t(".finish") %>
               </button>
@@ -216,7 +216,7 @@
                   </h6>
                 </div>
                 <div class="card-body p-3">
-                  <% unfinished_tasks = get_unfinished_tasks(@user_subject) %>
+                  <% unfinished_tasks = unfinished_tasks(@user_subject) %>
                   <% if unfinished_tasks.any? %>
                     <div class="text-center mb-3">
                       <div class="icon-circle-custom bg-warning text-white mb-2">

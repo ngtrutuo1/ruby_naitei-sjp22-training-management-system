@@ -39,14 +39,14 @@ class Supervisor::UsersController < Supervisor::BaseController
 
   # PATCH /supervisor/users/:id/update_user_course_status
   def update_user_course_status
-    flash[:success] = t(".update_success") if handle_update_user_course_status
+    flash[:success] = t(".update_success") if update_user_course_status?
 
     redirect_to supervisor_user_path(@user_trainee)
   end
 
   # PATCH /supervisor/users/:id/delete_user_course
   def delete_user_course
-    flash[:success] = t(".delete_success") if handle_delete_user_course
+    flash[:success] = t(".delete_success") if delete_user_course?
 
     redirect_to supervisor_user_path(@user_trainee)
   end
@@ -150,14 +150,14 @@ class Supervisor::UsersController < Supervisor::BaseController
     params.require(:user).permit(User::PERMITTED_UPDATE_ATTRIBUTES)
   end
 
-  def handle_update_user_course_status
+  def update_user_course_status?
     return true if @user_course.update(status: params[:status])
 
     flash[:danger] = t(".update_failed")
     false
   end
 
-  def handle_delete_user_course
+  def delete_user_course?
     return true if @user_course.destroy
 
     flash[:danger] = t(".delete_failed")

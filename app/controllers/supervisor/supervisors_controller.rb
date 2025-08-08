@@ -8,7 +8,8 @@ class Supervisor::SupervisorsController < ApplicationController
     if @course.supervisors.destroy(@supervisor)
       flash[:success] = I18n.t("courses.destroy_supervisor.success")
     else
-      flash[:danger] = I18n.t("courses.destroy_supervisor.failed")
+      flash[:danger] =
+        @course.course_supervisors.errors[:base].presence&.first
     end
     redirect_back fallback_location: members_supervisor_course_path(@course)
   end

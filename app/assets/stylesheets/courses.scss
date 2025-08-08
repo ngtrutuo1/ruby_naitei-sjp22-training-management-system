@@ -1,4 +1,188 @@
 .courses_page {
+  .subject-edit-card {
+    background: #fff;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 15px;
+    transition: box-shadow 0.2s ease;
+  }
+
+  .subject-edit-card:hover {
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+
+  .subject-edit-card.ui-sortable-helper {
+    box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+    transform: rotate(2deg);
+  }
+
+  .subject-placeholder {
+    height: 100px;
+    background: #f8f9fa;
+    border: 2px dashed #dee2e6;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #6c757d;
+    font-style: italic;
+    &:before { content: "Drop subject here"; }
+  }
+
+  .subject-edit-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #e9ecef;
+  }
+
+  .subject-position {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .position-label {
+    font-weight: bold;
+    color: #007bff;
+    font-size: 16px;
+    margin: 0;
+  }
+
+  .subject-drag-handle {
+    cursor: move;
+    color: #6c757d;
+    font-size: 18px;
+  }
+
+  .subject-drag-handle:hover {
+    color: #495057;
+  }
+
+  .subject-edit-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 20px;
+  }
+
+  .subject-basic-info {
+    flex: 1;
+  }
+
+  .subject-dates {
+    font-size: 14px;
+    color: #6c757d;
+    margin-bottom: 8px;
+  }
+
+  .subject-name {
+    font-size: 16px;
+    color: #495057;
+  }
+
+  .subject-actions-edit {
+    flex-shrink: 0;
+  }
+
+  .tasks-edit-section {
+    border-top: 1px solid #e9ecef;
+    padding-top: 15px;
+  }
+
+  .tasks-preview-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+  }
+
+  .tasks-preview-header h6 {
+    margin: 0;
+    color: #495057;
+  }
+
+  .existing-tasks {
+    margin-bottom: 15px;
+  }
+
+  .task-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+    padding: 5px 0;
+  }
+
+  .task-bullet {
+    color: #007bff;
+    font-weight: bold;
+  }
+
+  .task-name {
+    flex: 1;
+    color: #495057;
+  }
+
+  .task-description {
+    color: #6c757d;
+    font-style: italic;
+  }
+
+  .no-tasks {
+    padding: 15px;
+    text-align: center;
+    color: #6c757d;
+    background: #f8f9fa;
+    border-radius: 4px;
+  }
+
+  .new-tasks-form {
+    border-top: 1px solid #e9ecef;
+    padding-top: 15px;
+    margin-top: 15px;
+  }
+
+  .new-task-item {
+    margin-bottom: 10px;
+  }
+
+  .add-task-controls {
+    margin-top: 15px;
+  }
+
+  .status-badge {
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+
+  .status-not_started { background-color: #e9ecef; color: #495057; }
+  .status-in_progress { background-color: #fff3cd; color: #856404; }
+  .status-finished { background-color: #d4edda; color: #155724; }
+
+  @media (max-width: 768px) {
+    .subject-edit-content {
+      flex-direction: column;
+      gap: 15px;
+    }
+    .tasks-preview-header {
+      flex-direction: column;
+      gap: 10px;
+      align-items: flex-start;
+    }
+    .form-row {
+      flex-direction: column;
+      gap: 8px;
+    }
+    .form-row > div { width: 100%; }
+  }
   /* Course Detail Page Styles */
   .course-detail-page {
     margin: 0 auto;
@@ -444,12 +628,17 @@
   }
 
   .subject-name {
+    position: relative;
+    z-index: 10;
+    
     .subject-link {
       color: #333;
       font-size: 18px;
       font-weight: 600;
       text-decoration: none;
       transition: color 0.2s ease;
+      position: relative;
+      z-index: 10;
 
       &:hover {
         color: #007bff;
@@ -974,3 +1163,64 @@
     display: inline;
   }
 }
+
+.course-edit-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+
+  .page-title {
+    margin-bottom: 30px;
+    color: #333;
+    border-bottom: 2px solid #007bff;
+    padding-bottom: 10px;
+  }
+
+  .course-info-edit-section {
+    background: #f8f9fa;
+    border-radius: 8px;
+    padding: 25px;
+    margin-bottom: 30px;
+    display: flex;
+    gap: 30px;
+    align-items: flex-start;
+  }
+
+  .course-thumbnail-edit { flex-shrink: 0; width: 200px; }
+  .course-image-preview { width: 100%; height: 150px; object-fit: cover; border-radius: 8px; margin-bottom: 15px; }
+  .default-thumbnail-edit { width: 100%; height: 150px; background: #e9ecef; border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-bottom: 15px; }
+  .default-thumbnail-edit i { font-size: 48px; color: #6c757d; }
+
+  .course-details-edit { flex: 1; }
+  .form-group { margin-bottom: 20px; }
+  .form-label { font-weight: 600; margin-bottom: 8px; color: #495057; }
+  .form-control { border-radius: 6px; border: 1px solid #ced4da; padding: 10px 12px; }
+  .form-row { display: flex; gap: 20px; }
+
+  .form-actions-top, .form-actions-bottom { display: flex; gap: 15px; justify-content: flex-end; }
+  .form-actions-bottom { margin-top: 30px; padding-top: 20px; border-top: 1px solid #dee2e6; }
+
+  .subject-management-section {
+    background: #fff;
+    border: 1px solid #dee2e6;
+    border-radius: 10px;
+    padding: 24px;
+  }
+  .section-description { color: #6c757d; margin-bottom: 14px; font-style: italic; }
+  .subjects-edit-list { display: flex; flex-direction: column; gap: 16px; }
+  .trainers-info { display: flex; align-items: center; gap: 15px; }
+  .alert { border-radius: 6px; margin-bottom: 25px; }
+
+  @media (max-width: 768px) {
+    .course-info-edit-section { flex-direction: column; }
+    .form-row { flex-direction: column; gap: 0; }
+    .form-actions-top, .form-actions-bottom { justify-content: center; }
+  }
+  .z-1000 { z-index: 1000; }
+}
+
+.d-none { display: none !important; }
+.position-relative { position: relative !important; }
+.w-auto { width: auto !important; }
+.me-2 { margin-right: .5rem !important; }
+.mx-2 { margin-left: .5rem !important; margin-right: .5rem !important; }

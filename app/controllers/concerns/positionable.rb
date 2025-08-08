@@ -8,19 +8,26 @@ module Positionable
 
   private
 
-  def positions_for association_name
-    send(association_name).reject(&:marked_for_destruction?).map(&:position)
+  def association_records_for association_name
+    send(association_name).reject(&:marked_for_destruction?)
   end
 
   def validate_unique_positions positions
-    duplicates = positions.select {|v| positions.count(v) > 1}.uniq
+    present_positions = positions.compact
+    duplicates = present_positions.select do |v|
+      present_positions.count(v) > 1
+    end.uniq
     errors.add(:base, :must_be_unique_positions) if duplicates.any?
   end
 
   def normalize_positions_for association_name
-    send(association_name).reject(&:marked_for_destruction?)
-                          .sort_by(&:position)
-                          .each_with_index do |record, index|
+    records = association_records_for(association_name)
+
+    with_pos, without_pos = records.partition {|r| r.position.present?}
+
+    ordered = with_pos.sort_by {|r| r.position.to_i} + without_pos
+
+    ordered.each_with_index do |record, index|
       record.position = index + Settings.digits.digit_one
     end
   end
@@ -29,13 +36,11 @@ module Positionable
     return unless respond_to?(:positionable_association_name, true)
 
     assoc_name = positionable_association_name
-    positions = positions_for assoc_name
+    positions = association_records_for(assoc_name).map(&:position)
 
-    return if positions.any?(&:blank?)
-
-    validate_unique_positions positions
+    validate_unique_positions(positions)
     return if errors.any?
 
-    normalize_positions_for assoc_name
+    normalize_positions_for(assoc_name)
   end
 end

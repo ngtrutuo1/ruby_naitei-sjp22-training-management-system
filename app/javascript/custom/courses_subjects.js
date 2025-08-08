@@ -27,19 +27,13 @@ function handleMenuClick(e) {
 }
 
 function handleSubjectLinkClick(e) {
-  e.preventDefault();
-
+  // Don't prevent default - let the link work normally
+  // Just add loading state for visual feedback
+  
   // Add loading state
   this.style.opacity = '0.6';
   this.style.pointerEvents = 'none';
-
-  // Reset after a short delay (replace with actual navigation)
-  setTimeout(() => {
-    this.style.opacity = '1';
-    this.style.pointerEvents = 'auto';
-  }, 1000);
-
-  // Add your navigation logic here
-  // const subjectId = this.closest('.subject-item').dataset.subjectId;
-  // window.location.href = `/courses/${courseId}/subjects/${subjectId}/detail`;
+  
+  // The browser will navigate to the href automatically
+  // No need to prevent default or manually navigate
 }
