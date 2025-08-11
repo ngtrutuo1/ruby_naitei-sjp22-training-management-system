@@ -1,4 +1,16 @@
 class Course < ApplicationRecord
+  COURSE_PARAMS = [
+    :name,
+    :start_date,
+    :finish_date,
+    :link_to_course,
+    :image,
+    {supervisor_ids: []},
+    {course_subjects_attributes: [:id, :subject_id, :position, :_destroy]}
+  ].freeze
+  IMAGE_DISPLAY_SIZE = [120, 80].freeze
+  URL_FORMAT = %r{\Ahttps://.*}
+
   # Enums
   enum status: {not_started: Settings.course.status.not_started,
                 in_progress: Settings.course.status.in_progress,
@@ -13,15 +25,29 @@ class Course < ApplicationRecord
   has_many :subjects, through: :course_subjects
   has_many :course_supervisors, dependent: :destroy
   has_many :supervisors, through: :course_supervisors, source: :user
-  has_one_attached :image
+  has_one_attached :image do |attachable|
+    attachable.variant :display, resize_to_limit: IMAGE_DISPLAY_SIZE
+  end
+
+  accepts_nested_attributes_for :course_subjects, allow_destroy: true
 
   # Validations
+  before_validation :validate_and_normalize_positions
   validates :name, presence: true,
             length: {
               maximum: Settings.course.max_name_length
-            }
+            },
+            uniqueness: {case_sensitive: false}
+  validates :link_to_course, presence: true,
+            format: {with: URL_FORMAT,
+                     message: :must_be_valid_url}
+  validates :start_date, presence: true
+  validates :finish_date, presence: true
+  validate :at_least_one_supervisor_selected
   validate :finish_date_after_start_date
-  validates :image,
+  validate :start_date_within_allowed_range
+  validate :finish_date_within_allowed_range
+  validates :image, presence: true,
             content_type: {
               in: Settings.course.allowed_image_types,
               message: :invalid_image_type
@@ -85,6 +111,54 @@ class Course < ApplicationRecord
     return unless finish_date < start_date
 
     errors.add(:finish_date,
-               I18n.t("shared.error_messages.finish_date_after_start_date"))
+               :finish_date_after_start_date)
+  end
+
+  def at_least_one_supervisor_selected
+    return unless supervisor_ids.blank? || supervisor_ids.compact_blank.empty?
+
+    errors.add(:supervisor_ids,
+               :at_least_one_trainer)
+  end
+
+  def start_date_within_allowed_range
+    return if start_date.blank?
+    return if start_date.between?(1.year.ago.to_date, 1.year.from_now.to_date)
+
+    errors.add(:start_date, :must_be_within_one_year_from_now)
+  end
+
+  def finish_date_within_allowed_range
+    return if finish_date.blank?
+    return if finish_date.between?(1.year.ago.to_date, 1.year.from_now.to_date)
+
+    errors.add(:finish_date, :must_be_within_one_year_from_now)
+  end
+
+  def filter_and_get_positions
+    course_subjects.reject(&:marked_for_destruction?).map(&:position)
+  end
+
+  def validate_unique_positions positions
+    duplicates = positions.select {|v| positions.count(v) > 1}.uniq
+    errors.add(:base, :must_be_unique) if duplicates.any?
+  end
+
+  def normalize_positions
+    subjects = course_subjects.reject(&:marked_for_destruction?)
+    subjects.sort_by(&:position)
+            .each_with_index do |cs, index|
+      cs.position = index + 1
+    end
+  end
+
+  def validate_and_normalize_positions
+    positions = filter_and_get_positions
+    return if positions.any?(&:blank?)
+
+    validate_unique_positions(positions)
+    return if errors.any?
+
+    normalize_positions
   end
 end

@@ -1,4 +1,4 @@
-class Trainee::SubjectsController < TraineeController
+class Trainee::SubjectsController < Trainee::BaseController
   before_action :load_course, only: %i(show)
   before_action :load_subject, only: %i(show)
   before_action :load_tasks, only: %i(show)
@@ -23,7 +23,7 @@ class Trainee::SubjectsController < TraineeController
     return if @subject
 
     flash[:danger] = t(".subject_not_found")
-    redirect_to trainee_courses_path(course_id: @course.id)
+    redirect_to trainee_course_path(course_id: @course.id)
   end
 
   def load_tasks

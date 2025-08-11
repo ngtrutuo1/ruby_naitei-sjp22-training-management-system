@@ -34,7 +34,7 @@ Rails.application.routes.draw do
           delete :destroy_document, path: "document"
         end
       end
-      resources :daily_reports 
+      resources :daily_reports
     end
 
     namespace :supervisor do
@@ -47,31 +47,26 @@ Rails.application.routes.draw do
           patch :bulk_deactivate
         end
       end
+      resources :courses do
+        member do
+          get :members
+        end
+      end
     end
 
     namespace :admin do
+      root "dashboards#show", as: :dashboard
+
+      resources :dashboards
       resources :users
+      resources :subjects
+      resources :categories
+      resources :daily_reports, only: %i(index show)
       resources :courses do
         member do
           get :members
         end
       end
-
-      resources :subjects
-      resources :categories
-      resources :daily_reports, only: %i(index show)
-    end
-    
-    namespace :admin do
-      resources :dashboards 
-      resources :courses do
-        member do
-          get :members
-        end
-      end
-      resources :subjects
-      resources :categories
-      resources :daily_reports, only: %i(index show)
     end
   end
 end

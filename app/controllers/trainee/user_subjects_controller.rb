@@ -1,4 +1,4 @@
-class Trainee::UserSubjectsController < TraineeController
+class Trainee::UserSubjectsController < Trainee::BaseController
   before_action :find_user_subject_by_id, only: %i(update)
 
   USER_SUBJECT_PARAMS = %i(started_at completed_at status).freeze

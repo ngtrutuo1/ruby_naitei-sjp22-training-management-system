@@ -15,17 +15,21 @@ $qcm-active-border-color: #e67e22;
   padding-top: $qcm-header-height + 30px;
 }
 
+.flex-container {
+  display: flex;
+}
+
 body {
   min-width: 400px;
   padding-top: $qcm-header-height;
 }
 
 .sidebar {
-  position: sticky;
-  top: $qcm-header-height; 
-  height: calc(100vh - #{$qcm-header-height}); 
-  overflow-y: auto; 
   background-color: $qcm-sidebar-bg;
+  height: calc(100vh - #{$qcm-header-height});
+  overflow-y: auto;
+  position: sticky;
+  top: $qcm-header-height;
 }
 
 .sidebar-menu {

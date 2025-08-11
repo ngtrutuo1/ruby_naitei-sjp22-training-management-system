@@ -1,4 +1,4 @@
-class Trainee::UserTasksController < TraineeController
+class Trainee::UserTasksController < Trainee::BaseController
   before_action :load_user_task,
                 only: %i(update_document update_status update_spent_time
 destroy_document)

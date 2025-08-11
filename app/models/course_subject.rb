@@ -7,12 +7,14 @@ class CourseSubject < ApplicationRecord
 
   # Validations
   validates :course_id, uniqueness: {scope: :subject_id}
-  validates :position,
+  validates :position, presence: true,
             numericality: {
-              greater_than_or_equal_to: Settings.course_subject.min_position
-            },
-            allow_nil: true
+              only_integer: true,
+              greater_than_or_equal_to: Settings.course_subject.min_position,
+              allow_blank: true
+            }
   validate :finish_date_after_start_date
+  validates :position, uniqueness: {scope: :course_id}
 
   # Scopes
   scope :ordered_by_position, -> {order(:position)}
