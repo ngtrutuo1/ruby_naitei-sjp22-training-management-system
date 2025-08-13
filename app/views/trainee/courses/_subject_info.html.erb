@@ -19,7 +19,7 @@
 
   <!-- Subject Name (clickable) -->
   <div class="subject-name">
-    <%= link_to course_subject.subject.name, "#", class: "subject-link" %>
+    <%= link_to course_subject.subject.name, trainee_course_subject_path(course_subject.course, course_subject.subject), class: "subject-link" %>
   </div>
 
   <!-- Duration -->
