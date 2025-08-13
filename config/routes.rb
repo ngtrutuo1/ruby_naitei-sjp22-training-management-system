@@ -39,6 +39,14 @@ Rails.application.routes.draw do
 
     namespace :supervisor do
       resources :daily_reports, only: %i(index show)
+      resources :users, only: %i(index show) do
+        member do
+          patch :update_status
+        end
+        collection do
+          patch :bulk_deactivate
+        end
+      end
     end
 
     namespace :admin do

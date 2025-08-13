@@ -21,10 +21,6 @@ gender).freeze
     supervisor: Settings.user.roles.supervisor,
     admin: Settings.user.roles.admin
   }
-  enum status: {
-    active: Settings.user.status.active,
-    inactive: Settings.user.status.inactive
-  }
 
   # Associations
   has_many :user_courses, dependent: :destroy
@@ -47,9 +43,19 @@ gender).freeze
     joins(:supervised_courses).where(supervised_courses: {user_id:})
   end)
   scope :by_course, (lambda do |course_ids|
-    return none if course_ids.blank?
+    return all if course_ids.blank?
 
     joins(:courses).where(courses: {id: course_ids})
+  end)
+  scope :filter_by_status, (lambda do |status|
+    return all if status.blank?
+
+    where(activated: status)
+  end)
+  scope :filter_by_name, (lambda do |search|
+    return all if search.blank?
+
+    where("LOWER(users.name) LIKE ?", "%#{search.downcase}%")
   end)
 
   before_save :downcase_email
