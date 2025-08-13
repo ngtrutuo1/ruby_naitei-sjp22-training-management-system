@@ -73,6 +73,13 @@ Rails.application.routes.draw do
           get :members
         end
       end
+
+      resources :users, only: %i(index new create show destroy) do
+        member do
+          patch :activate
+          patch :deactivate
+        end
+      end
       resources :daily_reports, only: %i(index show)
     end
   end
