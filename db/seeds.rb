@@ -215,9 +215,15 @@ ActiveRecord::Base.transaction do
     end
   end
 
-  # Ghi chú: Việc tạo 'Task' chung cho 'Subject' đã được loại bỏ.
-  # Logic tạo Task đã được xử lý trong CourseSeederService để đảm bảo mỗi CourseSubject có Task riêng.
-  # Điều này giúp dữ liệu gọn gàng và đúng với logic hơn.
+  puts "-> Đang tạo Tasks cho Subject..."
+  subjects = Subject.all
+  200.times.each_with_index do |_, i|
+    Task.create!(
+      name: "#{Faker::Hacker.verb.capitalize} the #{Faker::Hacker.adjective} #{Faker::Hacker.noun} #{i + 1}",
+      taskable_type: "Subject",
+      taskable_id: subjects.sample.id
+    )
+  end
 
   puts "\n-> Đang tạo các Khóa học và dữ liệu liên quan..."
 

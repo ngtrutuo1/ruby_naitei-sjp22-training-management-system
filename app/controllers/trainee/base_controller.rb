@@ -1,6 +1,5 @@
 class Trainee::BaseController < ApplicationController
   before_action :check_trainee_role
-  layout "trainee/layouts/application"
 
   def check_trainee_role
     return if current_user&.trainee?

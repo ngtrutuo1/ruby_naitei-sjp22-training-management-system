@@ -57,6 +57,7 @@ class Course < ApplicationRecord
               message: :image_size_exceeded,
               size: Settings.course.max_image_size.megabytes
             }
+  after_create :clone_tasks_for_course
 
   # Scopes
   scope :upcoming, -> {where(start_date: Date.current.next_day..)}
@@ -202,5 +203,24 @@ class Course < ApplicationRecord
     return if errors.any?
 
     normalize_positions
+  end
+
+  def clone_tasks_for_course
+    course_subjects.each do |course_subject|
+      subject = course_subject.subject
+      next if subject.tasks.blank?
+
+      subject.tasks.each do |original_task|
+        cloned_task_attributes = original_task.attributes.except(
+          "id",
+          "taskable_id",
+          "taskable_type",
+          "created_at",
+          "updated_at"
+        )
+        raise ActiveRecord::Rollback unless
+          course_subject.tasks.create(cloned_task_attributes)
+      end
+    end
   end
 end

@@ -1,0 +1,15 @@
+<% provide(:title, t(".title")) %>
+
+<%= render "shared/masterdata_navbar" %>
+
+<div class="row mt-15 mb-15">
+  <div class="col-xs-6">
+    <h3 class="m-0 lh-34"><%= t(".title") %></h3>
+  </div>
+  <div class="col-xs-6 text-right">
+    <%= link_to t(".add_category"), new_supervisor_category_path, class: "btn btn-primary mt-5" %>
+  </div>
+</div>
+
+<%= render partial: "shared/search_box", locals: {path_to_search: supervisor_categories_path} %>
+<%= render "categories_table" %>

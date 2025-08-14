@@ -1,0 +1,25 @@
+<div class="container my-4">
+  <% if @tasks.any? %>
+    <div class="table-responsive">
+      <table class="table table-hover table-striped">
+        <thead class="thead-dark">
+          <tr>
+            <th><%= t(".name") %></th>
+            <th><%= t(".subject") %></th>
+            <th><%= t(".actions") %></th>
+          </tr>
+        </thead>
+        <tbody>
+          <%= render partial: "task", collection: @tasks%>
+        </tbody>
+      </table>
+    </div>
+  <div class="text-center mt-4">
+    <%== pagy_bootstrap_nav(@pagy) if @pagy.pages > Settings.allowed_pagy %>
+  </div>
+  <% else %>
+    <div class="alert alert-info">
+      <%= t(".no_tasks_found") %>
+    </div>
+  <% end %>
+</div>

@@ -1,0 +1,5 @@
+<div class="search-form-wrapper">
+  <%= form_with url: path_to_search, method: :get, class: "d-flex", id: "search-form" do %>
+    <%= text_field_tag :search, params[:search], class: "form-control", placeholder: t(".search") %>
+  <% end %>
+</div>

@@ -1,0 +1,21 @@
+en:
+  admin:
+    dashboards:
+      index:
+        title: "Dashboard"
+        overview: "Overview"
+        trainers: "Trainers"
+        trainees: "Trainees"
+        active_courses: "Active Courses"
+        completion_rate: "Completion Rate"
+        active_courses_title: "Active Courses"
+      tables:
+        view_action: "view"
+        table_headers:
+          course: "Course"
+          creators: "Creators"
+          start_date: "Start Date"
+          end_date: "End Date"
+          trainees: "Trainees"
+          trainers: "Trainers"
+          actions: "Actions"

@@ -7,7 +7,7 @@ class Supervisor::CoursesController < Supervisor::BaseController
     {user_subjects: [:user, :comments]}
   ].freeze
 
-  before_action :load_course, except: [:index]
+  before_action :load_course, only: %i(show members subjects supervisors leave)
   before_action :authorize_supervisor_access!, except: [:index]
   before_action :ensure_multiple_supervisors, only: [:leave]
   before_action :set_courses_page_class
@@ -63,18 +63,41 @@ class Supervisor::CoursesController < Supervisor::BaseController
     @trainee_count = @course.trainees_count
   end
 
+  # POST supervisor/courses
+  def create
+    @course = Course.new course_params.merge(user_id: current_user.id)
+
+    if @course.save
+      flash[:success] = t(".course_created_successfully")
+      redirect_to supervisor_courses_path
+    else
+      flash[:danger] = t(".course_creation_failed")
+      render :new, status: :unprocessable_entity
+    end
+  end
+
   # DELETE /supervisor/courses/:id/leave
   def leave
     if @course.supervisors.destroy(current_user)
       flash[:success] = t(".success")
-      redirect_to root_path
+      redirect_to supervisor_courses_path
     else
       flash[:danger] = t(".failed")
       redirect_back fallback_location: members_fallback_path
     end
   end
 
+  # GET supervisor/courses/new
+  def new
+    @course = Course.new
+    @course.course_subjects.build.build_subject
+  end
+
   private
+
+  def course_params
+    params.require(:course).permit Course::COURSE_PARAMS
+  end
 
   def accessible_courses
     if current_user&.admin?

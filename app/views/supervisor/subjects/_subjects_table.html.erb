@@ -1,0 +1,27 @@
+<div class="container my-4">
+  <% if @subjects.any? %>
+    <div class="table-responsive">
+      <table class="table table-hover table-striped">
+        <thead class="thead-dark">
+          <tr>
+            <th><%= t(".name") %></th>
+            <th><%= t(".duration") %></th>
+            <th><%= t(".max_score") %></th>
+            <th><%= t(".tasks_count") %></th>
+            <th><%= t(".actions") %></th>
+          </tr>
+        </thead>
+        <tbody>
+          <%= render partial: "subject", collection: @subjects%>
+        </tbody>
+      </table>
+    </div>
+  <div class="text-center mt-4">
+    <%== pagy_bootstrap_nav(@pagy) if @pagy.pages > Settings.allowed_pagy %>
+  </div>
+  <% else %>
+    <div class="alert alert-info">
+      <%= t(".no_subjects_found") %>
+    </div>
+  <% end %>
+</div>

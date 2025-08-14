@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2025_08_13_111012) do
+ActiveRecord::Schema[7.0].define(version: 2025_08_14_125035) do
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -43,6 +43,7 @@ ActiveRecord::Schema[7.0].define(version: 2025_08_13_111012) do
     t.string "name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_categories_on_name", unique: true
   end
 
   create_table "comments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -59,7 +60,7 @@ ActiveRecord::Schema[7.0].define(version: 2025_08_13_111012) do
 
   create_table "course_subjects", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "course_id", null: false
-    t.bigint "subject_id", null: false
+    t.bigint "subject_id"
     t.integer "position"
     t.date "start_date"
     t.date "finish_date"
@@ -124,6 +125,9 @@ ActiveRecord::Schema[7.0].define(version: 2025_08_13_111012) do
     t.integer "estimated_time_days"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "deleted_at"
+    t.index ["deleted_at"], name: "index_subjects_on_deleted_at"
+    t.index ["name"], name: "index_subjects_on_name", unique: true
   end
 
   create_table "tasks", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -132,6 +136,9 @@ ActiveRecord::Schema[7.0].define(version: 2025_08_13_111012) do
     t.string "name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "deleted_at"
+    t.index ["deleted_at"], name: "index_tasks_on_deleted_at"
+    t.index ["name", "taskable_type", "taskable_id"], name: "index_tasks_on_name_and_taskable_type_and_taskable_id", unique: true
     t.index ["taskable_type", "taskable_id"], name: "index_tasks_on_taskable"
     t.index ["taskable_type", "taskable_id"], name: "index_tasks_on_taskable_type_and_taskable_id"
   end

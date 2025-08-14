@@ -1,0 +1,19 @@
+vi:
+  supervisor:
+    categories:
+      index:
+        title: "Tất cả các danh mục"
+        add_category: "Thêm danh mục"
+      categories_table:
+        name: "Tên danh mục"
+        actions: "Hành động"
+        number_of_subjects: "Số lượng môn học"
+        no_categories_found: "Không tìm thấy danh mục nào."
+      destroy:
+        category_deleted: "Danh mục đã được xóa thành công."
+        delete_failed: "Xóa danh mục thất bại."
+      category:
+        detail: "Chi tiết"
+        delete: "Xóa"
+        confirm_delete: "Bạn có chắc chắn muốn xóa mục này không?"
+  not_found_category: "Không tìm thấy danh mục."

@@ -22,3 +22,9 @@ vi:
       delete_report_button: "Xóa"
       view_report_button: "Xem chi tiết báo cáo"
       confirm_delete: "Bạn có chắc chắn?"
+    search_box:
+      search: "Tìm kiếm"
+    masterdata_navbar:
+      subjects: "Môn học"
+      tasks: "Nhiệm vụ"
+      categories: "Danh mục"

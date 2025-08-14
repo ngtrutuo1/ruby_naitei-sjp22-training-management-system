@@ -1,0 +1,19 @@
+en:
+  supervisor:
+    categories:
+      index:
+        title: "All Categories"
+        add_subject: "Add Category"
+      categories_table:
+        name: "Category Name"
+        actions: "Actions"
+        number_of_subjects: "Number of subjects"
+        no_categories_found: "No categories found."
+      destroy:
+        category_deleted: "Category was successfully deleted."
+        delete_failed: "Failed to delete the category."
+      category:
+        detail: "Details"
+        delete: "Delete"
+        confirm_delete: "Are you sure you want to delete this item?"
+  not_found_category: "Category not found."

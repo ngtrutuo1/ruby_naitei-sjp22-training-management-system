@@ -1,0 +1,19 @@
+en:
+  supervisor:
+    tasks:
+      index:
+        title: "All Tasks"
+        add_task: "Add task"
+      tasks_table:
+        name: "Task Name"
+        actions: "Actions"
+        subject: "Subject"
+        no_tasks_found: "No tasks found."
+      task:
+        detail: "Details"
+        delete: "Delete"
+        confirm_delete: "Are you sure you want to delete this item?"
+      destroy:
+        task_deleted: "Bài tập đã được xóa thành công."
+        delete_failed: "Xóa bài tập thất bại."
+  not_found_task: "Không tìm thấy bài tập."

@@ -1,11 +1,11 @@
 <% provide :title, t(".title") %>
 
 <div class="content-container">
-  <h1 class="page-title"><%= t(".title") %></h1>
 
   <div class="page-controls-container">
-    <div class="top-action-area">
-      <%= link_to t(".add_course_button"), new_supervisor_course_path, class: "btn btn-success" %>
+    <div class="top-action-area flex-container space-between align-center">
+      <h1 class="page-title"><%= t(".title") %></h1>
+      <%= link_to t(".add_course_button"), new_supervisor_course_path, class: "btn btn-success height-fit" %>
     </div>
 
     <%= form_with url: supervisor_courses_path, method: :get, class: "filter-form", role: "form" do |f| %>
@@ -41,7 +41,7 @@
           <div class="form-group filter-action-buttons-group">
             <label>&nbsp;</label>
             <div class="filter-action-buttons">
-              <%= submit_tag t(".apply_button"), class: "btn btn-primary" %>
+              <%= submit_tag t(".apply_button"), class: "btn btn-primary width-fit" %>
               <%= link_to t(".clear_filter_button"), supervisor_courses_path, class: "btn btn-default" %>
             </div>
           </div>
