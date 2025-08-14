@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= full_title yield(:title) %></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag "application", media: "all", "data-turbo-track": "reload" %>
+    <%= javascript_include_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  </head>
+
+  <body class="<%= @page_class %>">
+    <%= render "layouts/header" %>
+    <% if logged_in? %>
+      <%= render "sidebar" %>
+    <% end %>
+    <main class="main-content">
+      <div class="container">
+        <% flash.each do |type, message| %>
+          <div class="alert alert-<%= type %>">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <%= message %>
+          </div>
+        <% end %>
+        <%= yield %>
+      </div>
+    </main>
+  </body>
+</html>

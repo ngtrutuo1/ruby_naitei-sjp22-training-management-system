@@ -1,6 +1,6 @@
 class DailyReport < ApplicationRecord
-  DAILY_REPORT_PARAMS = [:user_id, :course_id, :content, :status].freeze
-  EAGER_LOADING_PARAMS = [:user, :course].freeze
+  DAILY_REPORT_PARAMS = %i(user_id course_id content status).freeze
+  EAGER_LOADING_PARAMS = %i(user course).freeze
 
   # Enums
   enum status: {draft: Settings.daily_report.status.draft,

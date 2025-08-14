@@ -1,0 +1,111 @@
+<script>
+  window.subjectData = <%= raw(
+    Subject.includes(:categories, :subject_categories)
+           .map do |s|
+             {
+               id: s.id,
+               name: s.name,
+               categories: s.subject_categories.map do |sc|
+                 {
+                   id: sc.category_id,
+                   position: sc.position
+                 }
+               end
+             }
+           end.to_json
+  ) %>;
+</script>
+
+<% provide(:title, t(".page_title")) %>
+<h3><%= t(".page_title") %></h3>
+
+<div class="container-fluid">
+  <div class="row">
+      <%= form_with(model: @course, url: supervisor_courses_path ,local: true, class: "form-horizontal") do |f| %>
+        <%= render "shared/error_messages", object: f.object %>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <%= f.label :name, t(".course_name_label"), class: "col-sm-4 control-label" %>
+              <div class="col-sm-5">
+                <%= f.text_field :name, class: "form-control" %>
+              </div>
+            </div>
+            <div class="form-group">
+              <%= f.label :link_to_course, t(".link_to_course_label"), class: "col-sm-4 control-label" %>
+              <div class="col-sm-5">
+                <%= f.text_field :link_to_course, class: "form-control" %>
+              </div>
+            </div>
+            <div class="form-group">
+              <%= f.label :start_date, t(".start_date_label"), class: "col-sm-4 control-label" %>
+              <div class="col-sm-5">
+                <%= f.date_field :start_date, class: "form-control" %>
+              </div>
+            </div>
+            <div class="form-group">
+              <%= f.label :finish_date, t(".end_date_label"), class: "col-sm-4 control-label" %>
+              <div class="col-sm-5">
+                <%= f.date_field :finish_date, class: "form-control" %>
+              </div>
+            </div>
+            <div class="form-group">
+              <%= label_tag :category_for_subjects, t(".category_label"), class: "col-sm-4 control-label" %>
+              <div class="col-sm-5">
+                <%= select_tag :category_id_for_subjects,
+                               options_for_select(Category.all.map {|c| [c.name, c.id]}, params[:category_id_for_subjects]),
+                               prompt: t(".select_category_placeholder"),
+                               class: "form-control form-select" %>
+              </div>
+            </div>
+            <div class="form-group">
+              <%= f.label :supervisor_ids, t(".trainer_label"), class: "col-sm-4 control-label" %>
+              <div class="col-sm-5">
+                <%= f.select  :supervisor_ids,
+                              options_for_select(User.supervisor.map {|u| [u.name, u.id]}),
+                              {},
+                              multiple: true,
+                              class: "form-control select2-trainer",
+                              include_hidden: false %>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <div class="row">
+                <div class="col-sm-3">
+                  <label class="control-label"><%= t(".subject_list") %></label>
+                </div>
+                <div class="col-sm-9" id="subject-list-container">
+                    <%= f.fields_for :course_subjects do |subject_form| %>
+                      <%= render "course_subject_fields", f: subject_form %>
+                    <% end %>
+                </div>
+              </div>
+              <div class="row" style="margin-top:5px;">
+                <div class="col-sm-3"></div>
+                <div class="col-sm-9">
+                  <button type="button" class="btn btn-default btn-sm" id="add-subject-row">+</button>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-sm-8">
+                <div class="image-upload-container text-center border p-3 rounded">
+                  <%= f.file_field :image, id: "course-image-input", class: "form-control-file" %>
+                </div>
+              </div>
+            </div>
+        </div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-offset-8 col-sm-1 flex-container">
+            <%= link_to t(".cancel_button"), "#", class: "btn btn-danger" %>
+            <%= f.submit t(".add_button"), class: "btn btn-warning ml-2" %>
+          </div>
+        </div>
+      <% end %>
+      <%= javascript_tag "initSubjectForm()" %>
+    </div>
+  </div>
+</div>

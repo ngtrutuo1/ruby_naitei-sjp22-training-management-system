@@ -10,6 +10,7 @@ module RailsTutorial
   class Application < Rails::Application
     config.load_defaults 7.0
     config.time_zone = "Asia/Ho_Chi_Minh"
+    config.active_storage.variant_processor = :mini_magick
     config.i18n.default_locale = Settings.i18n.default_locale.to_sym
     config.i18n.available_locales = Settings.i18n.available_locales.map(&:to_sym)
     config.i18n.fallbacks = [Settings.i18n.fallback_locale.to_sym]

@@ -1,5 +1,5 @@
 class Supervisor::DailyReportsController < Supervisor::BaseController
-  # GET /daily_reports
+  # GET supervisor/daily_reports
   def index
     supervised_course_ids = current_user.supervised_courses.pluck(:id)
 
@@ -12,7 +12,7 @@ class Supervisor::DailyReportsController < Supervisor::BaseController
     @pagy, @daily_reports = pagy(all_reports)
   end
 
-  # GET /daily_reports/:id
+  # GET supervisor/daily_reports/:id
   def show
     @daily_report = DailyReport.submitted.find_by(id: params[:id],
                                                   course_id: current_user
