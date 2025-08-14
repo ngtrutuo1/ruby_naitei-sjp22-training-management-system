@@ -9,6 +9,7 @@ gender).freeze
   PASSWORD_RESET_ATTRIBUTES = %i(password password_confirmation).freeze
   PASSWORD_RESET_EXPIRATION = 2.hours.freeze
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
+  PERMITTED_UPDATE_ATTRIBUTES = %i(name birthday gender).freeze
 
   # Enums
   enum gender: {

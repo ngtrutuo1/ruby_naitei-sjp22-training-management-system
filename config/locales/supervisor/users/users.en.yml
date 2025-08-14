@@ -10,6 +10,10 @@ en:
         update_success: "Trainee status updated successfully."
         update_failed: "Failed to update trainee status."
 
+      update:
+        update_success: "Trainee profile updated successfully."
+        update_failed: "Failed to update trainee profile."
+
       destroy:
         destroy_success: "Trainee deleted successfully."
         destroy_failed: "Failed to delete trainee."
@@ -23,6 +27,14 @@ en:
         trainee_no_selection: "No trainees selected for bulk deactivation."
         bulk_deactivate_success: "%{count} trainees successfully deactivated."
         bulk_deactivate_failed: "Failed to deactivate trainees."
+      
+      delete_user_course:
+        delete_success: "User course deleted successfully."
+        delete_failed: "Failed to delete user course."
+      
+      update_user_course_status:
+        update_success: "User course status updated successfully."
+        update_failed: "Failed to update user course status."
 
       filter_form:
         search_label: "Search Trainees"
@@ -67,3 +79,61 @@ en:
         
       trainee_no_selection: "No trainees selected."
       bulk_deactivate_confirm: "Are you sure you want to deactivate the selected trainees?"
+
+      show:
+        title: "Trainee Details"
+        personal_info: "Personal Information"
+        actions: "Actions"
+        edit_profile: "Edit Profile"
+        deactivate_account: "Deactivate Account"
+        activate_account: "Activate Account"
+        email: "Email"
+        date_of_birth: "Date of Birth"
+        gender: "Gender"
+        no_courses: "No courses found for this trainee."
+        showing_courses: "Showing %{count} courses"
+        update_success: "Trainee profile updated successfully."
+        update_failed: "Failed to update trainee profile."
+        name: "Name"
+        table:
+          id: "ID"
+          courses: "Courses"
+          progress: "Progress"
+          trainers: "Trainers"
+          status: "Status"
+          actions: "Actions"
+        course_history: "Course History"
+        
+      edit_profile_form:
+        name_placeholder: "Enter trainee name"
+        email_placeholder: "Enter email address"
+        select_gender: "Select Gender"
+        save_changes: "Save Changes"
+      
+      modal_edit_profile:
+        edit_profile_title: "Edit Trainee Profile"
+      
+      user_courses_list:
+        status_not_started: "Not Started"
+        status_in_progress: "In Progress"
+        status_finished: "Finished"
+        update_status_to_not_started: "Mark as Not Started"
+        update_status_to_in_progress: "Mark as In Progress"
+        update_status_to_finished: "Mark as Finished"
+        remove_from_course: "Remove from Course"
+        view_course_details: "View Course Details"
+        update_status: "Update Status"
+        table:
+          actions: "Actions"
+      
+      filter_user_details_form:
+        course_history: "Course History"
+        search_placeholder: "Search courses..."
+        status_all: "All Statuses"
+        course_all: "All Courses"
+        apply: "Apply Filters"
+        reset_filters: "Reset Filters"
+        status_not_started: "Not Started"
+        status_in_progress: "In Progress"
+        status_finished: "Finished"
+
