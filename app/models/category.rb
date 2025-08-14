@@ -11,4 +11,10 @@ class Category < ApplicationRecord
 
   # Scopes
   scope :ordered_by_name, -> {order(:name)}
+  scope :search_by_name, (lambda do |query|
+                            if query.present?
+                              where("name LIKE ?",
+                                    "%#{sanitize_sql_like(query)}%")
+                            end
+                          end)
 end

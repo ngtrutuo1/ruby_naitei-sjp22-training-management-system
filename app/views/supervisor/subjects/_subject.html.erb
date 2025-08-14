@@ -1,0 +1,10 @@
+<tr>
+  <td><%= subject.name %></td>
+  <td><%= subject.estimated_time_days %></td>
+  <td><%= subject.max_score %></td>
+  <td><%= subject.tasks.size %></td>
+  <td>
+    <%= link_to t(".detail"), supervisor_subject_path(subject), class: "btn btn-info btn-sm" %>
+    <%= link_to t(".delete"), supervisor_subject_path(subject), data: {turbo_method: :delete, turbo_confirm: t(".confirm_delete")}, class: "btn btn-danger btn-sm" %>
+  </td>
+</tr>

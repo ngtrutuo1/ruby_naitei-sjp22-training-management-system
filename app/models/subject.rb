@@ -1,8 +1,11 @@
 class Subject < ApplicationRecord
+  acts_as_paranoid
+
   # Associations
-  has_many :user_subjects, dependent: :destroy
+  has_many :course_subjects # rubocop:disable Rails/HasManyOrHasOneDependent
+  has_many :user_subjects, through: :course_subjects
   has_many :users, through: :user_subjects
-  has_many :course_subjects, dependent: :destroy
+
   has_many :courses, through: :course_subjects
   has_many :subject_categories, dependent: :destroy
   has_many :categories, through: :subject_categories
@@ -32,4 +35,10 @@ class Subject < ApplicationRecord
 
   # Scopes
   scope :ordered_by_name, -> {order(:name)}
+  scope :search_by_name, (lambda do |query|
+                            if query.present?
+                              where("name LIKE ?",
+                                    "%#{sanitize_sql_like(query)}%")
+                            end
+                          end)
 end

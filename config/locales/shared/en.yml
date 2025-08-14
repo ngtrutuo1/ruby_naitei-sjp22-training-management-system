@@ -22,3 +22,9 @@ en:
       delete_report_button: "Delete"
       view_report_button: "View Report Details"
       confirm_delete: "Are you sure?"
+    search_box:
+      search: "Search"
+    masterdata_navbar:
+      subjects: "Subjects"
+      tasks: "Tasks"
+      categories: "Categories"

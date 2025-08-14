@@ -1,0 +1,21 @@
+en:
+  supervisor:
+    subjects:
+      index:
+        title: "All Subjects"
+        add_subject: "Add subject"
+      subjects_table:
+        name: "Subject Name"
+        duration: "Duration (Days)"
+        max_score: "Max Score"
+        tasks_count: "Number of Tasks"
+        actions: "Actions"
+        no_subjects_found: "No subjects found."
+      subject:
+        detail: "Details"
+        delete: "Delete"
+        confirm_delete: "Are you sure you want to delete this item?"
+      destroy:
+        subject_deleted: "Subject was successfully deleted."
+        delete_failed: "Failed to delete the subject."
+  not_found_subject: "Subject not found."

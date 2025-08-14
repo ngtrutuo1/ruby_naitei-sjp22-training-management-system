@@ -168,6 +168,8 @@ GEM
     ostruct (0.6.3)
     pagy (9.3.5)
     parallel (1.23.0)
+    paranoia (3.0.1)
+      activerecord (>= 6, < 8.1)
     parser (3.2.2.3)
       ast (~> 2.4.1)
       racc
@@ -312,6 +314,7 @@ DEPENDENCIES
   mini_magick
   mysql2 (~> 0.5)
   pagy
+  paranoia
   puma (~> 5.0)
   rails (~> 7.0.5)
   rails-i18n (~> 7.0)

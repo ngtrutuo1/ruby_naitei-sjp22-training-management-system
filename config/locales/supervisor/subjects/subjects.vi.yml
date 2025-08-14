@@ -1,0 +1,21 @@
+vi:
+  supervisor:
+    subjects:
+      index:
+        title: "Tất cả các môn học"
+        add_subject: "Thêm môn học"
+      subjects_table:
+        name: "Tên môn học"
+        duration: "Thời lượng (Ngày)"
+        max_score: "Điểm tối đa"
+        tasks_count: "Số lượng nhiệm vụ"
+        actions: "Hành động"
+        no_subjects_found: "Không tìm thấy môn học nào."
+      subject:
+        detail: "Chi tiết"
+        delete: "Xóa"
+        confirm_delete: "Bạn có chắc chắn muốn xóa mục này không?"
+      destroy:
+        subject_deleted: "Xóa môn học thành công"
+        delete_failed: "Xóa môn học thất bại"
+  not_found_subject: "Không tìm thấy môn học"

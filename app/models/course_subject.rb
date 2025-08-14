@@ -1,7 +1,7 @@
 class CourseSubject < ApplicationRecord
   # Associations
   belongs_to :course
-  belongs_to :subject
+  belongs_to :subject, -> {with_deleted}
   has_many :tasks, as: :taskable, dependent: :destroy
   has_many :user_subjects, dependent: :destroy
 
@@ -20,6 +20,7 @@ class CourseSubject < ApplicationRecord
   scope :ordered_by_position, -> {order(:position)}
   scope :by_course, ->(course) {where(course:)}
   scope :by_subject, ->(subject) {where(subject:)}
+  scope :with_deleted, -> {all}
 
   private
 

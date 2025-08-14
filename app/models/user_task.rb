@@ -5,7 +5,7 @@ class UserTask < ApplicationRecord
 
   # Associations
   belongs_to :user
-  belongs_to :task
+  belongs_to :task, -> {with_deleted}
   belongs_to :user_subject
   has_many_attached :documents
 
@@ -31,4 +31,5 @@ class UserTask < ApplicationRecord
   scope :by_user_subject, ->(user_subject) {where(user_subject:)}
   scope :recent, -> {order(created_at: :desc)}
   scope :not_done, -> {where(status: :not_done)}
+  scope :with_deleted, -> {all}
 end

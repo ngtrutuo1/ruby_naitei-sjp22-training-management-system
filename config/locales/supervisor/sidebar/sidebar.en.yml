@@ -1,6 +1,7 @@
 en:
   supervisor:
     sidebar:
+      dashboard: "Dashboard"
       my_courses: "My Courses"
       daily_report: "Daily Report"
       report_history: "Report History"
@@ -8,3 +9,4 @@ en:
       supervisors: "Supervisors"
       courses: "Courses"
       reports: "Reports"
+      masterdata: "Masterdata"
