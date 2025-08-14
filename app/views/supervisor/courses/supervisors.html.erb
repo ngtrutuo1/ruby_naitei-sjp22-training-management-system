@@ -1,0 +1,6 @@
+<%= render "courses/course_layout" do %>
+  <!-- Supervisor list (Admin only) -->
+  <div class="member-list-section">
+    <%= render "courses/trainer_list", trainers: @trainers, trainer_count: @trainer_count %>
+  </div>
+<% end %>

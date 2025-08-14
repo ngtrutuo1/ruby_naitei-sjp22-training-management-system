@@ -1,0 +1,47 @@
+<tr>
+  <td class="trainee-name">
+    <div class="trainee-info">
+      <div class="trainee-avatar-small">
+        <%= gravatar_for user_course.user, size: Settings.ui.gravatar.small_size %>
+      </div>
+      <%= link_to user_course.user.name, user_path(user_course.user), class: "trainee-link" %>
+    </div>
+  </td>
+  <td class="trainee-status">
+    <span class="status-badge status-<%= user_course.status %>">
+      <%= t("enums.user_course.status.#{user_course.status}") %>
+    </span>
+  </td>
+  <td class="trainee-joined-date">
+    <%= user_course.joined_at&.strftime(Settings.formats.date) || user_course.created_at.strftime(Settings.formats.date) %>
+  </td>
+  <td class="trainee-actions">
+    <div class="dropdown">
+      <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+        <%= t("courses.members.actions") %>
+      </button>
+      <ul class="dropdown-menu">
+        <li>
+          <%= link_to t("courses.members.view_profile"),
+              user_path(user_course.user),
+              class: "dropdown-item" %>
+        </li>
+        <li>
+          <%= link_to t("courses.members.view_reports"),
+              trainee_daily_reports_path(user_course.user),
+              class: "dropdown-item" %>
+        </li>
+        <% unless user_course.status.in?([Settings.user_course.status.in_progress, Settings.user_course.status.finished]) %>
+        <li>
+          <%= button_to t("courses.members.remove_from_course"),
+              destroy_user_course_path_for(@course, user_course_id: user_course.id),
+              method: :delete,
+              data: { confirm: t("courses.members.confirm_remove_trainee") },
+              form: { class: "inline-form" },
+              class: "dropdown-item text-danger" %>
+        </li>
+        <% end %>
+      </ul>
+    </div>
+  </td>
+</tr>

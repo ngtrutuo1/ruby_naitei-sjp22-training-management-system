@@ -1,8 +1,8 @@
 class Supervisor::UsersController < Supervisor::BaseController
   before_action :check_permissions,
                 only: %i(index show update_status bulk_deactivate)
-  before_action :get_courses, only: %i(index)
-  before_action :get_trainees, only: %i(index)
+  before_action :load_courses, only: %i(index)
+  before_action :load_trainees, only: %i(index)
   before_action :load_trainee, only: %i(update_status)
   before_action :set_css_class, only: %i(index)
   before_action :require_manager
@@ -17,7 +17,7 @@ class Supervisor::UsersController < Supervisor::BaseController
 
   # PATCH /supervisor/users/:id/update_status
   def update_status
-    flash[:success] = t(".update_success") if handle_update_status
+    flash[:success] = t(".update_success") if update_status?
 
     redirect_to
   end
@@ -30,14 +30,14 @@ class Supervisor::UsersController < Supervisor::BaseController
 
   private
 
-  def get_trainees
+  def load_trainees
     @user_trainees = User.trainee.filter_by_name(params[:search])
                          .filter_by_status(params[:status])
                          .by_course(params[:course])
                          .recent
   end
 
-  def get_courses
+  def load_courses
     @courses = Course.recent
   end
 
@@ -49,7 +49,7 @@ class Supervisor::UsersController < Supervisor::BaseController
     redirect_to supervisor_users_path
   end
 
-  def handle_update_status
+  def update_status?
     if params[:activated].present? &&
        @user_trainee.update(activated: params[:activated])
       return true

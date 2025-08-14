@@ -1,0 +1,27 @@
+<!-- Trainee List -->
+<div class="trainee-section">
+  <h3 class="section-title">
+    <%= t("courses.members.trainee_list") %> (<%= trainee_count %>)
+  </h3>
+
+  <div class="trainee-table-container">
+    <table class="table trainee-table">
+      <thead>
+        <tr>
+          <th><%= t("courses.members.name") %></th>
+          <th><%= t("courses.members.current_status") %></th>
+          <th><%= t("courses.members.joined_at") %></th>
+          <th><%= t("courses.members.actions") %></th>
+        </tr>
+      </thead>
+      <tbody>
+        <%= render partial: "courses/trainee_row", collection: trainees, as: :user_course %>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Pagination -->
+  <div class="pagination-container">
+    <%== pagy_bootstrap_nav(pagy) if pagy.pages > Settings.pagination.min_pages_to_show %>
+  </div>
+</div>

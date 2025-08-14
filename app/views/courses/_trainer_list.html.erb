@@ -1,0 +1,12 @@
+<!-- Trainer List -->
+<div class="trainer-section">
+  <h3 class="section-title">
+    <%= t("courses.members.trainer_list") %> (<%= trainer_count %>)
+  </h3>
+
+  <div class="trainer-list">
+    <% trainers.each do |trainer| %>
+      <%= render partial: "courses/trainer_item", locals: {trainer: trainer, course: @course} %>
+    <% end %>
+  </div>
+</div>

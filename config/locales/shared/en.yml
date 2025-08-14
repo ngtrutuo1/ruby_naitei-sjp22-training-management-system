@@ -4,6 +4,7 @@ en:
     not_authorized: "You are not authorized to perform this action."
     user_not_found: "User not found."
     already_login: "Already logged in"
+    action: "Actions"
     filter:
       select_course_placeholder: "Select Course"
       select_user_placeholder: "Select Trainee"
