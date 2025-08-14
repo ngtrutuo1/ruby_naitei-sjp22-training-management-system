@@ -1,8 +1,22 @@
 class Supervisor::CoursesController < Supervisor::BaseController
+  include Supervisor::CoursesHelper
+
   before_action :find_course, only: %i(show members subjects)
   before_action :check_course_access, only: %i(show members subjects)
   before_action :set_courses_page_class
   before_action :check_supervisor_role
+
+  # GET /supervisor/courses
+  def index
+    @statuses = build_statuses
+
+    courses_query = Course.includes(:user)
+                          .with_counts
+                          .filter_by_params(params)
+                          .ordered_by_start_date
+
+    @pagy, @courses = pagy courses_query, limit: Settings.ui.items_per_page
+  end
 
   # GET supervisor/courses/:id
   def show
