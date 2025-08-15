@@ -1,31 +1,69 @@
 class Supervisor::UsersController < Supervisor::BaseController
-  before_action :check_permissions,
-                only: %i(index show update_status bulk_deactivate)
+  USER_COURSE_INCLUDES = [:comments, {
+    user_subjects: [:comments, :user_tasks]
+  }].freeze
   before_action :load_courses, only: %i(index)
   before_action :load_trainees, only: %i(index)
-  before_action :load_trainee, only: %i(update_status)
-  before_action :set_css_class, only: %i(index)
+  before_action :load_trainee, only: %i(update_status show
+  update_user_course_status delete_user_course update)
+  before_action :set_css_class, only: %i(index show)
   before_action :require_manager
   skip_before_action :check_supervisor_role
-  # GET /supervisor/users
+  before_action :get_user_course,
+                only: %i(update_user_course_status delete_user_course)
+
+  # GET supervisor/users
   def index
     @pagy, @trainees = pagy(@user_trainees)
   end
 
   # GET /supervisor/users/:id
-  def show; end
+  def show
+    @trainee_courses = @user_trainee.courses
+                                    .includes([:supervisors])
+                                    .includes(user_courses: [:user_subjects])
+                                    .by_user_course_status(params[:status])
+                                    .search_by_name(params[:search])
+                                    .by_course(params[:course]).recent
+    @pagy, @trainee_courses = pagy(@trainee_courses)
+  end
 
   # PATCH /supervisor/users/:id/update_status
   def update_status
     flash[:success] = t(".update_success") if update_status?
 
-    redirect_to
+    redirect_to supervisor_user_path(@user_trainee)
   end
 
   # PATCH /supervisor/users/bulk_deactivate
   def bulk_deactivate
     handle_bulk_statuses
     redirect_to supervisor_users_path
+  end
+
+  # PATCH /supervisor/users/:id/update_user_course_status
+  def update_user_course_status
+    flash[:success] = t(".update_success") if handle_update_user_course_status
+
+    redirect_to supervisor_user_path(@user_trainee)
+  end
+
+  # PATCH /supervisor/users/:id/delete_user_course
+  def delete_user_course
+    flash[:success] = t(".delete_success") if handle_delete_user_course
+
+    redirect_to supervisor_user_path(@user_trainee)
+  end
+
+  # PATCH /supervisor/users/:id/update
+  def update
+    if @user_trainee.update(user_params)
+      flash[:success] = t(".update_success")
+      redirect_to supervisor_user_path(@user_trainee)
+    else
+      flash[:danger] = t(".update_failed")
+      render :show
+    end
   end
 
   private
@@ -93,13 +131,40 @@ class Supervisor::UsersController < Supervisor::BaseController
   end
 
   def set_css_class
-    @page_class = Settings.page_classes.trainee_manager
+    @page_class = Settings.page_classes.supervisor_users
   end
 
-  def check_permissions
-    return unless current_user.trainee?
+  def get_user_course
+    @user_course =
+      case action_name.to_sym
+      when :update_user_course_status
+        @user_trainee.user_courses
+                     .find_by(course_id: params[:course_id])
+      when :delete_user_course
+        @user_trainee.user_courses.includes(USER_COURSE_INCLUDES)
+                     .find_by(course_id: params[:course_id])
+      end
+    return if @user_course
 
-    flash[:danger] = t(".unauthorized_access")
-    redirect_to root_path
+    flash[:danger] = t(".course.not_found")
+    redirect_to supervisor_user_path(@user_trainee)
+  end
+
+  def user_params
+    params.require(:user).permit(User::PERMITTED_UPDATE_ATTRIBUTES)
+  end
+
+  def handle_update_user_course_status
+    return true if @user_course.update(status: params[:status])
+
+    flash[:danger] = t(".update_failed")
+    false
+  end
+
+  def handle_delete_user_course
+    return true if @user_course.destroy
+
+    flash[:danger] = t(".delete_failed")
+    false
   end
 end

@@ -10,3 +10,8 @@ en:
         not_started: "Not Started"
         in_progress: "In Progress"
         finished: "Finished"
+    user:
+      gender:
+        male: "Male"
+        female: "Female"
+        other: "Other"

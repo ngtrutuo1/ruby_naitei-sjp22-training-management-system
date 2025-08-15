@@ -1,0 +1,89 @@
+<% user_course = course.user_courses.find { |uc| uc.user_id == @user_trainee.id } %>
+<tr class="trainee-row">
+  <td><%= index + 1 %></td>
+  <td>
+    <%= link_to course.name, "#", class: "trainee-name text-decoration-none" %>
+  </td>
+  <td>
+    <div class="progress">
+      <% progress = get_progress_user_course(user_course) %>
+      <div class="progress-bar progress-bar-info" role="progressbar"
+           style="width: <%= progress %>%"
+           aria-valuenow="<%= progress %>"
+           aria-valuemin="0"
+           aria-valuemax="100">
+        <%= progress %>%
+      </div>
+    </div>
+  </td>
+  <td>
+    <% if course.supervisors.any? %>
+      <% course.supervisors.limit(2).each do |supervisor| %>
+        <span class="badge badge-secondary mr-1"><%= supervisor.name %></span>
+      <% end %>
+      <% if course.supervisors.count > Settings.views.supervisor.users.show.supervisors_display_limit %>
+        <span class="text-muted">
+          +<%= course.supervisors.count - Settings.views.supervisor.users.show.supervisors_display_limit %>
+        </span>
+      <% end %>
+    <% else %>
+      <span class="text-muted"><%= Settings.nil_value %></span>
+    <% end %>
+  </td>
+  <td>
+    <% status = user_course&.status %>
+    <span class="badge status-badge <%= status_badge_class(status) %>">
+      <%= t(".status_#{status}") %>
+    </span>
+  </td>
+  <td class="actions-col">
+    <div class="dropdown">
+      <button class="btn btn-outline-primary btn-sm dropdown-toggle action-btn"
+              type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <%= t(".table.actions") %>
+      </button>
+      <ul class="dropdown-menu">
+        <li>
+          <%= link_to "#", class: "dropdown-item" do %>
+            <i class="fas fa-eye mr-2"></i><%= t(".view_course_details") %>
+          <% end %>
+        </li>
+        <li class="dropdown-submenu">
+          <a class="dropdown-item" href="#">
+            <i class="fas fa-edit mr-2"></i><%= t(".update_status") %>
+            <i class="fas fa-chevron-right submenu-arrow"></i>
+          </a>
+          <ul class="dropdown-menu">
+            <li>
+              <%= link_to update_user_course_status_supervisor_user_path(@user_trainee, course_id: course.id, status: :not_started),
+                  class: "dropdown-item #{"active" if user_course&.not_started?}",
+                  data: {turbo_method: :patch} do %>
+                <i class="fas fa-circle mr-2 text-secondary"></i><%= t(".update_status_to_not_started") %>
+              <% end %>
+            </li>
+            <li>
+              <%= link_to update_user_course_status_supervisor_user_path(@user_trainee, course_id: course.id, status: :in_progress),
+                  class: "dropdown-item #{"active" if user_course&.in_progress?}",
+                  data: {turbo_method: :patch} do %>
+                <i class="fas fa-circle mr-2 text-warning"></i><%= t(".update_status_to_in_progress") %>
+              <% end %>
+            </li>
+            <li>
+              <%= link_to update_user_course_status_supervisor_user_path(@user_trainee, course_id: course.id, status: :finished),
+                  class: "dropdown-item #{"active" if user_course&.finished?}",
+                  data: {turbo_method: :patch} do %>
+                <i class="fas fa-circle mr-2 text-success"></i><%= t(".update_status_to_finished") %>
+              <% end %>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <%= link_to delete_user_course_supervisor_user_path(@user_trainee, course_id: course.id),
+              class: "dropdown-item text-danger", data: {turbo_method: :delete} do %>
+            <i class="fas fa-trash mr-2"></i><%= t(".remove_from_course") %>
+          <% end %>
+        </li>
+      </ul>
+    </div>
+  </td>
+</tr>

@@ -123,6 +123,14 @@ class Course < ApplicationRecord
 
     relation
   end)
+  scope :by_course, (lambda do |course_ids|
+    where(id: course_ids) if course_ids.present?
+  end)
+  scope :by_user_course_status, (lambda do |status|
+    return all if status.blank?
+
+    includes(:user_courses).where(user_courses: {status:}).distinct
+  end)
 
   def trainees_count
     self[:trainees_count] || user_courses

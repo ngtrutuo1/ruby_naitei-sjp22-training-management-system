@@ -10,3 +10,8 @@ vi:
         not_started: "Chưa bắt đầu"
         in_progress: "Đang diễn ra"
         finished: "Đã hoàn thành"
+    user:
+      gender:
+        male: "Nam"
+        female: "Nữ"
+        other: "Khác"

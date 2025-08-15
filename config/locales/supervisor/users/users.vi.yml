@@ -1,32 +1,44 @@
 vi:
   supervisor:
     users:
-      trainee_not_found: "Không tìm thấy thực học viên."
-      trainee_no_selection: "Không có thực học viên nào được chọn."
-      bulk_statuses_success: "Đã thay đổi trạng thái thành công %{count} thực học viên."
-      bulk_statuses_failed: "Thay đổi trạng thái thực học viên không thành công."
+      trainee_not_found: "Không tìm thấy học viên."
+      trainee_no_selection: "Không có học viên nào được chọn."
+      bulk_statuses_success: "Đã thay đổi trạng thái thành công %{count} học viên."
+      bulk_statuses_failed: "Thay đổi trạng thái học viên không thành công."
 
       update_status:
-        update_success: "Cập nhật trạng thái thực học viên thành công."
-        update_failed: "Cập nhật trạng thái thực học viên không thành công."
+        update_success: "Cập nhật trạng thái  học viên thành công."
+        update_failed: "Cập nhật trạng thái  học viên không thành công."
+
+      update:
+        update_success: "Cập nhật thông tin học viên thành công."
+        update_failed: "Cập nhật thông tin học viên thất bại."
 
       destroy:
-        destroy_success: "Đã xóa thực học viên thành công."
-        destroy_failed: "Xóa thực học viên không thành công."
+        destroy_success: "Đã xóa học viên thành công."
+        destroy_failed: "Xóa học viên không thành công."
 
       bulk_destroy:
-        trainee_no_selection: "Không có thực học viên nào được chọn để xóa hàng loạt."
-        bulk_destroy_success: "Đã xóa thành công %{count} thực học viên."
-        bulk_destroy_failed: "Xóa thực học viên không thành công."
+        trainee_no_selection: "Không có học viên nào được chọn để xóa hàng loạt."
+        bulk_destroy_success: "Đã xóa thành công %{count} học viên."
+        bulk_destroy_failed: "Xóa học viên không thành công."
 
       bulk_deactivate:
-        trainee_no_selection: "Không có thực học viên nào được chọn để hủy kích hoạt hàng loạt."
-        bulk_deactivate_success: "Đã hủy kích hoạt thành công %{count} thực học viên."
-        bulk_deactivate_failed: "Hủy kích hoạt thực học viên không thành công."
+        trainee_no_selection: "Không có học viên nào được chọn để hủy kích hoạt hàng loạt."
+        bulk_deactivate_success: "Đã hủy kích hoạt thành công %{count} học viên."
+        bulk_deactivate_failed: "Hủy kích hoạt học viên không thành công."
+
+      update_user_course_status:
+        update_success: "Cập nhật trạng thái khóa học của người dùng thành công."
+        update_failed: "Cập nhật trạng thái khóa học của người dùng không thành công."
+
+      delete_user_course:
+        delete_success: "Xóa khóa học của người dùng thành công."
+        delete_failed: "Xóa khóa học của người dùng không thành công."
 
       filter_form:
-        search_label: "Tìm kiếm thực học viên"
-        search_placeholder: "Nhập tên thực học viên"
+        search_label: "Tìm kiếm học viên"
+        search_placeholder: "Nhập tên học viên"
         status_label: "Trạng thái"
         status_all: "Tất cả"
         status_active: "Đang hoạt động"
@@ -41,9 +53,9 @@ vi:
         active: "Đang hoạt động"
         inactive: "Không hoạt động"
         unknown: "Không xác định"
-        deactivate_confirm: "Bạn có chắc chắn muốn hủy kích hoạt các thực học viên đã chọn không?"
-        delete_confirm: "Bạn có chắc chắn muốn xóa các thực học viên đã chọn không?"
-        activate_confirm: "Bạn có chắc chắn muốn kích hoạt các thực học viên đã chọn không?"
+        deactivate_confirm: "Bạn có chắc chắn muốn hủy kích hoạt các học viên đã chọn không?"
+        delete_confirm: "Bạn có chắc chắn muốn xóa các học viên đã chọn không?"
+        activate_confirm: "Bạn có chắc chắn muốn kích hoạt các học viên đã chọn không?"
         gender:
           male: "Nam"
           female: "Nữ"
@@ -65,5 +77,62 @@ vi:
         not_trainees_description: "Vui lòng chọn ít nhất một học viên để thực hiện hành động."
         show_results: "Hiển thị kết quả"
 
-      trainee_no_selection: "Không có thực học viên nào được chọn."
-      bulk_deactivate_confirm: "Bạn có chắc chắn muốn hủy kích hoạt các thực học viên đã chọn không?"
+      trainee_no_selection: "Không có học viên nào được chọn."
+      bulk_deactivate_confirm: "Bạn có chắc chắn muốn hủy kích hoạt các học viên đã chọn không?"
+
+      show:
+        title: "Chi tiết Học viên"
+        personal_info: "Thông tin cá nhân"
+        actions: "Hành động"
+        edit_profile: "Sửa hồ sơ"
+        deactivate_account: "Vô hiệu hóa tài khoản"
+        activate_account: "Kích hoạt tài khoản"
+        email: "Email"
+        date_of_birth: "Ngày sinh"
+        gender: "Giới tính"
+        no_courses: "Không tìm thấy khóa học nào cho học viên này."
+        showing_courses: "Hiển thị %{count} khóa học"
+        update_success: "Cập nhật thông tin học viên thành công."
+        update_failed: "Cập nhật thông tin học viên thất bại."
+        name: "Tên"
+        table:
+          id: "ID"
+          courses: "Khóa học"
+          progress: "Tiến độ"
+          trainers: "Giảng viên"
+          status: "Trạng thái"
+          actions: "Hành động"
+        course_history: "Lịch sử khóa học"
+
+      edit_profile_form:
+        name_placeholder: "Nhập tên học viên"
+        email_placeholder: "Nhập địa chỉ email"
+        select_gender: "Chọn giới tính"
+        save_changes: "Lưu thay đổi"
+      
+      modal_edit_profile:
+        edit_profile_title: "Chỉnh sửa thông tin học viên"
+      
+      user_courses_list:
+        status_not_started: "Chưa bắt đầu"
+        status_in_progress: "Đang thực hiện"
+        status_finished: "Hoàn thành"
+        update_status_to_not_started: "Đánh dấu chưa bắt đầu"
+        update_status_to_in_progress: "Đánh dấu đang thực hiện"
+        update_status_to_finished: "Đánh dấu hoàn thành"
+        remove_from_course: "Xóa khỏi khóa học"
+        view_course_details: "Xem chi tiết khóa học"
+        update_status: "Cập nhật trạng thái"
+        table:
+          actions: "Hành động"
+
+      filter_user_details_form:
+        course_history: "Lịch sử khóa học"
+        search_placeholder: "Tìm kiếm khóa học..."
+        status_all: "Tất cả trạng thái"
+        course_all: "Tất cả khóa học"
+        apply: "Áp dụng bộ lọc"
+        reset_filters: "Đặt lại bộ lọc"
+        status_not_started: "Chưa bắt đầu"
+        status_in_progress: "Đang thực hiện"
+        status_finished: "Hoàn thành"
