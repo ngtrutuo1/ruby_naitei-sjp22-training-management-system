@@ -90,7 +90,7 @@ class Admin::UsersController < Admin::BaseController
     @page_class = Settings.page_classes.admin_users
   end
 
-  def get_user_course
+  def load_user_course
     @user_course =
       case action_name.to_sym
       when :update_user_course_status

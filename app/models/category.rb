@@ -2,7 +2,8 @@ class Category < ApplicationRecord
   include Positionable
 
   CATERGORY_PERMITTED_PARAMS = [:name,
-  {subject_categories_attributes: [:subject_id, :position, :_destroy]}].freeze
+  {subject_categories_attributes: [:id, :subject_id, :position,
+  :_destroy]}].freeze
 
   # Associations
   has_many :subject_categories, dependent: :destroy
@@ -11,7 +12,7 @@ class Category < ApplicationRecord
   accepts_nested_attributes_for :subject_categories, allow_destroy: true
 
   # Validations
-  validates :name, presence: true,
+  validates :name, presence: true, uniqueness: {case_sensitive: false},
                   length: {
                     maximum: Settings.category.max_name_length
                   }
