@@ -11,6 +11,16 @@ en:
         tasks_count: "Number of Tasks"
         actions: "Actions"
         no_subjects_found: "No subjects found."
+      new:
+        title: "Add Subject"
+        subject_name: "Subject name:"
+        cancel: "Cancel"
+        add: "Add"
+        max_score: "Max Score:"
+        estimated_time_days: "Estimated Time (days):"
+      create:
+        create_fail: "Failed to create subject."
+        create_success: "Subject was successfully created."
       subject:
         detail: "Details"
         delete: "Delete"

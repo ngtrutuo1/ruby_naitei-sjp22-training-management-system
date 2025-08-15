@@ -61,8 +61,5 @@ vi:
       create:
         course_created_successfully: "Khóa học đã được tạo thành công."
         course_creation_failed: "Không thể tạo khóa học. Vui lòng kiểm tra lại các lỗi."
-      course_subject_fields:
-        position: "Vị trí"
-        delete: "Xóa"
       errors:
         access_denied: "Bạn không có quyền truy cập khóa học này"

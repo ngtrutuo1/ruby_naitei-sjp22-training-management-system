@@ -5,6 +5,7 @@ class Supervisor::TasksController < Supervisor::BaseController
   def index
     @pagy, @tasks = pagy Task.for_taskable_type(Subject.name)
                              .includes(:taskable)
+                             .recent
                              .search_by_name(params[:search]),
                          items: Settings.ui.items_per_page
   end
@@ -19,7 +20,29 @@ class Supervisor::TasksController < Supervisor::BaseController
     redirect_to supervisor_tasks_path
   end
 
+  # GET /supervisor/tasks/new
+  def new
+    @task = Task.new
+  end
+
+  # POST /supervisor/tasks
+  def create
+    @task = Task.new task_params
+
+    if @task.save
+      flash[:success] = t(".create_success")
+      redirect_to supervisor_tasks_path
+    else
+      flash.now[:danger] = t(".create_fail")
+      render :new, status: :unprocessable_entity
+    end
+  end
+
   private
+
+  def task_params
+    params.require(:task).permit Task::TASK_PERMITTED_PARAMS
+  end
 
   def load_task
     @task = Task.find_by id: params[:id]

@@ -4,6 +4,16 @@ en:
       index:
         title: "All Tasks"
         add_task: "Add task"
+      new:
+        title: "Add Task"
+        subject_name: "Subject name:"
+        task_name: "Task name:"
+        cancel: "Cancel"
+        add: "Add"
+        choose_subject: "Choose subject"
+      create:
+        create_fail: "Failed to create task."
+        create_success: "Create task success"
       tasks_table:
         name: "Task Name"
         actions: "Actions"

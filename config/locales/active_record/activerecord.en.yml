@@ -28,12 +28,24 @@ en:
         image: "Image"
         link_to_course: "Link to course"
       course_subjects:
-        position: "Course subjects position"
+        position: "Subject position"
         subject: "Subject"
       user_course:
         status: "Status"
         joined_at: "Joined At"
         finished_at: "Finished At"
+      subject:
+        name: "Name"
+        max_score: "Max score"
+        estimated_time_days: "Estimated time days"
+      task:
+        taskable: "Subject name"
+        name: "Task name"
+      category:
+        name: "Category name"
+      subject_categories:
+        position: "Position"
+        subject: "Subject name"
     errors:
       models:
         daily_report:
@@ -79,3 +91,4 @@ en:
         must_be_within_one_year_from_now: "must be within one year from now"
         must_be_valid_url: "must be a valid URL format (starting with https://)"
         must_be_unique: "must be unique"
+        must_be_unique_positions : "Positions can not be duplicate"

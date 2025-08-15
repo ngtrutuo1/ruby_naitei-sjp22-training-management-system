@@ -1,0 +1,39 @@
+<% provide(:title, t(".title")) %>
+<h3 class="mt-15 mb-15"><%= t(".title") %></h3>
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-9 col-md-10 main">
+      <div class="col-sm-8">
+        <%= form_with(model: @task, url: supervisor_tasks_path, local: true) do |f| %>
+          <%= render "shared/error_messages", object: f.object %>
+          <%= f.hidden_field :taskable_type, value: Subject.name %>
+          <div class="form-group">
+            <div class="row">
+              <div class="col-sm-3">
+                <%= f.label :taskable_id, t(".subject_name"), class: "control-label" %>
+              </div>
+              <div class="col-sm-9">
+                <%= f.collection_select :taskable_id, Subject.all, :id, :name, {prompt: t(".choose_subject")}, class: "form-control" %>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="row">
+              <div class="col-sm-3">
+                <%= f.label :name, t(".task_name"), class: "control-label" %>
+              </div>
+              <div class="col-sm-9">
+                <%= f.text_field :name, class: "form-control" %>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-offset-10 col-sm-2 form-group text-right flex-container">
+            <%= link_to t(".cancel"), supervisor_tasks_path, class: "btn btn-danger" %>
+            <%= f.submit t(".add"), class: "btn btn-warning" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

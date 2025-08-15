@@ -61,8 +61,5 @@ en:
       create:
         course_created_successfully: "Course was successfully created."
         course_creation_failed: "Failed to create course. Please check the errors."
-      course_subject_fields:
-        position: "Position"
-        delete: "Delete"
       errors:
         access_denied: "You don't have permission to access this course"

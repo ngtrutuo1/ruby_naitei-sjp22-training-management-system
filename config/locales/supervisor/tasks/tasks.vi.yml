@@ -4,6 +4,16 @@ vi:
       index:
         title: "Tất cả các nhiệm vụ"
         add_task: "Thêm nhiệm vụ"
+      new:
+        title: "Thêm nhiệm vụ"
+        subject_name: "Tên môn học:"
+        task_name: "Tên nhiệm vụ:"
+        cancel: "Hủy"
+        add: "Thêm"
+        choose_subject: "Chọn môn học"
+      create:
+        create_fail: "Thêm nhiệm vụ thất bại."
+        create_success: "Thêm nhiệm vụ thành công."
       tasks_table:
         name: "Tên nhiệm vụ"
         actions: "Hành động"
