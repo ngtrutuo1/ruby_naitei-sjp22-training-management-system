@@ -1,6 +1,8 @@
 class Subject < ApplicationRecord
   acts_as_paranoid
 
+  SUBJECT_PERMITTED_PARAMS = %i(name max_score estimated_time_days).freeze
+
   # Associations
   has_many :course_subjects # rubocop:disable Rails/HasManyOrHasOneDependent
   has_many :user_subjects, through: :course_subjects
@@ -14,14 +16,21 @@ class Subject < ApplicationRecord
 
   # Validations
   validates :name, presence: true,
+            uniqueness: {case_sensitive: false},
             length: {maximum: Settings.subject.max_name_length}
   validates :max_score, presence: true,
             numericality: {
-              greater_than: 0,
-              less_than_or_equal_to: Settings.subject.max_score_limit
+              only_integer: true,
+              greater_than: Settings.digits.digit_zero,
+              less_than_or_equal_to: Settings.subject.max_score_limit,
+              allow_blank: true
             }
-  validates :estimated_time_days, numericality: {greater_than: 0},
-            allow_nil: true
+  validates :estimated_time_days, presence: true,
+            numericality: {
+              only_integer: true,
+              greater_than: 0,
+              allow_blank: true
+            }
   validates :image,
             content_type: {
               in: Settings.subject.allowed_image_types,
@@ -41,4 +50,5 @@ class Subject < ApplicationRecord
                                     "%#{sanitize_sql_like(query)}%")
                             end
                           end)
+  scope :recent, -> {order(created_at: :desc)}
 end

@@ -34,6 +34,18 @@ vi:
         status: "Trạng thái"
         joined_at: "Ngày tham gia"
         finished_at: "Ngày hoàn thành"
+      subject:
+        name: "Tên"
+        max_score: "Điểm tối đa"
+        estimated_time_days: "Thời gian ước tính"
+      task:
+        taskable: "Tên môn học"
+        name: "Tên nhiệm vụ"
+      category:
+        name: "Tên danh mục"
+      subject_categories:
+        position: "Vị trí"
+        subject: "Tên môn học"
     errors:
       models:
         daily_report:
@@ -79,3 +91,4 @@ vi:
         must_be_within_one_year_from_now: "phải trong vòng 1 năm kể từ ngày hôm nay"
         must_be_valid_url: "phải có định dạng URL hợp lệ (bắt đầu bằng https://)"
         must_be_unique: "không được trùng nhau"
+        must_be_unique_positions : "Các vị trí không được trùng nhau"

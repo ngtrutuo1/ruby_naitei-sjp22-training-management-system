@@ -9,6 +9,15 @@ en:
         actions: "Actions"
         number_of_subjects: "Number of subjects"
         no_categories_found: "No categories found."
+      new:
+        title: "Add new category"
+        category_name: "Category name"
+        subject_list: "Subject list"
+        cancel: "Cancel"
+        add: "Add"
+      create:
+        create_success: "Category was successfully created."
+        create_fail: "Failed to create the category."
       destroy:
         category_deleted: "Category was successfully deleted."
         delete_failed: "Failed to delete the category."

@@ -193,6 +193,10 @@ ui_limits:
 defaults:
   count: 0
 
+digits:
+  digit_zero: 0
+  digit_one: 1
+
 subject_status:
   not_started: "not_started"
   in_progress: "in_progress"

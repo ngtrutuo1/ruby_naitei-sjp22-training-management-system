@@ -9,6 +9,15 @@ vi:
         actions: "Hành động"
         number_of_subjects: "Số lượng môn học"
         no_categories_found: "Không tìm thấy danh mục nào."
+      new:
+        title: "Thêm danh mục mới"
+        category_name: "Tên danh mục"
+        subject_list: "Danh sách môn học"
+        cancel: "Hủy bỏ"
+        add: "Thêm"
+      create:
+        create_success: "Tạo danh mục thành công"
+        create_fail: "Tạo danh mục thất bại"
       destroy:
         category_deleted: "Danh mục đã được xóa thành công."
         delete_failed: "Xóa danh mục thất bại."

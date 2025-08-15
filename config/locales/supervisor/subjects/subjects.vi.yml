@@ -11,6 +11,16 @@ vi:
         tasks_count: "Số lượng nhiệm vụ"
         actions: "Hành động"
         no_subjects_found: "Không tìm thấy môn học nào."
+      new:
+        title: "Thêm môn học"
+        subject_name: "Tên môn học:"
+        cancel: "Hủy"
+        add: "Thêm"
+        max_score: "Điểm tối đa:"
+        estimated_time_days: "Thời gian ước tính (ngày):"
+      create:
+        create_fail: "Thêm môn học thất bại."
+        create_success: "Thêm môn học thành công."
       subject:
         detail: "Chi tiết"
         delete: "Xóa"

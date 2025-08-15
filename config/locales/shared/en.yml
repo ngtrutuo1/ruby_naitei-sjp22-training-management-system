@@ -28,3 +28,6 @@ en:
       subjects: "Subjects"
       tasks: "Tasks"
       categories: "Categories"
+    subject_row_fields:
+        position: "Position"
+        delete: "Delete"

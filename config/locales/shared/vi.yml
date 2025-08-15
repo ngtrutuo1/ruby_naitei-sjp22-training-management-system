@@ -28,3 +28,6 @@ vi:
       subjects: "Môn học"
       tasks: "Nhiệm vụ"
       categories: "Danh mục"
+    subject_row_fields:
+      position: "Vị trí"
+      delete: "Xóa"

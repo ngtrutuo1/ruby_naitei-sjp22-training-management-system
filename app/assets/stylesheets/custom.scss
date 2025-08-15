@@ -217,12 +217,10 @@ textarea {
     box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0.25);
     color: white;
   }
-
   &:disabled {
     background-color: rgba(255, 255, 255, 0.05);
     color: rgba(255, 255, 255, 0.6);
   }
-
   &::placeholder {
     color: rgba(255, 255, 255, 0.6);
   }
@@ -477,12 +475,20 @@ textarea {
   }
 }
 
+.max-width-600 {
+  max-width: 600px;
+}
+
 .m-0 {
   margin: 0
 }
 
 .mt-5 {
   margin-top: 5px;
+}
+
+.mb-5 {
+  margin-bottom: 5px;
 }
 
 .mt-15 {
@@ -493,6 +499,22 @@ textarea {
   margin-bottom: 15px
 }
 
+.ml-5 {
+  margin-left: 5px;
+}
+
 .width-fit {
   width: fit-content;
+}
+
+.width-30 {
+  width: 30%
+}
+
+.width-50 {
+  width: 50%
+}
+
+.width-100 {
+  width: 100%
 }

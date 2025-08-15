@@ -1,0 +1,44 @@
+<% provide(:title, t(".title")) %>
+<h3 class="mt-15 mb-15"><%= t(".title") %></h3>
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-9 col-md-10 main">
+      <div class="col-sm-8">
+        <%= form_with(model: @subject, url: supervisor_subjects_path, local: true) do |f| %>
+          <%= render "shared/error_messages", object: f.object %>
+          <div class="form-group">
+            <div class="row">
+              <div class="col-sm-3">
+                <%= f.label :name, t(".subject_name"), class: "control-label" %>
+              </div>
+              <div class="col-sm-9">
+                <%= f.text_field :name, class: "form-control" %>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-3">
+                <%= f.label :max_score, t(".max_score"), class: "control-label" %>
+              </div>
+              <div class="col-sm-9">
+                <%= f.text_field :max_score, class: "form-control" %>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-3">
+                <%= f.label :estimated_time_days, t(".estimated_time_days"), class: "control-label" %>
+              </div>
+              <div class="col-sm-9">
+                <%= f.text_field :estimated_time_days, class: "form-control" %>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-offset-10 col-sm-2 form-group text-right flex-container">
+            <%= link_to t(".cancel"), supervisor_subjects_path, class: "btn btn-danger" %>
+            <%= f.submit t(".add"), class: "btn btn-warning" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

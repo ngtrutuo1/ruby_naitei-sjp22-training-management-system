@@ -15,13 +15,6 @@ Rails.application.routes.draw do
     resources :password_resets, only: %i(new create edit update)
     resources :users, only: %i(show edit update)
 
-    resources :courses, only: %i(index show) do
-      member do
-        get :members
-        get :subjects
-      end
-    end
-
     # --- Trainee Namespace ---
     namespace :trainee do
       resources :daily_reports, only: %i(index show new create edit update)
@@ -79,11 +72,7 @@ Rails.application.routes.draw do
     namespace :admin do
       resources :dashboards
       resources :users
-      resources :subjects
-      resources :categories
       resources :daily_reports, only: %i(index show)
-
-
     end
   end
 end

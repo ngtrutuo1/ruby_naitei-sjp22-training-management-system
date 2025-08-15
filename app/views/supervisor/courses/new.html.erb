@@ -78,11 +78,11 @@
                 </div>
                 <div class="col-sm-9" id="subject-list-container">
                     <%= f.fields_for :course_subjects do |subject_form| %>
-                      <%= render "course_subject_fields", f: subject_form %>
+                      <%= render "shared/subject_row_fields", f: subject_form %>
                     <% end %>
                 </div>
               </div>
-              <div class="row" style="margin-top:5px;">
+              <div class="row mt-5">
                 <div class="col-sm-3"></div>
                 <div class="col-sm-9">
                   <button type="button" class="btn btn-default btn-sm" id="add-subject-row">+</button>
