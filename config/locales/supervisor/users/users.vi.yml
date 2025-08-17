@@ -136,3 +136,4 @@ vi:
         status_not_started: "Chưa bắt đầu"
         status_in_progress: "Đang thực hiện"
         status_finished: "Hoàn thành"
+        select_gender: "Chọn giới tính"

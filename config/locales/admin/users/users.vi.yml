@@ -16,6 +16,37 @@ vi:
         no_supervisors_description: "Không có giám sát viên nào phù hợp với tiêu chí lọc hiện tại. Hãy thử điều chỉnh các tham số tìm kiếm."
         showing_results: "Hiển thị kết quả đã lọc"
 
+      show:
+        actions: "Hành động"
+        edit_profile: "Chỉnh sửa hồ sơ"
+        deactivate_account: "Vô hiệu hóa tài khoản"
+        activate_account: "Kích hoạt tài khoản"
+        email: "Email"
+        name: "Họ và tên"
+        date_of_birth: "Ngày sinh"
+        gender: "Giới tính"
+        course_history: "Lịch sử khóa học"
+        table:
+          id: "ID"
+          courses: "Khóa học"
+          start_date: "Ngày bắt đầu"
+          end_date: "Ngày kết thúc"
+          trainees: "Học viên"
+          status: "Trạng thái"
+          actions: "Hành động"
+        no_courses: "Không tìm thấy khóa học"
+        showing_courses: "Hiển thị %{count} khóa học"
+
+      update:
+        update_success: "Cập nhật hồ sơ thành công"
+        update_failed: "Cập nhật hồ sơ thất bại"
+
+      delete_user_course:
+        delete_success: "Xóa giám sát viên khỏi khóa học thành công"
+        delete_failed: "Xóa giám sát viên khỏi khóa học thất bại"
+        course:
+          not_found: "Không tìm thấy khóa học"
+
       update_status:
         update_success: "Cập nhật trạng thái giám sát viên thành công"
         update_failed: "Cập nhật trạng thái giám sát viên thất bại"
@@ -40,6 +71,37 @@ vi:
         activate: "Kích hoạt"
         deactivate_confirm: "Bạn có chắc chắn muốn vô hiệu hóa giám sát viên này không?"
         activate_confirm: "Bạn có chắc chắn muốn kích hoạt giám sát viên này không?"
+
+      user_courses_list:
+        status_active: "Hoạt động"
+        status_inactive: "Không hoạt động"
+        status_completed: "Hoàn thành"
+        status_cancelled: "Đã hủy"
+        table:
+          actions: "Hành động"
+        view_course_details: "Xem chi tiết khóa học"
+        remove_from_course: "Xóa khỏi khóa học"
+        status_in_progress: "Đang thực hiện"
+        status_not_started: "Chưa bắt đầu"
+        status_finished: "Hoàn thành"
+
+      filter_user_details_form:
+        search_placeholder: "Tìm kiếm khóa học..."
+        apply: "Áp dụng"
+        reset_filters: "Đặt lại bộ lọc"
+        course_all: "Tất cả khóa học"
+        status_all: "Tất cả trạng thái"
+        status_not_started: "Chưa bắt đầu"
+        status_in_progress: "Đang thực hiện"
+        status_finished: "Hoàn thành"
+
+      modal_edit_profile:
+        edit_profile_title: "Chỉnh sửa hồ sơ"
+
+      edit_profile_form:
+        name_placeholder: "Nhập họ và tên"
+        email_placeholder: "Nhập địa chỉ email"
+        save_changes: "Lưu thay đổi"
 
       filter_form:
         search_label: "Tìm kiếm"
