@@ -7,17 +7,42 @@
         "user_not_found": "User not found"
       }
     },
+    "action": "Action",
+    "active_courses": "Active Courses",
     "activerecord": {
       "attributes": {
+        "category": {
+          "name": "Category name"
+        },
         "course": {
           "finish_date": "Finish Date",
+          "image": "Image",
+          "link_to_course": "Link to course",
           "name": "Course Name",
           "start_date": "Start Date",
-          "status": "Status"
+          "status": "Status",
+          "supervisor_ids": "Trainer list"
+        },
+        "course_subjects": {
+          "position": "Subject position",
+          "subject": "Subject"
         },
         "daily_report": {
           "content": "Content",
           "course": "Course"
+        },
+        "subject": {
+          "estimated_time_days": "Estimated time days",
+          "max_score": "Max score",
+          "name": "Name"
+        },
+        "subject_categories": {
+          "position": "Position",
+          "subject": "Subject name"
+        },
+        "task": {
+          "name": "Task name",
+          "taskable": "Subject name"
         },
         "user": {
           "birthday": "Birthday",
@@ -40,11 +65,17 @@
       },
       "errors": {
         "messages": {
+          "at_least_one_trainer": "must have at least one trainer",
+          "document_size_exceeded": "must be less than %{max_size}",
           "finish_date_after_start_date": "must be after start date",
-          "image_size_exceeded": "must be less than %{size} MB",
+          "image_size_exceeded": "must be less than %{max_size}",
           "invalid_document_type": "is not a valid document type",
           "invalid_image_type": "is not a valid image type",
           "member_to_after_member_from": "must be after member from date",
+          "must_be_unique": "must be unique",
+          "must_be_unique_positions": "Positions can not be duplicate",
+          "must_be_valid_url": "must be a valid URL format (starting with https://)",
+          "must_be_within_one_year_from_now": "must be within one year from now",
           "not_a_valid_course": "is not valid. You can only submit a report for a course you are enrolled in.",
           "one_report_per_day": "You have already submitted a report for this course today.",
           "record_invalid": "Validation failed: %{errors}",
@@ -54,6 +85,13 @@
           }
         },
         "models": {
+          "daily_report": {
+            "attributes": {
+              "course": {
+                "blank": "can't be blank"
+              }
+            }
+          },
           "user": {
             "attributes": {
               "birthday": {
@@ -99,38 +137,344 @@
         "user_course": "User Course"
       }
     },
+    "admin": {
+      "courses": {
+        "courses_table": {
+          "actions": "Actions",
+          "course_name": "Course Name",
+          "end_date": "End Date",
+          "no_courses_found": "No courses were found.",
+          "start_date": "Start Date",
+          "status": "Status",
+          "supervisors": "Supervisors",
+          "trainees": "Trainees"
+        },
+        "index": {
+          "add_course_button": "Add Course",
+          "all_statuses": "All Statuses",
+          "apply_button": "Apply",
+          "clear_filter_button": "Clear Filter",
+          "courses": "Course Name",
+          "creators": "Trainer Name",
+          "search_by": "Search By",
+          "search_placeholder": "Enter keyword...",
+          "start_date_range": "Start Date Range",
+          "title": "All Courses"
+        }
+      },
+      "daily_reports": {
+        "index": {
+          "manager_header": "Daily Report Manager",
+          "title": "Daily Reports"
+        },
+        "report_not_found": "Report not found.",
+        "show": {
+          "content_details": "Content details:",
+          "course": "Course:",
+          "date_submitted": "Date submitted:",
+          "title": "Report detail"
+        }
+      },
+      "dashboards": {
+        "courses_row": {
+          "view_action": "Details"
+        },
+        "index": {
+          "active_courses": "Active Courses",
+          "active_courses_title": "Active Courses",
+          "completion_rate": "Completion Rate",
+          "overview": "Overview",
+          "search": "Enter keyword...",
+          "title": "Dashboard",
+          "trainees": "Trainees",
+          "trainers": "Trainers"
+        },
+        "tables": {
+          "table_headers": {
+            "actions": "Actions",
+            "course": "Course",
+            "creators": "Creators",
+            "end_date": "End Date",
+            "start_date": "Start Date",
+            "trainees": "Trainees",
+            "trainers": "Trainers"
+          },
+          "view_action": "view"
+        }
+      },
+      "sidebar": {
+        "admin": "Admins",
+        "courses": "Courses",
+        "daily_report": "Daily Report",
+        "masterdata": "Masterdata",
+        "my_courses": "My Courses",
+        "report_history": "Report History",
+        "reports": "Reports",
+        "supervisors": "Supervisors",
+        "trainees": "Trainees"
+      },
+      "users": {
+        "bulk_deactivate": {
+          "bulk_statuses_failed": "Failed to change supervisors status",
+          "bulk_statuses_success": "%{count} supervisors status changed successfully",
+          "supervisor_no_selection": "Please select at least one supervisor"
+        },
+        "delete_user_course": {
+          "course": {
+            "not_found": "Course not found"
+          },
+          "delete_failed": "Failed to remove supervisor from course",
+          "delete_success": "Supervisor removed from course successfully"
+        },
+        "edit_profile_form": {
+          "email_placeholder": "Enter email address",
+          "name_placeholder": "Enter full name",
+          "save_changes": "Save Changes"
+        },
+        "filter_form": {
+          "apply": "Apply Filters",
+          "clear_search": "Clear search",
+          "course_all": "All Courses",
+          "course_label": "Course",
+          "reset_filters": "Reset Filters",
+          "search_label": "Search",
+          "search_placeholder": "Search by name or email...",
+          "status_active": "Active",
+          "status_all": "All Statuses",
+          "status_inactive": "Inactive",
+          "status_label": "Status"
+        },
+        "filter_user_details_form": {
+          "apply": "Apply",
+          "course_all": "All Courses",
+          "reset_filters": "Reset Filters",
+          "search_placeholder": "Search courses...",
+          "status_all": "All Statuses",
+          "status_finished": "Finished",
+          "status_in_progress": "In Progress",
+          "status_not_started": "Not Started"
+        },
+        "index": {
+          "actions": "Actions",
+          "birthday": "Birthday",
+          "change_status": "Change Status",
+          "email": "Email",
+          "filter_title": "Filter and Search",
+          "gender": "Gender",
+          "items_selected": "items selected",
+          "name": "Name",
+          "no_supervisors_description": "No supervisors match your current filter criteria. Try adjusting your search parameters.",
+          "no_supervisors_found": "No supervisors found",
+          "showing_results": "Showing filtered results",
+          "status": "Status",
+          "title": "Supervisor Management"
+        },
+        "modal_edit_profile": {
+          "edit_profile_title": "Edit Profile"
+        },
+        "show": {
+          "actions": "Actions",
+          "activate_account": "Activate Account",
+          "course_history": "Course History",
+          "date_of_birth": "Date of Birth",
+          "deactivate_account": "Deactivate Account",
+          "edit_profile": "Edit Profile",
+          "email": "Email",
+          "gender": "Gender",
+          "name": "Name",
+          "no_courses": "No courses found",
+          "showing_courses": "Showing %{count} courses",
+          "table": {
+            "actions": "Actions",
+            "courses": "Course",
+            "end_date": "End Date",
+            "id": "ID",
+            "start_date": "Start Date",
+            "status": "Status",
+            "trainees": "Trainees"
+          }
+        },
+        "supervisor_infor_list": {
+          "activate": "Activate",
+          "activate_confirm": "Are you sure you want to activate this supervisor?",
+          "active": "Active",
+          "deactivate": "Deactivate",
+          "deactivate_confirm": "Are you sure you want to deactivate this supervisor?",
+          "gender": {
+            "female": "Female",
+            "male": "Male",
+            "other": "Other"
+          },
+          "inactive": "Inactive",
+          "unknown": "Unknown",
+          "view_profile": "View Profile"
+        },
+        "update": {
+          "update_failed": "Failed to update profile",
+          "update_success": "Profile updated successfully"
+        },
+        "update_status": {
+          "supervisor": {
+            "not_found": "Supervisor not found"
+          },
+          "update_failed": "Failed to update supervisor status",
+          "update_success": "Supervisor status updated successfully"
+        },
+        "user_courses_list": {
+          "remove_from_course": "Remove from Course",
+          "status_active": "Active",
+          "status_cancelled": "Cancelled",
+          "status_completed": "Completed",
+          "status_finished": "Finished",
+          "status_in_progress": "In Progress",
+          "status_inactive": "Inactive",
+          "status_not_started": "Not Started",
+          "table": {
+            "actions": "Actions"
+          },
+          "view_course_details": "View Course Details"
+        }
+      }
+    },
     "app_information": "App Information",
     "app_label": "App:",
-    "base_title": "Ruby on Rails Tutorial Sample App",
+    "base_title": "Training System",
+    "common": {
+      "cancel": "Cancel",
+      "errors_prohibited_save": "There were errors preventing the save:",
+      "save_changes": "Save changes"
+    },
+    "completion_rate": "Completion Rate",
     "courses": {
       "check_course_access": {
         "access_denied": "You don't have permission to access this course"
       },
+      "create": {
+        "course_created_successfully": "Course was successfully created.",
+        "course_creation_failed": "Failed to create course. Please check the errors."
+      },
+      "destroy_course_subject": {
+        "failed": "Failed to remove subject from course",
+        "success": "Subject removed from course successfully"
+      },
+      "destroy_supervisor": {
+        "failed": "Failed to remove trainer from course",
+        "must_have_another_supervisor": "The course must have at least one trainer remaining",
+        "success": "Removed trainer from course successfully"
+      },
+      "destroy_user_course": {
+        "failed": "Failed to remove member from course",
+        "success": "Removed member from course successfully"
+      },
       "errors": {
-        "access_denied": "You don't have permission to access this course"
+        "access_denied": "You don't have permission to access this course",
+        "course_not_found": "Course not found",
+        "course_subject_not_found": "Course subject not found",
+        "supervisor_not_found": "Supervisor not found",
+        "user_course_not_found": "User course not found"
+      },
+      "finish_course_subject": {
+        "failed": "Failed to mark subject as finished",
+        "success": "Marked subject as finished successfully"
+      },
+      "leave": {
+        "confirm_leave": "Are you sure?",
+        "leave_course": "Leave course"
       },
       "members": {
+        "access_denied": "You don't have permission to access this course",
+        "actions": "Actions",
+        "confirm_leave": "Are you sure?",
+        "confirm_remove_trainee": "Are you sure?",
+        "confirm_remove_trainer": "Are you sure?",
         "course_not_found": "Course not found",
         "current_status": "Current status",
         "joined_at": "Joined at",
+        "leave_course": "Leave course",
         "name": "Name",
+        "remove_from_course": "Remove from Course",
         "trainee_list": "Trainee list",
-        "trainer_list": "Trainer list"
+        "trainer_list": "Trainer list",
+        "view_profile": "View Profile",
+        "view_reports": "View Reports"
+      },
+      "new": {
+        "add_button": "Add",
+        "cancel_button": "Cancel",
+        "category_label": "Category:",
+        "course_name_label": "Course name",
+        "end_date_label": "End date",
+        "image_placeholder": "image",
+        "link_to_course_label": "Link to course:",
+        "page_title": "Create new course",
+        "select_category_placeholder": "Select category",
+        "start_date_label": "Start date",
+        "trainer_label": "Trainer"
       },
       "show": {
+        "access_denied": "You don't have permission to access this course",
+        "course_name": "Course Name",
+        "course_not_found": "Course not found",
         "created_by": "Created by",
         "expected": "expected",
         "last_updated": "Last updated",
+        "link_to_course": "Course Link",
         "tabs": {
           "members": "Members",
-          "subjects": "Subjects"
+          "subjects": "Subjects",
+          "supervisors": "Supervisors"
         },
-        "title": "Course Details"
+        "time_period": "Time Period",
+        "title": "Course Details",
+        "trainer_count": "trainers",
+        "trainers": "Trainers"
+      },
+      "statuses": {
+        "finished": "Finished",
+        "in_progress": "In Progress",
+        "not_started": "Not Started"
       },
       "subjects": {
-        "subjects_list": "Subjects list"
+        "access_denied": "You don't have permission to access this course",
+        "actions": "Actions",
+        "and_more": "and %{count} more",
+        "assessments": "Assessments (%{count})",
+        "assessments_popup": {
+          "close": "×",
+          "comments_title": "Comments from instructors",
+          "score": "Score",
+          "title": "Subject Assessment"
+        },
+        "confirm_delete": "Are you sure?",
+        "confirm_finish": "Are you sure?",
+        "delete": "Delete",
+        "edit": "Edit",
+        "finish": "Finish Subject",
+        "no_comments": "No assessments yet",
+        "no_tasks": "No tasks available",
+        "status": {
+          "finished": "Finished",
+          "in_progress": "In Progress",
+          "not_started": "Not Started"
+        },
+        "subject_status": {
+          "finished": "Finished",
+          "finished_but_overdue": "Finished but overdue",
+          "finished_early": "Finished early",
+          "finished_ontime": "Finished on time",
+          "in_progress": "In progress",
+          "not_started": "Start",
+          "overdue_and_not_finished": "Overdue and not finished"
+        },
+        "subjects_list": "Subjects list",
+        "task_overview": "Task overview",
+        "tasks_preview": "Task preview",
+        "time_label": "Time: %{days} day",
+        "time_label_plural": "Time: %{days} days",
+        "time_to_finish": "Time: %{days} days"
       }
     },
+    "creators": "Creators",
     "date": {
       "abbr_day_names": [
         "Sun",
@@ -252,12 +596,21 @@
         "year": "Year"
       }
     },
+    "detail": "Detail",
+    "end_date": "End Date",
     "enums": {
       "course": {
         "status": {
           "finished": "Finished",
           "in_progress": "In Progress",
           "not_started": "Not Started"
+        }
+      },
+      "user": {
+        "gender": {
+          "female": "Female",
+          "male": "Male",
+          "other": "Other"
         }
       },
       "user_course": {
@@ -73205,6 +73558,7 @@
         ]
       }
     },
+    "finished": "Finished",
     "helpers": {
       "select": {
         "prompt": "Please select"
@@ -73223,6 +73577,21 @@
         ]
       }
     },
+    "in_progress": "In progress",
+    "layouts": {
+      "sidebar": {
+        "admin": "Admins",
+        "courses": "Courses",
+        "daily_report": "Daily Report",
+        "dashboard": "Dashboard",
+        "my_courses": "My Courses",
+        "report_history": "Report History",
+        "reports": "Reports",
+        "requests": "Requests",
+        "supervisors": "Supervisors",
+        "trainees": "Trainees"
+      }
+    },
     "locales": {
       "en": "English",
       "vi": "Vietnamese"
@@ -73232,12 +73601,20 @@
       "permission_denied": "Permission denied"
     },
     "navigation": {
+      "account": "Account",
       "contact": "Contact",
       "help": "Help",
       "home": "Home",
       "log_in": "Log in",
-      "sample_app": "sample app"
+      "logout": "Log out",
+      "profile": "Profile",
+      "sample_app": "Training System",
+      "setting": "Settings"
     },
+    "not_found_category": "Category not found.",
+    "not_found_subject": "Subject not found.",
+    "not_found_task": "Không tìm thấy bài tập.",
+    "not_started": "Not started",
     "number": {
       "currency": {
         "format": {
@@ -73292,8 +73669,7 @@
           }
         }
       },
-      "nth": {
-      },
+      "nth": {},
       "percentage": {
         "format": {
           "delimiter": "",
@@ -73361,17 +73737,32 @@
       }
     },
     "shared": {
+      "action": "Actions",
+      "already_login": "Already logged in",
+      "course_subject_row_field": {
+        "delete": "Delete",
+        "position": "Position"
+      },
+      "courses_list": {
+        "all_statuses": "All statuses",
+        "apply": "Apply",
+        "course_dashboard_title": "Dashboard",
+        "no_courses_found": "No courses found",
+        "status": "Status"
+      },
       "daily_report": {
         "confirm_delete": "Are you sure?",
         "course": "Course",
         "delete_report_button": "Delete",
         "edit_report_button": "Edit Report",
         "my_reports_list": "My Reports List",
+        "sender": "Sender",
         "submit_report_button": "Submit Report",
         "title": "Daily report",
         "view_report_button": "View Report Details"
       },
       "error_messages": {
+        "filter_error": "Error applying filter. Please try again.",
         "one": "error",
         "other": "errors",
         "score_cannot_exceed_max": "cannot exceed maximum score",
@@ -73380,15 +73771,29 @@
       "filter": {
         "apply_filter": "Apply Filter",
         "create_report_button": "+ New Report",
-        "select_course_placeholder": "Select Course"
+        "select_course_placeholder": "Select Course",
+        "select_user_placeholder": "Select Trainee"
       },
       "login_required": "Please log in to continue.",
+      "masterdata_navbar": {
+        "categories": "Categories",
+        "subjects": "Subjects",
+        "tasks": "Tasks"
+      },
       "not_authorized": "You are not authorized to perform this action.",
       "reports_table": {
         "no_reports_found": "No reports found."
       },
+      "search_box": {
+        "search": "Search"
+      },
+      "subject_row_fields": {
+        "delete": "Delete",
+        "position": "Position"
+      },
       "user_not_found": "User not found."
     },
+    "start_date": "Start Date",
     "static_pages": {
       "contact": {
         "address": "132 Le Thanh Nghi, Hanoi, Vietnam",
@@ -73408,19 +73813,450 @@
         "book_emphasis": "book",
         "book_link_text": "Ruby on Rails Tutorial",
         "contact_heading": "Contact support",
-        "description": "Get help on the Ruby on Rails Tutorial at the %{help_link}. To get help on this sample app, see the %{book_link}.",
+        "description": "Get help on the Ruby on Rails Tutorial at the %{help_link}. To get help on this Training System, see the %{book_link}.",
         "email_label": "Contact email:",
         "heading": "Help",
         "help_link_text": "Rails Tutorial help section",
         "title": "Help"
       },
       "home": {
-        "description": "This is the home page for the %{link} sample application.",
+        "dashboard_title": "Dashboard",
+        "description": "This is the home page for the %{link} Training System.",
         "link_text": "Ruby on Rails Tutorial",
+        "manager_dashboard_title": "Manager Dashboard",
         "sign_up": "Sign up now!",
         "title": "Home",
         "version_label": "Version",
-        "welcome": "Welcome to the Sample App"
+        "welcome": "Welcome to the Training System"
+      }
+    },
+    "supervisor": {
+      "categories": {
+        "categories_table": {
+          "actions": "Actions",
+          "name": "Category Name",
+          "no_categories_found": "No categories found.",
+          "number_of_subjects": "Number of subjects"
+        },
+        "category": {
+          "confirm_delete": "Are you sure you want to delete this item?",
+          "delete": "Delete",
+          "detail": "Details"
+        },
+        "create": {
+          "create_fail": "Failed to create the category.",
+          "create_success": "Category was successfully created."
+        },
+        "destroy": {
+          "category_deleted": "Category was successfully deleted.",
+          "delete_failed": "Failed to delete the category."
+        },
+        "edit": {
+          "title": "Chỉnh sửa danh mục",
+          "update": "Cập nhật"
+        },
+        "form": {
+          "cancel": "Cancel",
+          "category_name": "Category name",
+          "subject_list": "Subject list"
+        },
+        "index": {
+          "add_subject": "Add Category",
+          "title": "All Categories"
+        },
+        "new": {
+          "add": "Add",
+          "title": "Add new category"
+        },
+        "show": {
+          "back": "Back",
+          "category_name": "Category name",
+          "edit": "Edit",
+          "no_subjects": "There are no subjects in this category.",
+          "subject_list": "Subject list",
+          "title": "Category Details"
+        },
+        "update": {
+          "update_fail": "Failed to update the category.",
+          "update_success": "Category was successfully updated."
+        }
+      },
+      "courses": {
+        "check_course_access": {
+          "access_denied": "You don't have permission to access this course"
+        },
+        "courses_table": {
+          "actions": "Actions",
+          "course_name": "Course Name",
+          "end_date": "End Date",
+          "no_courses_found": "No courses were found.",
+          "start_date": "Start Date",
+          "status": "Status",
+          "supervisors": "Supervisors",
+          "trainees": "Trainees"
+        },
+        "create": {
+          "course_created_successfully": "Course was successfully created.",
+          "course_creation_failed": "Failed to create course. Please check the errors."
+        },
+        "errors": {
+          "access_denied": "You don't have permission to access this course"
+        },
+        "index": {
+          "add_course_button": "Add Course",
+          "all_statuses": "All Statuses",
+          "apply_button": "Apply",
+          "clear_filter_button": "Clear Filter",
+          "courses": "Course Name",
+          "creators": "Trainer Name",
+          "search_by": "Search By",
+          "search_placeholder": "Enter keyword...",
+          "start_date_range": "Start Date Range",
+          "title": "All Courses"
+        },
+        "members": {
+          "access_denied": "You don't have permission to access this course",
+          "course_not_found": "Course not found",
+          "current_status": "Current status",
+          "joined_at": "Joined at",
+          "name": "Name",
+          "trainee_list": "Trainee list",
+          "trainer_list": "Trainer list"
+        },
+        "new": {
+          "add_button": "Add",
+          "cancel_button": "Cancel",
+          "category_label": "Category:",
+          "course_name_label": "Course name",
+          "end_date_label": "End date",
+          "image_placeholder": "image",
+          "link_to_course_label": "Link to course:",
+          "page_title": "Create new course",
+          "select_category_placeholder": "Select category",
+          "start_date_label": "Start date",
+          "subject_list": "Subject list",
+          "trainer_label": "Trainer"
+        },
+        "show": {
+          "access_denied": "You don't have permission to access this course",
+          "course_not_found": "Course not found",
+          "created_by": "Created by",
+          "expected": "expected",
+          "last_updated": "Last updated",
+          "tabs": {
+            "members": "Members",
+            "subjects": "Subjects"
+          },
+          "title": "Course Details"
+        },
+        "subjects": {
+          "access_denied": "You don't have permission to access this course",
+          "assessments": "Assessments (%{count})",
+          "assessments_popup": {
+            "close": "×",
+            "comments_title": "Comments from instructors",
+            "score": "Score",
+            "title": "Subject Assessment"
+          },
+          "course_not_found": "Course not found",
+          "no_comments": "No assessments yet",
+          "no_tasks": "No tasks available",
+          "subject_status": {
+            "finished": "Finished",
+            "finished_but_overdue": "Finished but overdue",
+            "finished_early": "Finished early",
+            "finished_ontime": "Finished on time",
+            "in_progress": "In progress",
+            "not_started": "Start",
+            "overdue_and_not_finished": "Overdue and not finished"
+          },
+          "subjects_list": "Subjects list",
+          "task_overview": "Task overview",
+          "time_label": "Time: %{days} day",
+          "time_label_plural": "Time: %{days} days"
+        }
+      },
+      "daily_reports": {
+        "index": {
+          "manager_header": "Daily Report Manager",
+          "title": "Daily Reports"
+        },
+        "report_not_found": "Report not found.",
+        "show": {
+          "content_details": "Content details:",
+          "course": "Course:",
+          "date_submitted": "Date submitted:",
+          "title": "Report detail"
+        }
+      },
+      "dashboards": {
+        "courses_row": {
+          "view_action": "Details"
+        },
+        "index": {
+          "active_courses": "Ongoing Courses",
+          "active_courses_title": "Active Courses",
+          "completion_rate": "Completion Rate",
+          "overview": "Overview",
+          "search": "Enter keyword...",
+          "title": "Dashboard",
+          "trainees": "Trainees",
+          "trainers": "Trainers"
+        },
+        "tables": {
+          "table_headers": {
+            "actions": "Actions",
+            "course": "Course",
+            "creators": "Creators",
+            "end_date": "End Date",
+            "start_date": "Start Date",
+            "trainees": "Trainees",
+            "trainers": "Trainers"
+          }
+        }
+      },
+      "sidebar": {
+        "courses": "Courses",
+        "daily_report": "Daily Report",
+        "dashboard": "Dashboard",
+        "masterdata": "Masterdata",
+        "my_courses": "My Courses",
+        "report_history": "Report History",
+        "reports": "Reports",
+        "supervisors": "Supervisors",
+        "trainees": "Trainees"
+      },
+      "subjects": {
+        "create": {
+          "create_fail": "Failed to create subject.",
+          "create_success": "Subject was successfully created."
+        },
+        "destroy": {
+          "delete_failed": "Failed to delete the subject.",
+          "subject_deleted": "Subject was successfully deleted."
+        },
+        "destroy_tasks": {
+          "n_tasks_deleted": "%{count} task(s) have been successfully deleted.",
+          "no_tasks_to_delete": "No tasks were selected to delete."
+        },
+        "edit": {
+          "are_you_sure_to_delete": "Are you sure you want to delete selected tasks?",
+          "page_header": "Editing subject: %{subject_name}",
+          "title": "Edit Subject %{subject_name}"
+        },
+        "form": {
+          "add_task_button": "Add new tasks",
+          "tasks": "Tasks"
+        },
+        "index": {
+          "add_subject": "Add subject",
+          "title": "All Subjects"
+        },
+        "new": {
+          "add": "Add",
+          "cancel": "Cancel",
+          "estimated_time_days": "Estimated Time (days):",
+          "max_score": "Max Score:",
+          "subject_name": "Subject name:",
+          "title": "Add Subject"
+        },
+        "new_task_template": {
+          "enter_task_name": "Enter task name"
+        },
+        "show": {
+          "days": "Days",
+          "edit": "Edit",
+          "no_tasks": "No tasks",
+          "task": "Tasks"
+        },
+        "subject": {
+          "confirm_delete": "Are you sure you want to delete this item?",
+          "delete": "Delete",
+          "detail": "Details"
+        },
+        "subjects_table": {
+          "actions": "Actions",
+          "duration": "Duration (Days)",
+          "max_score": "Max Score",
+          "name": "Subject Name",
+          "no_subjects_found": "No subjects found.",
+          "tasks_count": "Number of Tasks"
+        },
+        "update": {
+          "update_success": "Update %{subject_name} successfully"
+        }
+      },
+      "tasks": {
+        "create": {
+          "create_fail": "Failed to create task.",
+          "create_success": "Create task success"
+        },
+        "destroy": {
+          "delete_failed": "Xóa bài tập thất bại.",
+          "task_deleted": "Bài tập đã được xóa thành công."
+        },
+        "index": {
+          "add_task": "Add task",
+          "title": "All Tasks"
+        },
+        "new": {
+          "add": "Add",
+          "cancel": "Cancel",
+          "choose_subject": "Choose subject",
+          "subject_name": "Subject name:",
+          "task_name": "Task name:",
+          "title": "Add Task"
+        },
+        "task": {
+          "confirm_delete": "Are you sure you want to delete this item?",
+          "delete": "Delete",
+          "detail": "Details"
+        },
+        "tasks_table": {
+          "actions": "Actions",
+          "name": "Task Name",
+          "no_tasks_found": "No tasks found.",
+          "subject": "Subject"
+        }
+      },
+      "users": {
+        "bulk_deactivate": {
+          "bulk_deactivate_failed": "Failed to deactivate trainees.",
+          "bulk_deactivate_success": "%{count} trainees successfully deactivated.",
+          "trainee_no_selection": "No trainees selected for bulk deactivation."
+        },
+        "bulk_deactivate_confirm": "Are you sure you want to deactivate the selected trainees?",
+        "bulk_destroy": {
+          "bulk_destroy_failed": "Failed to delete trainees.",
+          "bulk_destroy_success": "%{count} trainees successfully deleted.",
+          "trainee_no_selection": "No trainees selected for bulk deletion."
+        },
+        "bulk_statuses_failed": "Failed to update trainees.",
+        "bulk_statuses_success": "%{count} trainees successfully updated.",
+        "delete_user_course": {
+          "delete_failed": "Failed to delete user course.",
+          "delete_success": "User course deleted successfully."
+        },
+        "destroy": {
+          "destroy_failed": "Failed to delete trainee.",
+          "destroy_success": "Trainee deleted successfully."
+        },
+        "edit_profile_form": {
+          "email_placeholder": "Enter email address",
+          "name_placeholder": "Enter trainee name",
+          "save_changes": "Save Changes",
+          "select_gender": "Select Gender"
+        },
+        "filter_form": {
+          "apply": "Apply Filters",
+          "clear_search": "Clear Search",
+          "course_all": "All Courses",
+          "course_label": "Course",
+          "reset_filters": "Reset Filters",
+          "search_label": "Search Trainees",
+          "search_placeholder": "Enter trainee name",
+          "status_active": "Active",
+          "status_all": "All",
+          "status_inactive": "Inactive",
+          "status_label": "Status"
+        },
+        "filter_user_details_form": {
+          "apply": "Apply Filters",
+          "course_all": "All Courses",
+          "course_history": "Course History",
+          "reset_filters": "Reset Filters",
+          "search_placeholder": "Search courses...",
+          "select_gender": "Select Gender",
+          "status_all": "All Statuses",
+          "status_finished": "Finished",
+          "status_in_progress": "In Progress",
+          "status_not_started": "Not Started"
+        },
+        "index": {
+          "actions": "Actions",
+          "birthday": "Birthday",
+          "change_status": "Change Status",
+          "delete_selected": "Delete Selected",
+          "email": "Email",
+          "filter_title": "Filter Trainees",
+          "gender": "Gender",
+          "items_selected": "trainees selected",
+          "name": "Name",
+          "no_trainees_found": "No trainees found.",
+          "not_trainees_description": "You can manage trainees here. Use the filter options to find specific trainees or perform bulk actions.",
+          "show_results": "Show Results",
+          "status": "Status",
+          "title": "Trainee Management"
+        },
+        "modal_edit_profile": {
+          "edit_profile_title": "Edit Trainee Profile"
+        },
+        "show": {
+          "actions": "Actions",
+          "activate_account": "Activate Account",
+          "course_history": "Course History",
+          "date_of_birth": "Date of Birth",
+          "deactivate_account": "Deactivate Account",
+          "edit_profile": "Edit Profile",
+          "email": "Email",
+          "gender": "Gender",
+          "name": "Name",
+          "no_courses": "No courses found for this trainee.",
+          "personal_info": "Personal Information",
+          "showing_courses": "Showing %{count} courses",
+          "table": {
+            "actions": "Actions",
+            "courses": "Courses",
+            "id": "ID",
+            "progress": "Progress",
+            "status": "Status",
+            "trainers": "Trainers"
+          },
+          "title": "Trainee Details",
+          "update_failed": "Failed to update trainee profile.",
+          "update_success": "Trainee profile updated successfully."
+        },
+        "trainee_infor_list": {
+          "activate_confirm": "Are you sure you want to activate the selected trainees?",
+          "active": "Active",
+          "deactivate_confirm": "Are you sure you want to deactivate the selected trainees?",
+          "delete_confirm": "Are you sure you want to delete the selected trainees?",
+          "gender": {
+            "female": "Female",
+            "male": "Male",
+            "other": "Other"
+          },
+          "inactive": "Inactive",
+          "unknown": "Unknown"
+        },
+        "trainee_no_selection": "No trainees selected.",
+        "trainee_not_found": "Trainee not found.",
+        "update": {
+          "update_failed": "Failed to update trainee profile.",
+          "update_success": "Trainee profile updated successfully."
+        },
+        "update_status": {
+          "update_failed": "Failed to update trainee status.",
+          "update_success": "Trainee status updated successfully."
+        },
+        "update_user_course_status": {
+          "update_failed": "Failed to update user course status.",
+          "update_success": "User course status updated successfully."
+        },
+        "user_courses_list": {
+          "remove_from_course": "Remove from Course",
+          "status_finished": "Finished",
+          "status_in_progress": "In Progress",
+          "status_not_started": "Not Started",
+          "table": {
+            "actions": "Actions"
+          },
+          "update_status": "Update Status",
+          "update_status_to_finished": "Mark as Finished",
+          "update_status_to_in_progress": "Mark as In Progress",
+          "update_status_to_not_started": "Mark as Not Started",
+          "view_course_details": "View Course Details"
+        }
       }
     },
     "support": {
@@ -73441,15 +74277,28 @@
       "pm": "pm"
     },
     "trainee": {
-      "daily_reports": {
-        "destroy_failed": "Could not delete the report.",
-        "destroy_success": "Report was successfully deleted.",
-        "draft_success": "Report was successfully saved as a draft.",
-        "index": {
-          "manager_header": "Daily Report Manager",
-          "title": "Daily Reports"
+      "courses": {
+        "access_denied": "You don't have permission to access this course",
+        "course_not_found": "Course not found",
+        "members": {
+          "access_denied": "You don't have permission to access this course",
+          "course_not_found": "Course not found"
         },
-        "new": {
+        "subjects": {
+          "access_denied": "You don't have permission to access this course",
+          "course_not_found": "Course not found"
+        }
+      },
+      "daily_reports": {
+        "destroy": {
+          "destroy_failed": "Could not delete the report.",
+          "destroy_success": "Report was successfully deleted."
+        },
+        "draft_success": "Report was successfully saved as a draft.",
+        "edit": {
+          "title": "Report edit"
+        },
+        "form": {
           "cancel_button": "Cancel",
           "content_details": "Content details:",
           "content_placeholder": "Enter detailed report content here...",
@@ -73460,7 +74309,26 @@
           "submit_button": "Submit Report",
           "title": "Daily report add"
         },
+        "index": {
+          "manager_header": "Daily Report Manager",
+          "title": "Daily Reports"
+        },
+        "new": {
+          "title": "Daily Report Add"
+        },
+        "report_not_found": "Report not found.",
+        "show": {
+          "content_details": "Content details:",
+          "course": "Course:",
+          "date_submitted": "Date submitted:",
+          "title": "Report detail"
+        },
         "submit_success": "Report was successfully submitted."
+      },
+      "sidebar": {
+        "daily_report": "Daily Report",
+        "my_courses": "My Courses",
+        "report_history": "Report History"
       },
       "subjects": {
         "course_not_found": "Course not found.",
@@ -73477,6 +74345,8 @@
           "spent_time_placeholder": "Spent time (in hours)"
         },
         "form_upload_file": {
+          "choose_file": "Choose file",
+          "close": "Close",
           "submit": "Submit"
         },
         "show": {
@@ -73485,6 +74355,7 @@
           "all_tasks_completed": "All Tasks Completed",
           "assessment_score": "Assessment Score",
           "assessment_title": "Assessment Title",
+          "cancel": "Cancel",
           "comments_title": "Comments",
           "confirm_finish_title": "Confirm Finish Subject",
           "course_details": "Course Details: ",
@@ -73513,6 +74384,7 @@
           "choose_file": "Choose file",
           "close": "Close",
           "delete": "Delete",
+          "file": "File",
           "no_files": "No files uploaded.",
           "spent_time_placeholder": "Spent time (in hours)",
           "submit": "Submit",
@@ -73547,13 +74419,15 @@
         }
       }
     },
+    "trainees": "Trainees",
+    "trainers": "Trainers",
     "user_mailer": {
       "account_activation": {
         "activate_button": "Activate",
-        "app_name": "Sample App",
+        "app_name": "Training System",
         "greeting": "Hi %{name},",
         "subject": "Account activation",
-        "welcome_message": "Welcome to the Sample App! Click on the link below to activate your account:"
+        "welcome_message": "Welcome to the Training System! Click on the link below to activate your account:"
       },
       "password_changed": {
         "login_button": "Sign In",
@@ -73580,12 +74454,8 @@
       "create": {
         "activation_email_sent": "Please check your email to activate your account.",
         "signup_failure": "There were errors in your sign up form. Please correct them and try again.",
-        "signup_success": "Sign up successful! Welcome to the sample app.",
+        "signup_success": "Sign up successful! Welcome to the Training System.",
         "system_error": "An error occurred during registration. Please try again later"
-      },
-      "destroy": {
-        "delete_failed": "Delete fail!",
-        "user_deleted": "User deleted"
       },
       "edit": {
         "change": "change",
@@ -73613,10 +74483,6 @@
         "save_changes": "Save changes",
         "select_gender": "Select gender"
       },
-      "index": {
-        "heading": "All users",
-        "title": "All users"
-      },
       "new": {
         "create_my_account": "Create my account",
         "select_gender": "Select gender",
@@ -73626,8 +74492,8 @@
         "birthday": "Birthday",
         "email": "Email",
         "gender": "Gender",
-        "last_updated": "Last updated",
-        "member_since": "Member since",
+        "last_updated": "Last Updated",
+        "member_since": "Member Since",
         "system_error": "An error occurred. Please try again later",
         "user_not_found": "User not found"
       },
@@ -73636,10 +74502,6 @@
         "not_authorized": "You are not authorized to edit this user.",
         "profile_updated": "Profile updated successfully",
         "update_failed": "Failed to update profile. Please try again."
-      },
-      "user": {
-        "confirm_delete": "You sure?",
-        "delete": "delete"
       }
     }
   },
@@ -73651,17 +74513,42 @@
         "user_not_found": "Không tìm thấy người dùng"
       }
     },
+    "action": "Hành động",
+    "active_courses": "Khóa học đang hoạt động",
     "activerecord": {
       "attributes": {
+        "category": {
+          "name": "Tên danh mục"
+        },
         "course": {
           "finish_date": "Ngày kết thúc",
+          "image": "Hình ảnh",
+          "link_to_course": "Link đến khóa học",
           "name": "Tên khóa học",
           "start_date": "Ngày bắt đầu",
-          "status": "Trạng thái"
+          "status": "Trạng thái",
+          "supervisor_ids": "Danh sách trainer"
+        },
+        "course_subjects": {
+          "position": "Vị trí môn học",
+          "subject": "Môn học"
         },
         "daily_report": {
           "content": "Nội dung",
           "course": "Khóa học"
+        },
+        "subject": {
+          "estimated_time_days": "Thời gian ước tính",
+          "max_score": "Điểm tối đa",
+          "name": "Tên"
+        },
+        "subject_categories": {
+          "position": "Vị trí",
+          "subject": "Tên môn học"
+        },
+        "task": {
+          "name": "Tên nhiệm vụ",
+          "taskable": "Tên môn học"
         },
         "user": {
           "birthday": "Ngày sinh",
@@ -73684,12 +74571,17 @@
       },
       "errors": {
         "messages": {
-          "document_size_exceeded": "phải nhỏ hơn %{size} MB",
+          "at_least_one_trainer": "phải có ít nhất một người hướng dẫn",
+          "document_size_exceeded": "phải nhỏ hơn %{max_size}",
           "finish_date_after_start_date": "Ngày kết thúc phải sau ngày bắt đầu",
-          "image_size_exceeded": "phải nhỏ hơn %{size} MB",
+          "image_size_exceeded": "phải nhỏ hơn %{max_size}",
           "invalid_document_type": "không phải là loại tài liệu hợp lệ",
           "invalid_image_type": "không phải là loại hình ảnh hợp lệ",
           "member_to_after_member_from": "Ngày kết thúc thành viên phải sau ngày bắt đầu thành viên",
+          "must_be_unique": "không được trùng nhau",
+          "must_be_unique_positions": "Các vị trí không được trùng nhau",
+          "must_be_valid_url": "phải có định dạng URL hợp lệ (bắt đầu bằng https://)",
+          "must_be_within_one_year_from_now": "phải trong vòng 1 năm kể từ ngày hôm nay",
           "not_a_valid_course": "không hợp lệ. Bạn chỉ có thể gửi báo cáo cho khóa học mà bạn tham gia",
           "one_report_per_day": "Bạn đã gửi báo cáo cho môn học này hôm nay rồi.",
           "record_invalid": "Có các lỗi sau: %{errors}",
@@ -73751,37 +74643,345 @@
         "user_course": "Khóa học của người dùng"
       }
     },
+    "admin": {
+      "courses": {
+        "courses_table": {
+          "actions": "Hành động",
+          "course_name": "Tên Khóa học",
+          "end_date": "Ngày kết thúc",
+          "no_courses_found": "Không tìm thấy khóa học nào.",
+          "start_date": "Ngày bắt đầu",
+          "status": "Trạng thái",
+          "supervisors": "Giảng viên",
+          "trainees": "Học viên"
+        },
+        "index": {
+          "add_course_button": "Thêm Khóa học",
+          "all_statuses": "Tất cả trạng thái",
+          "apply_button": "Áp dụng",
+          "clear_filter_button": "Xóa bộ lọc",
+          "courses": "Tên khóa học",
+          "creators": "Tên giảng viên",
+          "search_by": "Tìm kiếm theo",
+          "search_placeholder": "Nhập từ khóa...",
+          "start_date_range": "Khoảng ngày bắt đầu",
+          "title": "Tất cả Khóa học"
+        }
+      },
+      "daily_reports": {
+        "index": {
+          "manager_header": "Quản lý báo cáo hàng ngày",
+          "title": "Báo cáo hàng ngày"
+        },
+        "report_not_found": "Không tìm thấy báo cáo.",
+        "show": {
+          "content_details": "Nội dung chi tiết:",
+          "course": "Khóa học:",
+          "date_submitted": "Ngày gửi:",
+          "title": "Chi tiết báo cáo"
+        }
+      },
+      "dashboards": {
+        "courses_row": {
+          "view_action": "Xem chi tiết"
+        },
+        "index": {
+          "active_courses": "Khóa học đang diễn ra",
+          "active_courses_title": "Các khóa học đang diễn ra",
+          "completion_rate": "Tỷ lệ hoàn thành",
+          "overview": "Tổng quan",
+          "search": "Nhập từ khóa...",
+          "title": "Bảng điều khiển",
+          "trainees": "Học viên",
+          "trainers": "Giảng viên"
+        },
+        "tables": {
+          "table_headers": {
+            "actions": "Hành động",
+            "course": "Khóa học",
+            "creators": "Người tạo",
+            "end_date": "Ngày kết thúc",
+            "start_date": "Ngày bắt đầu",
+            "trainees": "Học viên",
+            "trainers": "Giảng viên"
+          },
+          "view_action": "xem"
+        }
+      },
+      "sidebar": {
+        "admin": "Quản trị viên",
+        "courses": "Khóa học",
+        "daily_report": "Báo cáo hằng ngày",
+        "dashboard": "Bảng điều khiển",
+        "masterdata": "Dữ liệu gốc",
+        "my_courses": "Khóa học của tôi",
+        "report_history": "Lịch sử báo cáo",
+        "reports": "Báo cáo",
+        "supervisors": "Giám sát viên",
+        "trainees": "Học viên"
+      },
+      "users": {
+        "bulk_deactivate": {
+          "bulk_statuses_failed": "Thay đổi trạng thái giám sát viên thất bại",
+          "bulk_statuses_success": "Thay đổi trạng thái %{count} giám sát viên thành công",
+          "supervisor_no_selection": "Vui lòng chọn ít nhất một giám sát viên"
+        },
+        "delete_user_course": {
+          "course": {
+            "not_found": "Không tìm thấy khóa học"
+          },
+          "delete_failed": "Xóa giám sát viên khỏi khóa học thất bại",
+          "delete_success": "Xóa giám sát viên khỏi khóa học thành công"
+        },
+        "edit_profile_form": {
+          "email_placeholder": "Nhập địa chỉ email",
+          "name_placeholder": "Nhập họ và tên",
+          "save_changes": "Lưu thay đổi"
+        },
+        "filter_form": {
+          "apply": "Áp dụng bộ lọc",
+          "clear_search": "Xóa tìm kiếm",
+          "course_all": "Tất cả khóa học",
+          "course_label": "Khóa học",
+          "reset_filters": "Đặt lại bộ lọc",
+          "search_label": "Tìm kiếm",
+          "search_placeholder": "Tìm kiếm theo tên hoặc email...",
+          "status_active": "Hoạt động",
+          "status_all": "Tất cả trạng thái",
+          "status_inactive": "Không hoạt động",
+          "status_label": "Trạng thái"
+        },
+        "filter_user_details_form": {
+          "apply": "Áp dụng",
+          "course_all": "Tất cả khóa học",
+          "reset_filters": "Đặt lại bộ lọc",
+          "search_placeholder": "Tìm kiếm khóa học...",
+          "status_all": "Tất cả trạng thái",
+          "status_finished": "Hoàn thành",
+          "status_in_progress": "Đang thực hiện",
+          "status_not_started": "Chưa bắt đầu"
+        },
+        "index": {
+          "actions": "Hành động",
+          "birthday": "Ngày sinh",
+          "change_status": "Thay đổi Trạng thái",
+          "email": "Email",
+          "filter_title": "Bộ lọc và Tìm kiếm",
+          "gender": "Giới tính",
+          "items_selected": "mục đã chọn",
+          "name": "Họ và tên",
+          "no_supervisors_description": "Không có giám sát viên nào phù hợp với tiêu chí lọc hiện tại. Hãy thử điều chỉnh các tham số tìm kiếm.",
+          "no_supervisors_found": "Không tìm thấy giám sát viên",
+          "showing_results": "Hiển thị kết quả đã lọc",
+          "status": "Trạng thái",
+          "title": "Quản lý Giám sát viên"
+        },
+        "modal_edit_profile": {
+          "edit_profile_title": "Chỉnh sửa hồ sơ"
+        },
+        "show": {
+          "actions": "Hành động",
+          "activate_account": "Kích hoạt tài khoản",
+          "course_history": "Lịch sử khóa học",
+          "date_of_birth": "Ngày sinh",
+          "deactivate_account": "Vô hiệu hóa tài khoản",
+          "edit_profile": "Chỉnh sửa hồ sơ",
+          "email": "Email",
+          "gender": "Giới tính",
+          "name": "Họ và tên",
+          "no_courses": "Không tìm thấy khóa học",
+          "showing_courses": "Hiển thị %{count} khóa học",
+          "table": {
+            "actions": "Hành động",
+            "courses": "Khóa học",
+            "end_date": "Ngày kết thúc",
+            "id": "ID",
+            "start_date": "Ngày bắt đầu",
+            "status": "Trạng thái",
+            "trainees": "Học viên"
+          }
+        },
+        "supervisor_infor_list": {
+          "activate": "Kích hoạt",
+          "activate_confirm": "Bạn có chắc chắn muốn kích hoạt giám sát viên này không?",
+          "active": "Hoạt động",
+          "deactivate": "Vô hiệu hóa",
+          "deactivate_confirm": "Bạn có chắc chắn muốn vô hiệu hóa giám sát viên này không?",
+          "gender": {
+            "female": "Nữ",
+            "male": "Nam",
+            "other": "Khác"
+          },
+          "inactive": "Không hoạt động",
+          "unknown": "Không xác định",
+          "view_profile": "Xem hồ sơ"
+        },
+        "update": {
+          "update_failed": "Cập nhật hồ sơ thất bại",
+          "update_success": "Cập nhật hồ sơ thành công"
+        },
+        "update_status": {
+          "supervisor": {
+            "not_found": "Không tìm thấy giám sát viên"
+          },
+          "update_failed": "Cập nhật trạng thái giám sát viên thất bại",
+          "update_success": "Cập nhật trạng thái giám sát viên thành công"
+        },
+        "user_courses_list": {
+          "remove_from_course": "Xóa khỏi khóa học",
+          "status_active": "Hoạt động",
+          "status_cancelled": "Đã hủy",
+          "status_completed": "Hoàn thành",
+          "status_finished": "Hoàn thành",
+          "status_in_progress": "Đang thực hiện",
+          "status_inactive": "Không hoạt động",
+          "status_not_started": "Chưa bắt đầu",
+          "table": {
+            "actions": "Hành động"
+          },
+          "view_course_details": "Xem chi tiết khóa học"
+        }
+      }
+    },
     "app_information": "Thông tin ứng dụng",
     "app_label": "Ứng dụng:",
+    "common": {
+      "cancel": "Hủy",
+      "errors_prohibited_save": "Có lỗi ngăn không cho lưu:",
+      "save_changes": "Lưu thay đổi"
+    },
+    "completion_rate": "Tỷ lệ hoàn thành",
     "courses": {
       "check_course_access": {
         "access_denied": "Bạn không có quyền truy cập khóa học này"
       },
+      "create": {
+        "course_created_successfully": "Khóa học đã được tạo thành công.",
+        "course_creation_failed": "Không thể tạo khóa học. Vui lòng kiểm tra lại các lỗi."
+      },
+      "destroy_course_subject": {
+        "failed": "Xóa môn học khỏi khóa học thất bại",
+        "success": "Xóa môn học khỏi khóa học thành công"
+      },
+      "destroy_supervisor": {
+        "failed": "Xóa huấn luyện viên khỏi khóa học thất bại",
+        "must_have_another_supervisor": "Khóa học phải còn ít nhất 1 huấn luyện viên",
+        "success": "Xóa huấn luyện viên khỏi khóa học thành công"
+      },
+      "destroy_user_course": {
+        "failed": "Xóa thành viên khỏi khóa học thất bại",
+        "success": "Xóa thành viên khỏi khóa học thành công"
+      },
       "errors": {
-        "access_denied": "Bạn không có quyền truy cập khóa học này"
+        "access_denied": "Bạn không có quyền truy cập khóa học này",
+        "course_not_found": "Không tìm thấy khóa học",
+        "course_subject_not_found": "Không tìm thấy môn học trong khóa",
+        "supervisor_not_found": "Không tìm thấy huấn luyện viên",
+        "user_course_not_found": "Không tìm thấy người dùng trong khóa học"
+      },
+      "finish_course_subject": {
+        "failed": "Đánh dấu hoàn thành môn học thất bại",
+        "success": "Đánh dấu hoàn thành môn học thành công"
+      },
+      "leave": {
+        "confirm_leave": "Bạn có chắc chắn?",
+        "leave_course": "Rời khóa học"
       },
       "members": {
+        "access_denied": "Bạn không có quyền truy cập khóa học này",
+        "actions": "Hành động",
+        "confirm_leave": "Bạn có chắc chắn?",
+        "confirm_remove_trainee": "Bạn có chắc chắn?",
+        "confirm_remove_trainer": "Bạn có chắc chắn?",
         "course_not_found": "Không tìm thấy khóa học",
         "current_status": "Trạng thái hiện tại",
         "joined_at": "Ngày tham gia",
+        "leave_course": "Rời khóa học",
         "name": "Họ và tên",
+        "remove_from_course": "Xóa khỏi khóa học",
         "trainee_list": "Danh sách trainee",
-        "trainer_list": "Danh sách trainer"
+        "trainer_list": "Danh sách trainer",
+        "view_profile": "Xem hồ sơ",
+        "view_reports": "Xem báo cáo"
+      },
+      "new": {
+        "add_button": "Thêm",
+        "cancel_button": "Hủy",
+        "category_label": "Danh mục:",
+        "course_name_label": "Tên khóa học",
+        "end_date_label": "Ngày kết thúc",
+        "image_placeholder": "hình ảnh",
+        "link_to_course_label": "Link đến khóa học:",
+        "page_title": "Tạo khóa học mới",
+        "select_category_placeholder": "Chọn danh mục",
+        "start_date_label": "Ngày bắt đầu",
+        "trainer_label": "Người hướng dẫn"
       },
       "show": {
+        "access_denied": "Bạn không có quyền truy cập khóa học này",
+        "course_name": "Tên Khóa Học",
+        "course_not_found": "Không tìm thấy khóa học",
         "created_by": "Được tạo bởi",
         "expected": "dự kiến",
         "last_updated": "Lần cuối cập nhật là",
+        "link_to_course": "Liên Kết Khóa Học",
         "tabs": {
           "members": "Thành viên",
-          "subjects": "Môn học"
+          "subjects": "Môn học",
+          "supervisors": "Huấn Luyện Viên"
         },
-        "title": "Chi tiết khóa học"
+        "time_period": "Thời Gian",
+        "title": "Chi tiết khóa học",
+        "trainer_count": "huấn luyện viên",
+        "trainers": "Huấn Luyện Viên"
+      },
+      "statuses": {
+        "finished": "Đã kết thúc",
+        "in_progress": "Đang diễn ra",
+        "not_started": "Chưa bắt đầu"
       },
       "subjects": {
-        "subjects_list": "Danh sách môn học"
+        "access_denied": "Bạn không có quyền truy cập khóa học này",
+        "actions": "Hành động",
+        "and_more": "và %{count} nhiệm vụ khác",
+        "assessments": "Nhận xét (%{count})",
+        "assessments_popup": {
+          "close": "×",
+          "comments_title": "Nhận xét từ giảng viên",
+          "score": "Điểm",
+          "title": "Đánh giá môn học"
+        },
+        "confirm_delete": "Bạn có chắc chắn?",
+        "confirm_finish": "Bạn có chắc chắn?",
+        "course_not_found": "Không tìm thấy khóa học",
+        "delete": "Xóa",
+        "edit": "Chỉnh sửa",
+        "finish": "Hoàn thành môn học",
+        "no_comments": "Chưa có nhận xét",
+        "no_tasks": "Không có nhiệm vụ nào",
+        "status": {
+          "finished": "Đã hoàn thành",
+          "in_progress": "Đang thực hiện",
+          "not_started": "Chưa bắt đầu"
+        },
+        "subject_status": {
+          "finished": "Hoàn thành",
+          "finished_but_overdue": "Hoàn thành nhưng quá hạn",
+          "finished_early": "Hoàn thành sớm",
+          "finished_ontime": "Hoàn thành đúng hạn",
+          "in_progress": "Đang thực hiện",
+          "not_started": "Bắt đầu",
+          "overdue_and_not_finished": "Quá hạn và chưa hoàn thành"
+        },
+        "subjects_list": "Danh sách môn học",
+        "task_overview": "Xem nhanh nhiệm vụ",
+        "tasks_preview": "Xem trước nhiệm vụ",
+        "time_label": "Thời gian: %{days} ngày",
+        "time_label_plural": "Thời gian: %{days} ngày",
+        "time_to_finish": "Thời gian: %{days} ngày"
       }
     },
+    "creators": "Người tạo",
     "date": {
       "abbr_day_names": [
         "CN",
@@ -73866,12 +75066,21 @@
         "year": "Năm"
       }
     },
+    "detail": "Chi tiết",
+    "end_date": "Ngày kết thúc",
     "enums": {
       "course": {
         "status": {
           "finished": "Đã hoàn thành",
           "in_progress": "Đang diễn ra",
           "not_started": "Chưa bắt đầu"
+        }
+      },
+      "user": {
+        "gender": {
+          "female": "Nữ",
+          "male": "Nam",
+          "other": "Khác"
         }
       },
       "user_course": {
@@ -74371,6 +75580,7 @@
         ]
       }
     },
+    "finished": "Đã hoàn thành",
     "helpers": {
       "select": {
         "prompt": "Vui lòng chọn"
@@ -74526,6 +75736,21 @@
         }
       }
     },
+    "in_progress": "Đang tiến hành",
+    "layouts": {
+      "sidebar": {
+        "admin": "Quản trị viên",
+        "courses": "Khóa học",
+        "daily_report": "Báo cáo hằng ngày",
+        "dashboard": "Bảng điều khiển",
+        "my_courses": "Khóa học của tôi",
+        "report_history": "Lịch sử báo cáo",
+        "reports": "Báo cáo",
+        "requests": "Yêu cầu",
+        "supervisors": "Giám sát viên",
+        "trainees": "Học viên"
+      }
+    },
     "locales": {
       "en": "Tiếng Anh",
       "vi": "Tiếng Việt"
@@ -74535,12 +75760,20 @@
       "permission_denied": "Quyền truy cập bị từ chối"
     },
     "navigation": {
+      "account": "Tài khoản",
       "contact": "Liên hệ",
       "help": "Trợ giúp",
       "home": "Trang chủ",
       "log_in": "Đăng nhập",
-      "sample_app": "ứng dụng mẫu"
+      "logout": "Đăng xuất",
+      "profile": "Hồ sơ",
+      "sample_app": "Training System",
+      "setting": "Cài đặt"
     },
+    "not_found_category": "Không tìm thấy danh mục.",
+    "not_found_subject": "Không tìm thấy môn học",
+    "not_found_task": "Không tìm thấy nhiệm vụ",
+    "not_started": "Chưa bắt đầu",
     "number": {
       "currency": {
         "format": {
@@ -74604,6 +75837,7 @@
         }
       }
     },
+    "overview": "Tổng quan",
     "password_resets": {
       "create": {
         "email_sent": "Email đã được gửi với hướng dẫn đặt lại mật khẩu",
@@ -74659,17 +75893,32 @@
       }
     },
     "shared": {
+      "action": "Hành động",
+      "already_logged_in": "Bạn đã đăng nhập rồi",
+      "course_subject_row_field": {
+        "delete": "Xóa",
+        "position": "Vị trí"
+      },
+      "courses_list": {
+        "all_statuses": "Tất cả",
+        "apply": "Áp dụng",
+        "course_dashboard_title": "Danh sách khóa học",
+        "no_courses_found": "Không tìm thấy khóa học nào",
+        "status": "Trạng thái"
+      },
       "daily_report": {
         "confirm_delete": "Bạn có chắc chắn?",
         "course": "Khóa học",
         "delete_report_button": "Xóa",
         "edit_report_button": "Edit báo cáo",
         "my_reports_list": "Danh sách báo cáo của tôi",
+        "sender": "Người gửi",
         "submit_report_button": "Gửi báo cáo",
         "title": "Báo cáo hàng ngày",
         "view_report_button": "Xem chi tiết báo cáo"
       },
       "error_messages": {
+        "filter_error": "Lỗi khi áp dụng bộ lọc. Vui lòng thử lại.",
         "one": "lỗi",
         "other": "lỗi",
         "score_cannot_exceed_max": "Điểm không được vượt quá điểm tối đa",
@@ -74678,16 +75927,30 @@
       "filter": {
         "apply_filter": "Apply bộ lọc",
         "create_report_button": "+ Tạo báo cáo mới",
-        "select_course_placeholder": "Chọn Khóa học"
+        "select_course_placeholder": "Chọn Khóa học",
+        "select_user_placeholder": "Chọn học viên"
       },
       "login_required": "Vui lòng đăng nhập để tiếp tục.",
+      "masterdata_navbar": {
+        "categories": "Danh mục",
+        "subjects": "Môn học",
+        "tasks": "Nhiệm vụ"
+      },
       "not_authorized": "Bạn không có quyền thực hiện hành động này.",
       "reports_table": {
         "no_reports_found": "Chưa có báo cáo nào."
       },
-      "user_not_found": "Người dùng không tồn tại."
+      "search_box": {
+        "search": "Tìm kiếm"
+      },
+      "subject_row_fields": {
+        "delete": "Xóa",
+        "position": "Vị trí"
+      },
+      "user_not_found": "Không tìm thấy người dùng."
     },
     "site_title": "Ứng dụng mẫu Ruby on Rails Tutorial",
+    "start_date": "Ngày bắt đầu",
     "static_pages": {
       "contact": {
         "address": "132 Le Thanh Nghi, Hanoi, Vietnam",
@@ -74714,12 +75977,443 @@
         "title": "Trợ giúp"
       },
       "home": {
+        "dashboard_title": "Bảng điều khiển",
         "description": "Đây là trang chủ cho ứng dụng mẫu %{link}.",
         "link_text": "Ruby on Rails Tutorial",
+        "manager_dashboard_title": "Bảng điều khiển Quản lý",
         "sign_up": "Đăng ký ngay!",
         "title": "Trang chủ",
         "version_label": "Phiên bản",
         "welcome": "Chào mừng đến với ứng dụng mẫu"
+      }
+    },
+    "supervisor": {
+      "categories": {
+        "categories_table": {
+          "actions": "Hành động",
+          "name": "Tên danh mục",
+          "no_categories_found": "Không tìm thấy danh mục nào.",
+          "number_of_subjects": "Số lượng môn học"
+        },
+        "category": {
+          "confirm_delete": "Bạn có chắc chắn muốn xóa mục này không?",
+          "delete": "Xóa",
+          "detail": "Chi tiết"
+        },
+        "create": {
+          "create_fail": "Tạo danh mục thất bại",
+          "create_success": "Tạo danh mục thành công"
+        },
+        "destroy": {
+          "category_deleted": "Danh mục đã được xóa thành công.",
+          "delete_failed": "Xóa danh mục thất bại."
+        },
+        "edit": {
+          "title": "Chỉnh sửa danh mục",
+          "update": "Cập nhật"
+        },
+        "form": {
+          "cancel": "Hủy bỏ",
+          "category_name": "Tên danh mục",
+          "subject_list": "Danh sách môn học"
+        },
+        "index": {
+          "add_category": "Thêm danh mục",
+          "title": "Tất cả các danh mục"
+        },
+        "new": {
+          "add": "Thêm",
+          "title": "Thêm danh mục mới"
+        },
+        "show": {
+          "back": "Trở lại",
+          "category_name": "Tên danh mục",
+          "edit": "Sửa",
+          "no_subjects": "Danh mục này chưa có môn học nào.",
+          "subject_list": "Danh sách môn học",
+          "title": "Chi tiết danh mục"
+        },
+        "update": {
+          "update_fail": "Cập nhật danh mục thất bại.",
+          "update_success": "Danh mục đã được cập nhật thành công."
+        }
+      },
+      "courses": {
+        "check_course_access": {
+          "access_denied": "Bạn không có quyền truy cập khóa học này"
+        },
+        "courses_table": {
+          "actions": "Hành động",
+          "course_name": "Tên Khóa học",
+          "end_date": "Ngày kết thúc",
+          "no_courses_found": "Không tìm thấy khóa học nào.",
+          "start_date": "Ngày bắt đầu",
+          "status": "Trạng thái",
+          "supervisors": "Giảng viên",
+          "trainees": "Học viên"
+        },
+        "create": {
+          "course_created_successfully": "Khóa học đã được tạo thành công.",
+          "course_creation_failed": "Không thể tạo khóa học. Vui lòng kiểm tra lại các lỗi."
+        },
+        "errors": {
+          "access_denied": "Bạn không có quyền truy cập khóa học này"
+        },
+        "index": {
+          "add_course_button": "Thêm Khóa học",
+          "all_statuses": "Tất cả trạng thái",
+          "apply_button": "Áp dụng",
+          "clear_filter_button": "Xóa bộ lọc",
+          "courses": "Tên khóa học",
+          "creators": "Tên giảng viên",
+          "search_by": "Tìm kiếm theo",
+          "search_placeholder": "Nhập từ khóa...",
+          "start_date_range": "Khoảng ngày bắt đầu",
+          "title": "Tất cả Khóa học"
+        },
+        "members": {
+          "access_denied": "Bạn không có quyền truy cập khóa học này",
+          "course_not_found": "Không tìm thấy khóa học",
+          "current_status": "Trạng thái hiện tại",
+          "joined_at": "Ngày tham gia",
+          "name": "Họ và tên",
+          "trainee_list": "Danh sách trainee",
+          "trainer_list": "Danh sách trainer"
+        },
+        "new": {
+          "add_button": "Thêm",
+          "cancel_button": "Hủy",
+          "category_label": "Danh mục:",
+          "course_name_label": "Tên khóa học",
+          "end_date_label": "Ngày kết thúc",
+          "image_placeholder": "hình ảnh",
+          "link_to_course_label": "Link đến khóa học:",
+          "page_title": "Tạo khóa học mới",
+          "select_category_placeholder": "Chọn danh mục",
+          "start_date_label": "Ngày bắt đầu",
+          "subject_list": "Danh sách môn học",
+          "trainer_label": "Người hướng dẫn"
+        },
+        "show": {
+          "access_denied": "Bạn không có quyền truy cập khóa học này",
+          "course_not_found": "Không tìm thấy khóa học",
+          "created_by": "Được tạo bởi",
+          "expected": "dự kiến",
+          "last_updated": "Lần cuối cập nhật là",
+          "tabs": {
+            "members": "Thành viên",
+            "subjects": "Môn học"
+          },
+          "title": "Chi tiết khóa học"
+        },
+        "subjects": {
+          "access_denied": "Bạn không có quyền truy cập khóa học này",
+          "assessments": "Nhận xét (%{count})",
+          "assessments_popup": {
+            "close": "×",
+            "comments_title": "Nhận xét từ giảng viên",
+            "score": "Điểm",
+            "title": "Đánh giá môn học"
+          },
+          "course_not_found": "Không tìm thấy khóa học",
+          "no_comments": "Chưa có nhận xét",
+          "no_tasks": "Không có nhiệm vụ nào",
+          "subject_status": {
+            "finished": "Hoàn thành",
+            "finished_but_overdue": "Hoàn thành nhưng quá hạn",
+            "finished_early": "Hoàn thành sớm",
+            "finished_ontime": "Hoàn thành đúng hạn",
+            "in_progress": "Đang thực hiện",
+            "not_started": "Bắt đầu",
+            "overdue_and_not_finished": "Quá hạn và chưa hoàn thành"
+          },
+          "subjects_list": "Danh sách môn học",
+          "task_overview": "Xem nhanh nhiệm vụ",
+          "time_label": "Thời gian: %{days} ngày",
+          "time_label_plural": "Thời gian: %{days} ngày"
+        }
+      },
+      "daily_reports": {
+        "index": {
+          "manager_header": "Quản lý báo cáo hàng ngày",
+          "title": "Báo cáo hàng ngày"
+        },
+        "report_not_found": "Không tìm thấy báo cáo.",
+        "show": {
+          "content_details": "Nội dung chi tiết:",
+          "course": "Khóa học:",
+          "date_submitted": "Ngày gửi:",
+          "title": "Chi tiết báo cáo"
+        }
+      },
+      "dashboards": {
+        "courses_row": {
+          "view_action": "Xem chi tiết"
+        },
+        "index": {
+          "active_courses": "Khóa học đang diễn ra",
+          "active_courses_title": "Khóa học đang diễn ra",
+          "completion_rate": "Tỷ lệ hoàn thành",
+          "overview": "Tổng quan",
+          "search": "Nhập từ khóa...",
+          "title": "Bảng điều khiển",
+          "trainees": "Học viên",
+          "trainers": "Giảng viên"
+        },
+        "tables": {
+          "table_headers": {
+            "actions": "Hành động",
+            "course": "Khóa học",
+            "creators": "Người tạo",
+            "end_date": "Ngày kết thúc",
+            "start_date": "Ngày bắt đầu",
+            "trainees": "Học viên",
+            "trainers": "Giảng viên"
+          }
+        }
+      },
+      "sidebar": {
+        "courses": "Khóa học",
+        "daily_report": "Báo cáo hằng ngày",
+        "dashboard": "Bảng điều khiển",
+        "masterdata": "Dữ liệu gốc",
+        "my_courses": "Khóa học của tôi",
+        "report_history": "Lịch sử báo cáo",
+        "reports": "Báo cáo",
+        "supervisors": "Giám sát viên",
+        "trainees": "Học viên"
+      },
+      "subjects": {
+        "create": {
+          "create_fail": "Thêm môn học thất bại.",
+          "create_success": "Thêm môn học thành công."
+        },
+        "destroy": {
+          "delete_failed": "Xóa môn học thất bại",
+          "subject_deleted": "Xóa môn học thành công"
+        },
+        "destroy_tasks": {
+          "n_tasks_deleted": "%{count} nhiệm vụ đã được xóa thành công.",
+          "no_tasks_to_delete": "Không có nhiệm vụ nào được chọn để xóa."
+        },
+        "edit": {
+          "are_you_sure_to_delete": "Bạn có chắc chắn muốn xóa các nhiệm vụ đã chọn?",
+          "page_header": "Chỉnh sửa môn học: %{subject_name}",
+          "title": "Chỉnh sửa môn học %{subject_name}"
+        },
+        "form": {
+          "add_task_button": "Thêm nhiệm vụ mới",
+          "tasks": "Nhiệm vụ"
+        },
+        "index": {
+          "add_subject": "Thêm môn học",
+          "title": "Tất cả các môn học"
+        },
+        "new": {
+          "add": "Thêm",
+          "cancel": "Hủy",
+          "estimated_time_days": "Thời gian ước tính (ngày):",
+          "max_score": "Điểm tối đa:",
+          "subject_name": "Tên môn học:",
+          "title": "Thêm môn học"
+        },
+        "new_task_template": {
+          "enter_task_name": "Nhập tên nhiệm vụ"
+        },
+        "show": {
+          "days": "Ngày",
+          "edit": "Chỉnh sửa",
+          "no_tasks": "Không có nhiệm vụ",
+          "task": "Nhiệm vụ"
+        },
+        "subject": {
+          "confirm_delete": "Bạn có chắc chắn muốn xóa mục này không?",
+          "delete": "Xóa",
+          "detail": "Chi tiết"
+        },
+        "subjects_table": {
+          "actions": "Hành động",
+          "duration": "Thời lượng (Ngày)",
+          "max_score": "Điểm tối đa",
+          "name": "Tên môn học",
+          "no_subjects_found": "Không tìm thấy môn học nào.",
+          "tasks_count": "Số lượng nhiệm vụ"
+        },
+        "update": {
+          "update_success": "Cập nhật môn học %{subject_name} thành công"
+        }
+      },
+      "tasks": {
+        "create": {
+          "create_fail": "Thêm nhiệm vụ thất bại.",
+          "create_success": "Thêm nhiệm vụ thành công."
+        },
+        "destroy": {
+          "delete_failed": "Xóa nhiệm vụ thất bại",
+          "task_deleted": "Xóa nhiệm vụ thành công"
+        },
+        "index": {
+          "add_task": "Thêm nhiệm vụ",
+          "title": "Tất cả các nhiệm vụ"
+        },
+        "new": {
+          "add": "Thêm",
+          "cancel": "Hủy",
+          "choose_subject": "Chọn môn học",
+          "subject_name": "Tên môn học:",
+          "task_name": "Tên nhiệm vụ:",
+          "title": "Thêm nhiệm vụ"
+        },
+        "task": {
+          "confirm_delete": "Bạn có chắc chắn muốn xóa mục này không?",
+          "delete": "Xóa",
+          "detail": "Chi tiết"
+        },
+        "tasks_table": {
+          "actions": "Hành động",
+          "name": "Tên nhiệm vụ",
+          "no_tasks_found": "Không tìm thấy nhiệm vụ nào.",
+          "subject": "Môn học"
+        }
+      },
+      "users": {
+        "bulk_deactivate": {
+          "bulk_deactivate_failed": "Hủy kích hoạt học viên không thành công.",
+          "bulk_deactivate_success": "Đã hủy kích hoạt thành công %{count} học viên.",
+          "trainee_no_selection": "Không có học viên nào được chọn để hủy kích hoạt hàng loạt."
+        },
+        "bulk_deactivate_confirm": "Bạn có chắc chắn muốn hủy kích hoạt các học viên đã chọn không?",
+        "bulk_destroy": {
+          "bulk_destroy_failed": "Xóa học viên không thành công.",
+          "bulk_destroy_success": "Đã xóa thành công %{count} học viên.",
+          "trainee_no_selection": "Không có học viên nào được chọn để xóa hàng loạt."
+        },
+        "bulk_statuses_failed": "Thay đổi trạng thái học viên không thành công.",
+        "bulk_statuses_success": "Đã thay đổi trạng thái thành công %{count} học viên.",
+        "delete_user_course": {
+          "delete_failed": "Xóa khóa học của người dùng không thành công.",
+          "delete_success": "Xóa khóa học của người dùng thành công."
+        },
+        "destroy": {
+          "destroy_failed": "Xóa học viên không thành công.",
+          "destroy_success": "Đã xóa học viên thành công."
+        },
+        "edit_profile_form": {
+          "email_placeholder": "Nhập địa chỉ email",
+          "name_placeholder": "Nhập tên học viên",
+          "save_changes": "Lưu thay đổi",
+          "select_gender": "Chọn giới tính"
+        },
+        "filter_form": {
+          "apply": "Áp dụng bộ lọc",
+          "clear_search": "Xóa tìm kiếm",
+          "course_all": "Tất cả khóa học",
+          "course_label": "Khóa học",
+          "reset_filters": "Đặt lại bộ lọc",
+          "search_label": "Tìm kiếm học viên",
+          "search_placeholder": "Nhập tên học viên",
+          "status_active": "Đang hoạt động",
+          "status_all": "Tất cả",
+          "status_inactive": "Không hoạt động",
+          "status_label": "Trạng thái"
+        },
+        "filter_user_details_form": {
+          "apply": "Áp dụng bộ lọc",
+          "course_all": "Tất cả khóa học",
+          "course_history": "Lịch sử khóa học",
+          "reset_filters": "Đặt lại bộ lọc",
+          "search_placeholder": "Tìm kiếm khóa học...",
+          "select_gender": "Chọn giới tính",
+          "status_all": "Tất cả trạng thái",
+          "status_finished": "Hoàn thành",
+          "status_in_progress": "Đang thực hiện",
+          "status_not_started": "Chưa bắt đầu"
+        },
+        "index": {
+          "actions": "Hành động",
+          "birthday": "Ngày sinh",
+          "change_status": "Thay đổi trạng thái",
+          "delete_selected": "Xóa đã chọn",
+          "email": "Email",
+          "filter_title": "Lọc Học viên",
+          "gender": "Giới tính",
+          "items_selected": "Học viên đã chọn",
+          "name": "Tên",
+          "no_trainees_found": "Không tìm thấy học viên nào.",
+          "not_trainees_description": "Vui lòng chọn ít nhất một học viên để thực hiện hành động.",
+          "show_results": "Hiển thị kết quả",
+          "status": "Trạng thái",
+          "title": "Quản lý Học viên"
+        },
+        "modal_edit_profile": {
+          "edit_profile_title": "Chỉnh sửa thông tin học viên"
+        },
+        "show": {
+          "actions": "Hành động",
+          "activate_account": "Kích hoạt tài khoản",
+          "course_history": "Lịch sử khóa học",
+          "date_of_birth": "Ngày sinh",
+          "deactivate_account": "Vô hiệu hóa tài khoản",
+          "edit_profile": "Sửa hồ sơ",
+          "email": "Email",
+          "gender": "Giới tính",
+          "name": "Tên",
+          "no_courses": "Không tìm thấy khóa học nào cho học viên này.",
+          "personal_info": "Thông tin cá nhân",
+          "showing_courses": "Hiển thị %{count} khóa học",
+          "table": {
+            "actions": "Hành động",
+            "courses": "Khóa học",
+            "id": "ID",
+            "progress": "Tiến độ",
+            "status": "Trạng thái",
+            "trainers": "Giảng viên"
+          },
+          "title": "Chi tiết Học viên",
+          "update_failed": "Cập nhật thông tin học viên thất bại.",
+          "update_success": "Cập nhật thông tin học viên thành công."
+        },
+        "trainee_infor_list": {
+          "activate_confirm": "Bạn có chắc chắn muốn kích hoạt các học viên đã chọn không?",
+          "active": "Đang hoạt động",
+          "deactivate_confirm": "Bạn có chắc chắn muốn hủy kích hoạt các học viên đã chọn không?",
+          "delete_confirm": "Bạn có chắc chắn muốn xóa các học viên đã chọn không?",
+          "gender": {
+            "female": "Nữ",
+            "male": "Nam",
+            "other": "Khác"
+          },
+          "inactive": "Không hoạt động",
+          "unknown": "Không xác định"
+        },
+        "trainee_no_selection": "Không có học viên nào được chọn.",
+        "trainee_not_found": "Không tìm thấy học viên.",
+        "update": {
+          "update_failed": "Cập nhật thông tin học viên thất bại.",
+          "update_success": "Cập nhật thông tin học viên thành công."
+        },
+        "update_status": {
+          "update_failed": "Cập nhật trạng thái  học viên không thành công.",
+          "update_success": "Cập nhật trạng thái  học viên thành công."
+        },
+        "update_user_course_status": {
+          "update_failed": "Cập nhật trạng thái khóa học của người dùng không thành công.",
+          "update_success": "Cập nhật trạng thái khóa học của người dùng thành công."
+        },
+        "user_courses_list": {
+          "remove_from_course": "Xóa khỏi khóa học",
+          "status_finished": "Hoàn thành",
+          "status_in_progress": "Đang thực hiện",
+          "status_not_started": "Chưa bắt đầu",
+          "table": {
+            "actions": "Hành động"
+          },
+          "update_status": "Cập nhật trạng thái",
+          "update_status_to_finished": "Đánh dấu hoàn thành",
+          "update_status_to_in_progress": "Đánh dấu đang thực hiện",
+          "update_status_to_not_started": "Đánh dấu chưa bắt đầu",
+          "view_course_details": "Xem chi tiết khóa học"
+        }
       }
     },
     "support": {
@@ -74739,17 +76433,28 @@
       "pm": "chiều"
     },
     "trainee": {
+      "courses": {
+        "access_denied": "Bạn không có quyền truy cập khóa học này",
+        "course_not_found": "Không tìm thấy khóa học",
+        "members": {
+          "access_denied": "Bạn không có quyền truy cập khóa học này",
+          "course_not_found": "Không tìm thấy khóa học"
+        },
+        "subjects": {
+          "access_denied": "Bạn không có quyền truy cập khóa học này",
+          "course_not_found": "Không tìm thấy khóa học"
+        }
+      },
       "daily_reports": {
         "destroy": {
           "destroy_failed": "Không thể xóa báo cáo này.",
           "destroy_success": "Báo cáo đã được xóa thành công."
         },
         "draft_success": "Báo cáo đã được lưu dưới dạng nháp thành công.",
-        "index": {
-          "manager_header": "Quản lý báo cáo hàng ngày",
-          "title": "Báo cáo hàng ngày"
+        "edit": {
+          "title": "Chỉnh sửa báo cáo"
         },
-        "new": {
+        "form": {
           "cancel_button": "Hủy bỏ",
           "content_details": "Nội dung chi tiết:",
           "content_placeholder": "Nhập nội dung báo cáo chi tiết tại đây...",
@@ -74760,7 +76465,26 @@
           "submit_button": "Gửi báo cáo",
           "title": "Thêm báo cáo hàng ngày"
         },
+        "index": {
+          "manager_header": "Quản lý báo cáo hàng ngày",
+          "title": "Báo cáo hàng ngày"
+        },
+        "new": {
+          "title": "Thêm báo cáo hàng ngày"
+        },
+        "report_not_found": "Không tìm thấy báo cáo.",
+        "show": {
+          "content_details": "Nội dung chi tiết:",
+          "course": "Khóa học:",
+          "date_submitted": "Ngày gửi:",
+          "title": "Chi tiết báo cáo"
+        },
         "submit_success": "Báo cáo đã được gửi thành công."
+      },
+      "sidebar": {
+        "daily_report": "Báo cáo hàng ngày",
+        "my_courses": "Khóa học của tôi",
+        "report_history": "Lịch sử báo cáo"
       },
       "subjects": {
         "course_not_found": "Không tìm thấy khóa học.",
@@ -74777,6 +76501,8 @@
           "spent_time_placeholder": "Thời gian đã sử dụng (tính bằng giờ)"
         },
         "form_upload_file": {
+          "choose_file": "Chọn tệp",
+          "close": "Đóng",
           "submit": "Nộp"
         },
         "show": {
@@ -74785,6 +76511,7 @@
           "all_tasks_completed": "Tất Cả Nhiệm Vụ Đã Hoàn Thành",
           "assessment_score": "Điểm Đánh Giá",
           "assessment_title": "Tiêu Đề Đánh Giá",
+          "cancel": "Huỷ Bỏ",
           "comments_title": "Bình Luận",
           "confirm_finish_title": "Xác Nhận Kết Thúc Môn Học",
           "course_details": "Chi Tiết Khóa Học: ",
@@ -74813,6 +76540,7 @@
           "choose_file": "Chọn tệp",
           "close": "Đóng",
           "delete": "Xóa",
+          "files": "Tệp",
           "no_files": "Chưa có tệp nào được tải lên.",
           "spent_time_placeholder": "Thời gian đã sử dụng (tính bằng giờ)",
           "submit": "Nộp",
@@ -74847,13 +76575,15 @@
         }
       }
     },
+    "trainees": "Học viên",
+    "trainers": "Huấn luyện viên",
     "user_mailer": {
       "account_activation": {
         "activate_button": "Kích hoạt",
-        "app_name": "Sample App",
+        "app_name": "Training System",
         "greeting": "Xin chào %{name},",
         "subject": "Kích hoạt tài khoản",
-        "welcome_message": "Chào mừng bạn đến với Sample App! Nhấp vào liên kết bên dưới để kích hoạt tài khoản của bạn:"
+        "welcome_message": "Chào mừng bạn đến với Training System! Nhấp vào liên kết bên dưới để kích hoạt tài khoản của bạn:"
       },
       "password_changed": {
         "login_button": "Đăng Nhập",
@@ -74880,12 +76610,8 @@
       "create": {
         "activation_email_sent": "Vui lòng kiểm tra email để kích hoạt tài khoản của bạn.",
         "signup_failure": "Có lỗi trong form đăng ký của bạn. Vui lòng sửa chúng và thử lại.",
-        "signup_success": "Đăng ký thành công! Chào mừng bạn đến với ứng dụng mẫu.",
+        "signup_success": "Đăng ký thành công! Chào mừng bạn đến với Hệ thống huấn luyện.",
         "system_error": "Có lỗi xảy ra trong quá trình đăng ký. Vui lòng thử lại sau"
-      },
-      "destroy": {
-        "delete_failed": "Xóa thất bại!",
-        "user_deleted": "Người dùng đã được xóa"
       },
       "edit": {
         "change": "thay đổi",
@@ -74913,10 +76639,6 @@
         "save_changes": "Lưu thay đổi",
         "select_gender": "Chọn giới tính"
       },
-      "index": {
-        "heading": "Tất cả người dùng",
-        "title": "Tất cả người dùng"
-      },
       "new": {
         "create_my_account": "Tạo tài khoản của tôi",
         "select_gender": "Chọn giới tính",
@@ -74936,10 +76658,6 @@
         "not_authorized": "Bạn không có quyền chỉnh sửa người dùng này.",
         "profile_updated": "Hồ sơ đã được cập nhật thành công",
         "update_failed": "Cập nhật hồ sơ không thành công. Vui lòng thử lại"
-      },
-      "user": {
-        "confirm_delete": "Bạn có chắc chắn?",
-        "delete": "xóa"
       }
     }
   }

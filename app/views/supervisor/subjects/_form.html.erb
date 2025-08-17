@@ -1,0 +1,44 @@
+<%= form_with model: [:supervisor, subject], local: true, id: "edit-subject-form" do |form| %>
+  <div class="pull-right">
+    <%= link_to supervisor_subject_path(subject), class: "btn btn-default" do %>
+      <i class="fa fa-times"></i> <%= t("common.cancel") %>
+    <% end %>
+    <button type="submit" class="btn btn-primary">
+      <i class="fa fa-save"></i> <%= t("common.save_changes") %>
+    </button>
+  </div>
+
+  <h1 class="page-header"><%= subject.name %></h1>
+
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <dl class="dl-horizontal">
+        <dt><%= Subject.human_attribute_name(:name) %></dt>
+        <dd><%= form.text_field :name, required: true, class: "form-control" %></dd>
+
+        <dt><%= Subject.human_attribute_name(:estimated_time_days) %></dt>
+        <dd><%= form.number_field :estimated_time_days, class: "form-control" %></dd>
+
+        <dt><%= Subject.human_attribute_name(:max_score) %></dt>
+        <dd><%= form.number_field :max_score, required: true, class: "form-control" %></dd>
+
+        <dt><%= t(".tasks") %></dt>
+        <dd>
+          <div id="tasks-list">
+            <%= form.fields_for :tasks do |task_form| %>
+              <%= render partial: "subject_tasks_field", locals: {task_form: task_form} %>
+            <% end %>
+          </div>
+          <div id="new-tasks-container"></div>
+
+          <div class="mt-2">
+            <button type="button" class="btn btn-success width-fit" id="add-task-btn">
+              <i class="fa fa-plus"></i>
+              <%= t(".add_task_button") %>
+            </button>
+          </div>
+        </dd>
+      </dl>
+    </div>
+  </div>
+<% end %>

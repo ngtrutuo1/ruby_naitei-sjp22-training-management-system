@@ -42,7 +42,6 @@ Rails.application.routes.draw do
     # --- Supervisor Namespace ---
     namespace :supervisor do
       resources :daily_reports, only: %i(index show)
-      resources :subjects, only: %i(index show destroy new create)
       resources :tasks
       resources :categories
       resources :users, only: %i(index show update) do
@@ -66,6 +65,11 @@ Rails.application.routes.draw do
         resources :supervisors, only: [:destroy]
         resources :course_subjects, only: [:destroy] do
           post :finish, on: :member
+        end
+      end
+      resources :subjects do
+        member do
+          delete :destroy_tasks     
         end
       end
     end

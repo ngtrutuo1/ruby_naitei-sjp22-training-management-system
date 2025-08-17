@@ -1,6 +1,6 @@
 ---
 translations:
-  - file: app/javascript/locales.json
+  - file: public/locales.json
     patterns:
       - "*"
       - "!*.activerecord"

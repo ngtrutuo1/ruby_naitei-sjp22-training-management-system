@@ -1,0 +1,6 @@
+<% provide :title, t(".title", subject_name: @subject.name) %>
+
+<div class="subject-edit-page" id="tasks-form-container">
+  <%= render "form", subject: @subject %>
+  <%= render "new_task_template" %>
+</div>

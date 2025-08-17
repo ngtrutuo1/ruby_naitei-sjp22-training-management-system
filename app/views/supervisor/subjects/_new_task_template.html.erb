@@ -1,0 +1,14 @@
+<template id="task-template">
+  <div class="input-group task-item mb-2">
+    <span class="input-group-addon">
+      <button type="button" class="btn btn-danger btn-xs remove-new-task-btn">
+        &times;
+      </button>
+    </span>
+    <input type="text"
+           name="subject[tasks_attributes][NEW_INDEX][name]"
+           class="form-control"
+           placeholder="<%= t(".enter_task_name") %>"
+           required>
+  </div>
+</template>

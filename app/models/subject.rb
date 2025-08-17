@@ -1,7 +1,10 @@
 class Subject < ApplicationRecord
   acts_as_paranoid
 
-  SUBJECT_PERMITTED_PARAMS = %i(name max_score estimated_time_days).freeze
+  SUBJECT_PERMITTED_PARAMS_CREATE = %i(name max_score
+                                        estimated_time_days).freeze
+  SUBJECT_PERMITTED_PARAMS_UPDATE = %i(name max_score estimated_time_days
+                              tasks_attributes: [:id name _destroy]).freeze
 
   # Associations
   has_many :course_subjects # rubocop:disable Rails/HasManyOrHasOneDependent
@@ -13,6 +16,10 @@ class Subject < ApplicationRecord
   has_many :categories, through: :subject_categories
   has_many :tasks, as: :taskable, dependent: :destroy
   has_one_attached :image
+  accepts_nested_attributes_for :tasks, allow_destroy: true,
+                              reject_if: (lambda do |attributes|
+                                attributes[Settings.name].blank?
+                              end)
 
   # Validations
   validates :name, presence: true,

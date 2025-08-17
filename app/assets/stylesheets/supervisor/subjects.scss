@@ -1,0 +1,37 @@
+.subject-detail-page {
+  .page-header {
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 30px;
+  }
+
+  .dl-horizontal {
+    dd { 
+      margin-bottom: 15px; 
+      margin-left: 220px;
+    }
+
+    dt { 
+      color: #333;
+      font-weight: 600;     
+      width: 200px;
+    }
+  }
+
+  .task-list {
+    margin-top: 5px;
+
+    li {
+      background-color: #d8dce0; 
+      border-left: 4px solid #337ab7;
+      border-radius: 4px;
+      font-size: 15px;
+      margin-bottom: 8px;
+      padding: 10px 15px;
+      transition: background-color 0.2s ease-in-out;
+
+      &:hover {
+        background-color: #dae1e9;
+      }
+    }
+  }
+}
