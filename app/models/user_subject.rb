@@ -36,7 +36,8 @@ class UserSubject < ApplicationRecord
   scope :recent, -> {order(started_at: :desc)}
 
   def display_status
-    return Settings.user_subject.display_status.not_started unless started_at
+    # Infer status from course_subject dates if not explicitly started
+    return inferred_status_from_schedule unless started_at
 
     if completed_at
       determine_finished_status
@@ -54,7 +55,19 @@ class UserSubject < ApplicationRecord
   end
 
   def comment_count
-    comments.length
+    comments.size
+  end
+
+  # Compute enum symbol for finished status based on completed_at vs deadline
+  def compute_finish_status completed_date
+    deadline = course_subject&.finish_date
+    return :finished_ontime unless deadline && completed_date
+
+    completion = completed_date.to_date
+    return :finished_early if completion < deadline
+    return :finished_ontime if completion == deadline
+
+    :finished_but_overdue
   end
 
   private
@@ -80,5 +93,24 @@ class UserSubject < ApplicationRecord
     else
       Settings.user_subject.display_status.finished_but_overdue
     end
+  end
+
+  def inferred_status_from_schedule
+    start_date = course_subject.start_date
+    finish_date = course_subject.finish_date
+
+    # Without dates we cannot infer; treat as not started
+    unless start_date && finish_date
+      return Settings.user_subject.display_status.not_started
+    end
+
+    if Date.current > finish_date
+      return Settings.user_subject.display_status.overdue_and_not_finished
+    end
+    if Date.current.between?(start_date, finish_date)
+      return Settings.user_subject.display_status.in_progress
+    end
+
+    Settings.user_subject.display_status.not_started
   end
 end

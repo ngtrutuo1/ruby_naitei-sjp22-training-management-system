@@ -1,3 +1,13 @@
+document.addEventListener('turbo:load', applyProgressWidths);
+document.addEventListener('DOMContentLoaded', applyProgressWidths);
+
+function applyProgressWidths() {
+  document.querySelectorAll('[data-progress-width]').forEach(el => {
+    const value = el.getAttribute('data-progress-width');
+    el.style.width = `${value}%`;
+  });
+}
+
 document.addEventListener('turbo:load', function() {
   // Track if document listeners have been added to avoid duplicates
   let dropdownDocumentListenerAdded = false;

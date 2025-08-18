@@ -1,0 +1,110 @@
+<% provide(:title, t("courses.edit.page_title")) %>
+
+<div class="course-edit-page">
+  <h1 class="page-title"><%= t("courses.edit.page_title") %></h1>
+
+  <%= form_with model: @course, url: supervisor_course_path(@course), 
+      method: :patch, local: true, html: {class: "course-edit-form", multipart: true} do |form| %>
+    
+    <% if @course.errors.any? %>
+      <div class="alert alert-danger">
+        <h4><%= t("shared.error_messages.the_form_contains") %> <%= pluralize(@course.errors.count, t("shared.error_messages.one"), t("shared.error_messages.other")) %></h4>
+        <ul>
+          <% @course.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <!-- Course Overall Info (Edit Mode) -->
+    <div class="course-info-edit-section">
+      <div class="course-thumbnail-edit">
+        <% if @course.image.attached? %>
+          <%= image_tag @course.image, alt: @course.name, class: "course-image-preview" %>
+        <% else %>
+          <div class="default-thumbnail-edit">
+            <i class="fas fa-graduation-cap"></i>
+          </div>
+        <% end %>
+        <div class="image-upload">
+          <%= form.file_field :image, class: "form-control", accept: "image/*" %>
+          <small class="form-text text-muted">
+            <%= t("courses.edit.image_help", default: "Upload a new image or leave empty to keep current") %>
+          </small>
+        </div>
+      </div>
+
+      <div class="course-details-edit">
+        <div class="form-group">
+          <%= form.label :name, t("courses.show.course_name"), class: "form-label" %>
+          <%= form.text_field :name, class: "form-control", required: true %>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <%= form.label :start_date, t("start_date"), class: "form-label" %>
+            <%= form.date_field :start_date, value: format_date_for_input(@course.start_date), class: "form-control", required: true %>
+          </div>
+          <div class="form-group col-md-6">
+            <%= form.label :finish_date, t("end_date"), class: "form-label" %>
+            <%= form.date_field :finish_date, value: format_date_for_input(@course.finish_date), class: "form-control", required: true %>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label"><%= t("courses.show.trainers") %>:</label>
+          <div class="trainers-info">
+            <span class="info-value">
+              <%= @course.supervisors.count %> <%= t("courses.show.trainer_count") %>
+            </span>
+            <small class="form-text text-muted">
+              <%= t("courses.edit.trainers_help", default: "Trainer management is handled separately") %>
+            </small>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-actions-top">
+        <%= form.submit t("courses.edit.save_changes"), class: "btn btn-success" %>
+        <%= link_to t("courses.edit.cancel"), course_subjects_path_for(@course), class: "btn btn-secondary" %>
+      </div>
+    </div>
+
+    <!-- Subject Management (Edit Mode) -->
+    <div class="subject-management-section">
+      <h3><%= t("courses.edit.subject_management") %></h3>
+      <p class="section-description"><%= t("courses.edit.drag_to_reorder") %></p>
+      
+      <!-- Add Subject Search Section -->
+      <div class="add-subject-section mb-4">
+        <h5><%= t("courses.edit.add_subject_title") %></h5>
+        <div class="input-group">
+          <input type="text" 
+                 id="subject-search-input" 
+                 class="form-control" 
+                 placeholder="<%= t("courses.edit.search_subject_placeholder") %>"
+                 data-search-url="<%= subjects_path(format: :json) %>"
+                 data-add-url="<%= add_subject_path_for(@course) %>"
+                 autocomplete="off">
+          <div class="input-group-append">
+            <span class="input-group-text">
+              <i class="fas fa-search"></i>
+            </span>
+          </div>
+        </div>
+        <div id="subject-search-results" class="list-group mt-1 position-relative z-1000"></div>
+      </div>
+      
+      <div class="subjects-edit-list" id="sortable-subjects">
+        <% @subjects.each_with_index do |course_subject, index| %>
+          <%= render "courses/subject_edit_card", 
+              course_subject: course_subject, 
+              course: @course, 
+              index: index %>
+        <% end %>
+      </div>
+    </div>
+
+  <% end %>
+</div>

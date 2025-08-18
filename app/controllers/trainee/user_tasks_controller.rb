@@ -2,24 +2,32 @@ class Trainee::UserTasksController < Trainee::BaseController
   before_action :load_user_task,
                 only: %i(update_document update_status update_spent_time
 destroy_document)
-  after_save :make_subject_in_progress, only: :update_status
 
   # PATCH /trainee/user_tasks/:id/document
   def update_document
-    flash[:success] = t(".document_updated") if update_document?
+    if update_document?
+      make_subject_in_progress
+      flash[:success] = t(".document_updated")
+    end
 
     redirect_to trainee_course_subject_path(@course_id, @subject_id)
   end
 
   # PATCH /trainee/user_tasks/:id/status
   def update_status
-    flash[:success] = t(".status_updated") if update_status?
+    if update_status?
+      make_subject_in_progress
+      flash[:success] = t(".status_updated")
+    end
     redirect_to trainee_course_subject_path(@course_id, @subject_id)
   end
 
   # PATCH /trainee/user_tasks/:id/spent_time
   def update_spent_time
-    flash[:success] = t(".spent_time_updated") if update_spent_time?
+    if update_spent_time?
+      make_subject_in_progress
+      flash[:success] = t(".spent_time_updated")
+    end
 
     redirect_to trainee_course_subject_path(@course_id, @subject_id)
   end
@@ -40,6 +48,8 @@ destroy_document)
       user_task.status = Settings.user_task.status.not_done
       user_task.spent_time = nil
     end
+    attachments = @user_task.documents.attachments
+    attachments.includes(:blob).load
     load_course_and_subject_id
   end
 
@@ -70,8 +80,10 @@ destroy_document)
   end
 
   def update_status?
-    return true if params[:status].present? &&
-                   @user_task.update(status: params[:status])
+    return false if params[:status].blank?
+
+    new_status = params[:status].to_s == "1" ? :done : :not_done
+    return true if @user_task.update(status: new_status)
 
     flash[:danger] = t(".status_not_updated")
     false
@@ -94,13 +106,20 @@ destroy_document)
   end
 
   def make_subject_in_progress
-    return if @user_subject.status != Settings.user_subject.status.not_started
+    user_subject = @user_task.user_subject
+    return unless user_subject
 
-    if @user_subject.update(status: Settings.user_subject.status.in_progress)
+    unless user_subject.status == Settings.user_subject.status.not_started
       return
     end
 
-    flash[:danger] = t(".subject_in_progress_failed")
-    redirect_to trainee_courses_path
+    # Set started_at and move to in_progress at first learner interaction
+    unless user_subject.update(
+      started_at: user_subject.started_at || Time.zone.today,
+      status: Settings.user_subject.status.in_progress
+    )
+      flash[:danger] = t(".subject_in_progress_failed")
+      redirect_to trainee_courses_path
+    end
   end
 end

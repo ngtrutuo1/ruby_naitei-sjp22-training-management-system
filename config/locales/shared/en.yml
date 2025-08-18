@@ -34,3 +34,8 @@ en:
     course_subject_row_field:
         position: "Position"
         delete: "Delete"
+    error_messages:
+      course_edit:
+        failed: "Failed to update course"
+        success: "Course updated successfully"
+        finish_date_after_start_date: "Finish date must be after start date"

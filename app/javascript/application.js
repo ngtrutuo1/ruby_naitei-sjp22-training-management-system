@@ -5,12 +5,13 @@ import 'jquery';
 import 'bootstrap';
 import 'custom/menu';
 import 'custom/courses_subjects';
-import 'custom/admin_courses';
 import 'custom/trainee/subject_details';
 import 'custom/document_upload';
 import 'custom/supervisor/users';
 import 'custom/admin/users';
 import 'custom/add_subject_in_category';
 import 'custom/add_subject_in_course';
-import "custom/supervisor/tasks_form"
+import 'custom/supervisor/tasks_form';
 import 'custom/admin/new_supervisor';
+import 'custom/course_edit'
+import 'custom/subject_search'

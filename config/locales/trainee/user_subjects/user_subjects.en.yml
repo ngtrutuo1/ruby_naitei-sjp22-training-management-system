@@ -4,5 +4,6 @@ en:
       update:
         update_success: "Successfully updated the subject"
         update_failed: "Failed to update the subject. Please try again."
+        subject_updated: "Successfully updated the subject"
 
       subject_not_found: "Subject not found."

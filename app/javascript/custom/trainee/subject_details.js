@@ -56,6 +56,7 @@ window.updateFormDates = function () {
   const startDate = document.getElementById('actual_start_date').value;
   const endDate = document.getElementById('actual_end_date').value;
   // Gán vào hidden fields của form
-  document.getElementById('form_started_at').value = startDate || '<%= @user_subject.started_at || Date.current %>';
-  document.getElementById('form_completed_at').value = endDate || '<%= @user_subject.completed_at || Date.current %>';
+  const today = new Date().toISOString().slice(0, 10);
+  document.getElementById('form_started_at').value = startDate || today;
+  document.getElementById('form_completed_at').value = endDate || today;
 }

@@ -17,6 +17,9 @@ class UserCourse < ApplicationRecord
   # Validations
   validates :user_id, uniqueness: {scope: :course_id}
 
+  # Callbacks
+  after_create :create_user_subjects_for_course_subjects, if: :trainee?
+
   # Scopes
   scope :active, -> {where(finished_at: nil)}
   scope :completed, -> {where.not(finished_at: nil)}
@@ -26,4 +29,30 @@ class UserCourse < ApplicationRecord
   scope :trainees, (lambda do
     joins(:user).where(users: {role: :trainee}).includes(:user)
   end)
+
+  private
+
+  def trainee?
+    user&.trainee?
+  end
+
+  def create_user_subjects_for_course_subjects
+    # Create user_subjects and user_tasks for all existing course_subjects
+    course.course_subjects.includes(:tasks).find_each do |course_subject|
+      user_subject = user_subjects.create!(
+        user: user,
+        course_subject: course_subject,
+        status: Settings.user_subject.status.not_started
+      )
+
+      # Create user_tasks for all tasks of the course_subject
+      course_subject.tasks.each do |task|
+        user_subject.user_tasks.create!(
+          user: user,
+          task: task,
+          status: Settings.user_task.status.not_done
+        )
+      end
+    end
+  end
 end

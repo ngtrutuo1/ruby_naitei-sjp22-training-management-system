@@ -8,7 +8,7 @@
     <div class="progress">
       <% progress = load_progress_user_course(user_course) %>
       <div class="progress-bar progress-bar-info" role="progressbar"
-           style="width: <%= progress %>%"
+           data-progress-width="<%= progress %>"
            aria-valuenow="<%= progress %>"
            aria-valuemin="0"
            aria-valuemax="100">
