@@ -5,6 +5,7 @@ import 'jquery';
 import 'bootstrap';
 import 'custom/menu';
 import 'custom/courses_subjects';
+import 'custom/add_members_modal';
 import 'custom/trainee/subject_details';
 import 'custom/document_upload';
 import 'custom/supervisor/users';

@@ -4,4 +4,25 @@
     <%= render "courses/trainer_list", trainers: @trainers, trainer_count: @trainer_count %>
     <%= render "courses/trainee_list", trainees: @trainees, trainee_count: @trainee_count, pagy: @pagy %>
   </div>
+
+  <!-- Modal Add Members -->
+  <div class="modal fade" id="addMembersModal" tabindex="-1" aria-hidden="true" data-course-id="<%= @course.id %>">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="addMembersModalLabel" data-trainee-title="<%= t("courses.members.add_trainees_title") %>" data-trainer-title="<%= t("courses.members.add_trainers_title") %>"><%= t("courses.members.add_members_title") %></h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div id="selected-tags" class="mb-2"></div>
+          <input type="text" id="member-search-input" class="form-control" placeholder="<%= t("courses.members.search_placeholder") %>">
+          <div id="member-search-results" class="mt-3" style="max-height: 300px; overflow-y: auto;"></div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><%= t("courses.members.cancel_button") %></button>
+          <button type="button" class="btn btn-primary" id="confirm-add-members" disabled><%= t("courses.members.add_button") %></button>
+        </div>
+      </div>
+    </div>
+  </div>
 <% end %>

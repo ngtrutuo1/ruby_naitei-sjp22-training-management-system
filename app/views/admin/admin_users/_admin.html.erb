@@ -2,7 +2,7 @@
 <tr>
   <td><%= link_to admin.name, admin_admin_users_path(admin) %></td>
   <td><%= admin.email %></td>
-  <td><%= t("activerecord.attributes.user.genders.#{admin.gender}", default: admin.gender.humanize) %></td>
+  <td><%= t("activerecord.attributes.user.genders.#{admin.gender}") %></td>
   <td><%= l(admin.birthday, format: :long) if admin.birthday? %></td>
   <td class="text-center"><%= status_badge(admin.activated?) %></td>
 

@@ -62,11 +62,12 @@ Rails.application.routes.draw do
           get :members
           get :subjects
           get :supervisors
+          get :search_members
           delete :leave
           post :add_subject
         end
-        resources :user_courses, only: [:destroy]
-        resources :supervisors, only: [:destroy]
+        resources :user_courses, only: %i(create destroy)
+        resources :supervisors, only: %i(create destroy)
         resources :course_subjects, only: [:destroy] do
           post :finish, on: :member
         end

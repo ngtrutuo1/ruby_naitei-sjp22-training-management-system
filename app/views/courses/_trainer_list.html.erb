@@ -4,6 +4,12 @@
     <%= t("courses.members.trainer_list") %> (<%= trainer_count %>)
   </h2>
 
+  <% if admin_role? || current_user&.supervisor? %>
+    <button type="button" class="btn btn-primary mb-3" id="open-add-trainers-modal" data-member-type="trainer">
+      + <%= t("courses.members.add_trainers_button") %>
+    </button>
+  <% end %>
+
   <div class="trainer-list">
     <% trainers.each do |trainer| %>
       <%= render partial: "courses/trainer_item", locals: {trainer: trainer, course: @course} %>

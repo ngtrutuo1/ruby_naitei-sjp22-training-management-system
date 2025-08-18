@@ -1,7 +1,7 @@
 <div class="subject-group">
   <h2 class="subject-status-title">
     <span class="status-indicator status-<%= status %>"></span>
-    <%= t("courses.subjects.status.#{status}", default: t("courses.subjects.subject_status.#{status}", default: status.humanize)) %>
+    <%= t("courses.subjects.status.#{status}") %>
   </h2>
 
   <% course_subjects.each do |course_subject| %>

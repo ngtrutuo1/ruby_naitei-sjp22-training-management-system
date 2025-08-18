@@ -98,6 +98,8 @@ vi:
 
       modal_edit_profile:
         edit_profile_title: "Chỉnh sửa hồ sơ"
+      new_supervisor:
+        search_trainee_label: "Tìm kiếm Học viên"
 
       edit_profile_form:
         name_placeholder: "Nhập họ và tên đầy đủ"

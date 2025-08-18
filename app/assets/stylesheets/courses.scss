@@ -328,6 +328,14 @@
     padding: 20px;
   }
 
+  #selected-tags .badge {
+    font-size: 0.9rem;
+  }
+
+  #member-search-results .list-group-item {
+    cursor: pointer;
+  }
+
   .section-title {
     border-bottom: 2px solid #e9ecef;
     color: #333;
