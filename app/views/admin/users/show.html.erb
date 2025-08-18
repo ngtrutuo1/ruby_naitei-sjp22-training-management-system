@@ -3,7 +3,7 @@
 <div class="supervisor-manager-page">
   <!-- Page Header with Title and Actions -->
   <div class="d-flex justify-content-between align-items-center mb-4">
-    <h1 class="page-title mb-0"><%= @user_supervisor.name %></h1>
+    <h2 class="page-title mb-0"><%= @user_supervisor.name %></h2>
     <div class="dropdown">
       <button class="btn btn-primary dropdown-toggle action-btn" type="button" id="supervisorActions" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         <i class="fas fa-cog mr-2"></i><%= t(".actions") %>
@@ -44,11 +44,11 @@
           </div>
           <div class="col-md-6">
             <div class="info-item">
-              <strong><%= t(".date_of_birth") %>:</strong> 
+              <strong><%= t(".date_of_birth") %>:</strong>
               <%= @user_supervisor.birthday ? @user_supervisor.birthday.strftime(Settings.formats.date) : Settings.nil_value %>
             </div>
             <div class="info-item">
-              <strong><%= t(".gender") %>:</strong> 
+              <strong><%= t(".gender") %>:</strong>
               <%= @user_supervisor.gender ? t("enums.user.gender.#{@user_supervisor.gender}") : Settings.nil_value %>
             </div>
           </div>
