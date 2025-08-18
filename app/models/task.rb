@@ -1,7 +1,7 @@
 class Task < ApplicationRecord
   acts_as_paranoid
 
-  TASK_PERMITTED_PARAMS = %i(name taskable_id taskable_type).freeze
+  TASK_PERMITTED_PARAMS = %i(name taskable_id taskable_type subject_id).freeze
   TASKABLE_SCOPE = %i(taskable_id taskable_type).freeze
 
   # Associations
@@ -10,7 +10,7 @@ class Task < ApplicationRecord
   has_many :users, through: :user_tasks
 
   # Validations
-  validates :name, presence: true,
+  validates :name, presence: true, # rubocop:disable Rails/UniqueValidationWithoutIndex
             length: {maximum: Settings.task.max_name_length},
             uniqueness: {scope: [:taskable_id, :taskable_type]}
 
@@ -26,4 +26,9 @@ class Task < ApplicationRecord
                             end
                           end)
   scope :recent, -> {order(created_at: :desc)}
+  scope :by_subject, (lambda do |taskable_id|
+    if taskable_id.present?
+      where(taskable_type: Subject.name, taskable_id: taskable_id)
+    end
+  end)
 end

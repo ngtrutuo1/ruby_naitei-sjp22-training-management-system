@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2025_08_15_100710) do
+ActiveRecord::Schema[7.0].define(version: 2025_08_16_064137) do
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -137,7 +137,7 @@ ActiveRecord::Schema[7.0].define(version: 2025_08_15_100710) do
     t.datetime "updated_at", null: false
     t.datetime "deleted_at"
     t.index ["deleted_at"], name: "index_tasks_on_deleted_at"
-    t.index ["name", "taskable_type", "taskable_id"], name: "index_tasks_on_name_and_taskable_type_and_taskable_id", unique: true
+    t.index ["name", "taskable_type", "taskable_id", "deleted_at"], name: "idx_tasks_on_name_type_id_and_deleted_at", unique: true
     t.index ["taskable_type", "taskable_id"], name: "index_tasks_on_taskable"
     t.index ["taskable_type", "taskable_id"], name: "index_tasks_on_taskable_type_and_taskable_id"
   end

@@ -43,7 +43,7 @@ Rails.application.routes.draw do
     namespace :supervisor do
       resources :daily_reports, only: %i(index show)
       resources :subjects, only: %i(index show destroy new create)
-      resources :tasks, only: %i(index show destroy new create)
+      resources :tasks
       resources :categories
       resources :users, only: %i(index show update) do
         member do
