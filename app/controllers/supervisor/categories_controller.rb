@@ -1,5 +1,6 @@
 class Supervisor::CategoriesController < Supervisor::BaseController
-  before_action :load_category, only: %i(destroy)
+  before_action :load_category, only: %i(show edit update destroy)
+  before_action :load_subject_categories, only: %i(show edit update)
 
   # GET /supervisor/categories
   def index
@@ -38,14 +39,45 @@ class Supervisor::CategoriesController < Supervisor::BaseController
     end
   end
 
+  # GET /supervisor/categories/:id
+  def show; end
+
+  # GET /supervisor/categories/:id/edit
+  def edit; end
+
+  # PATCH /supervisor/categories/:id
+  def update
+    if @category.update(category_params)
+      flash[:success] = t(".update_success")
+      redirect_to supervisor_category_path(@category)
+    else
+      flash.now[:danger] = t(".update_fail")
+      render :edit, status: :unprocessable_entity
+    end
+  end
+
   private
 
   def load_category
-    @category = Category.includes(:subject_categories).find_by id: params[:id]
+    base_scope = Category.all
+
+    case action_name.to_sym
+    when :show, :update
+      base_scope = base_scope.includes(subject_categories: :subject)
+    end
+
+    @category = base_scope.find_by(id: params[:id])
+
     return if @category
 
     flash[:danger] = t("not_found_category")
     redirect_to supervisor_categories_path
+  end
+
+  def load_subject_categories
+    return unless @category
+
+    @subject_categories = @category.subject_categories.ordered_by_position
   end
 
   def category_params
