@@ -56,3 +56,7 @@ en:
       courses: "Courses"
       requests: "Requests"
       reports: "Reports"
+  common:
+    cancel: "Cancel"
+    save_changes: "Save changes"
+    errors_prohibited_save: "There were errors preventing the save:"

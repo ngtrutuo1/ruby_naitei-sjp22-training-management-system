@@ -56,3 +56,7 @@ vi:
       courses: "Khóa học"
       requests: "Yêu cầu"
       reports: "Báo cáo"
+  common:
+    cancel: "Hủy"
+    save_changes: "Lưu thay đổi"
+    errors_prohibited_save: "Có lỗi ngăn không cho lưu:"

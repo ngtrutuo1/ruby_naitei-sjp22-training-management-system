@@ -7,6 +7,8 @@ gem "active_storage_validations", "0.9.8"
 
 gem "bullet"
 
+gem "i18n-js", "~> 4.2"
+
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "paranoia"
 gem "rails", "~> 7.0.5"
