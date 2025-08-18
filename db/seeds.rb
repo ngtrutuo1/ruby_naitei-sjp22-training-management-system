@@ -46,11 +46,15 @@ class CourseSeederService
       cs_finish = cs_start + (estimated_days - 1).days
       cs_finish = [@course.finish_date, cs_finish].min
       cs_start = cs_finish if cs_start > cs_finish
-
       course_subject = @course.course_subjects.create!(
         subject:, position: index + 1,
         start_date: cs_start, finish_date: cs_finish
       )
+      rand(3..8).times.each_with_index do |_, i|
+        course_subject.tasks.create!(
+          name: "#{Faker::Hacker.verb.capitalize} the #{Faker::Hacker.adjective} #{Faker::Hacker.noun} #{Faker::Number.unique.number(digits: 4)} #{i + 1}"
+        )
+      end
     end
     @course.reload
   end

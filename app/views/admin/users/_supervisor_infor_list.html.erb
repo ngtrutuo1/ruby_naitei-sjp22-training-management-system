@@ -2,9 +2,9 @@
   <tr class="supervisor-row">
     <!-- Checkbox for bulk actions -->
     <td class="checkbox-col">
-      <input type="checkbox" class="form-check-input supervisor-checkbox" value="<%= supervisor.id %>">
+      <input type="checkbox" class="form-check-input supervisor-checkbox" value="<%= supervisor.id %>" data-bs-toggle="modal" data-bs-target="#bulkActionModal">
     </td>
-
+  
     <!-- Name (clickable link) -->
     <td class="name-col">
       <%= link_to supervisor.name,
