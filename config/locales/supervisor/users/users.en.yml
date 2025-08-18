@@ -60,6 +60,9 @@ en:
           male: "Male"
           female: "Female"
           other: "Other"
+        view_profile: "View Profile"
+        deactivate: "Deactivate"
+        activate: "Activate"
 
       index:
         title: "Trainee Management"
@@ -125,7 +128,7 @@ en:
         update_status: "Update Status"
         table:
           actions: "Actions"
-      
+
       filter_user_details_form:
         course_history: "Course History"
         search_placeholder: "Search courses..."

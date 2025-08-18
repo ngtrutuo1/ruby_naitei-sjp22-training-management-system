@@ -27,8 +27,7 @@ class Supervisor::UsersController < Supervisor::BaseController
 
   # PATCH /supervisor/users/:id/update_status
   def update_status
-    flash[:success] = t(".update_success") if update_status?
-
+    flash[:success] = t(".update_success") if handle_update_status?
     redirect_to session.delete(:forwarding_url) || supervisor_users_path
   end
 
@@ -84,7 +83,7 @@ class Supervisor::UsersController < Supervisor::BaseController
     redirect_to supervisor_users_path
   end
 
-  def update_status?
+  def handle_update_status?
     if params[:activated].present? &&
        @user_trainee.update(activated: params[:activated])
       return true
