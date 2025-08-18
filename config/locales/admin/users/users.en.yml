@@ -16,6 +16,37 @@ en:
         no_supervisors_description: "No supervisors match your current filter criteria. Try adjusting your search parameters."
         showing_results: "Showing filtered results"
 
+      show:
+        actions: "Actions"
+        edit_profile: "Edit Profile"
+        deactivate_account: "Deactivate Account"
+        activate_account: "Activate Account"
+        email: "Email"
+        name: "Name"
+        date_of_birth: "Date of Birth"
+        gender: "Gender"
+        course_history: "Course History"
+        table:
+          id: "ID"
+          courses: "Course"
+          start_date: "Start Date"
+          end_date: "End Date"
+          trainees: "Trainees"
+          status: "Status"
+          actions: "Actions"
+        no_courses: "No courses found"
+        showing_courses: "Showing %{count} courses"
+
+      update:
+        update_success: "Profile updated successfully"
+        update_failed: "Failed to update profile"
+
+      delete_user_course:
+        delete_success: "Supervisor removed from course successfully"
+        delete_failed: "Failed to remove supervisor from course"
+        course:
+          not_found: "Course not found"
+
       update_status:
         update_success: "Supervisor status updated successfully"
         update_failed: "Failed to update supervisor status"
@@ -41,12 +72,43 @@ en:
         deactivate_confirm: "Are you sure you want to deactivate this supervisor?"
         activate_confirm: "Are you sure you want to activate this supervisor?"
 
+      user_courses_list:
+        status_active: "Active"
+        status_inactive: "Inactive"
+        status_completed: "Completed"
+        status_cancelled: "Cancelled"
+        table:
+          actions: "Actions"
+        view_course_details: "View Course Details"
+        remove_from_course: "Remove from Course"
+        status_in_progress: "In Progress"
+        status_not_started: "Not Started"
+        status_finished: "Finished"
+
+      filter_user_details_form:
+        search_placeholder: "Search courses..."
+        apply: "Apply"
+        reset_filters: "Reset Filters"
+        course_all: "All Courses"
+        status_all: "All Statuses"
+        status_not_started: "Not Started"
+        status_in_progress: "In Progress"
+        status_finished: "Finished"
+
+      modal_edit_profile:
+        edit_profile_title: "Edit Profile"
+
+      edit_profile_form:
+        name_placeholder: "Enter full name"
+        email_placeholder: "Enter email address"
+        save_changes: "Save Changes"
+
       filter_form:
         search_label: "Search"
         search_placeholder: "Search by name or email..."
         clear_search: "Clear search"
         status_label: "Status"
-        status_all: "All Status"
+        status_all: "All Statuses"
         status_active: "Active"
         status_inactive: "Inactive"
         course_label: "Course"

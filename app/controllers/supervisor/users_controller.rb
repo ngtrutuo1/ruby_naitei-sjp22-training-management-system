@@ -1,7 +1,4 @@
 class Supervisor::UsersController < Supervisor::BaseController
-  USER_COURSE_INCLUDES = [:comments, {
-    user_subjects: [:comments, :user_tasks]
-  }].freeze
   before_action :load_courses, only: %i(index)
   before_action :load_trainees, only: %i(index)
   before_action :load_trainee, only: %i(update_status show
@@ -141,7 +138,7 @@ class Supervisor::UsersController < Supervisor::BaseController
         @user_trainee.user_courses
                      .find_by(course_id: params[:course_id])
       when :delete_user_course
-        @user_trainee.user_courses.includes(USER_COURSE_INCLUDES)
+        @user_trainee.user_courses.includes(UserCourse::USER_COURSE_INCLUDES)
                      .find_by(course_id: params[:course_id])
       end
     return if @user_course

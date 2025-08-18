@@ -132,6 +132,12 @@ class Course < ApplicationRecord
 
     includes(:user_courses).where(user_courses: {status:}).distinct
   end)
+  scope :by_supervisor_course, (lambda do |supervisor_id|
+    return all if supervisor_id.blank?
+
+    joins(:course_supervisors)
+    .where(course_supervisors: {user_id: supervisor_id})
+  end)
 
   def trainees_count
     self[:trainees_count] || user_courses

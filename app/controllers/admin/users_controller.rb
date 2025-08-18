@@ -1,8 +1,10 @@
 class Admin::UsersController < Admin::BaseController
   before_action :load_supervisors, only: %i(index)
   before_action :load_courses, only: %i(index)
-  before_action :load_supervisor, only: %i(update_status)
-  before_action :set_css_class, only: %i(index)
+  before_action :load_supervisor,
+                only: %i(update_status show update delete_user_course)
+  before_action :set_css_class, only: %i(index show)
+  before_action :load_user_course, only: %i(delete_user_course)
 
   # GET /admin/users
   def index
@@ -16,6 +18,36 @@ class Admin::UsersController < Admin::BaseController
     redirect_to session.delete(:forwarding_url) || admin_users_path
   end
 
+  # GET /admin/users/:id
+  def show
+    @supervisor_courses = @user_supervisor.supervised_courses
+                                          .includes(:users)
+                                          .by_user_course_status(
+                                            params[:status]
+                                          )
+                                          .search_by_name(params[:search])
+                                          .by_course(params[:course_id]).recent
+    @pagy, @supervisor_courses = pagy(@supervisor_courses)
+  end
+
+  # PATCH /admin/users/:id
+  def update
+    if @user_supervisor.update(user_params)
+      flash[:success] = t(".update_success")
+      redirect_to admin_user_path(@user_supervisor)
+    else
+      flash[:danger] = t(".update_failed")
+      render :show
+    end
+  end
+
+  # DELETE /admin/users/:id
+  def delete_user_course
+    flash[:success] = t(".delete_success") if handle_delete_user_course
+
+    redirect_to admin_user_path(@user_supervisor)
+  end
+
   # PATCH /admin/users/bulk_deactivate
   def bulk_deactivate
     handle_bulk_statuses
@@ -23,6 +55,26 @@ class Admin::UsersController < Admin::BaseController
   end
 
   private
+
+  def load_user_course
+    @user_course = @user_supervisor.course_supervisors
+                                   .find_by(course_id: params[:course_id])
+    return if @user_course
+
+    flash[:danger] = t(".course.not_found")
+    redirect_to admin_user_path(@user_supervisor)
+  end
+
+  def handle_delete_user_course
+    return true if @user_course.destroy
+
+    flash[:danger] = t(".delete_failed")
+    false
+  end
+
+  def user_params
+    params.require(:user).permit(User::PERMITTED_UPDATE_ATTRIBUTES)
+  end
 
   def load_supervisors
     @user_supervisors = User.supervisor.filter_by_name(params[:search])
@@ -88,21 +140,5 @@ class Admin::UsersController < Admin::BaseController
 
   def set_css_class
     @page_class = Settings.page_classes.admin_users
-  end
-
-  def load_user_course
-    @user_course =
-      case action_name.to_sym
-      when :update_user_course_status
-        @user_supervisor.user_courses
-                        .find_by(course_id: params[:course_id])
-      when :delete_user_course
-        @user_supervisor.user_courses.includes(USER_COURSE_INCLUDES)
-                        .find_by(course_id: params[:course_id])
-      end
-    return if @user_course
-
-    flash[:danger] = t(".course.not_found")
-    redirect_to admin_user_path(@user_supervisor)
   end
 end

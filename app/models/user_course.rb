@@ -1,4 +1,8 @@
 class UserCourse < ApplicationRecord
+  USER_COURSE_INCLUDES = [:comments, {
+    user_subjects: [:comments, :user_tasks]
+  }].freeze
+
   # Enums
   enum status: {not_started: Settings.user_course.status.not_started,
                 in_progress: Settings.user_course.status.in_progress,

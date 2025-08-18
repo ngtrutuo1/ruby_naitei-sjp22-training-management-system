@@ -1,0 +1,52 @@
+<%= form_with model: @user_supervisor, url: admin_user_path(@user_supervisor), data: { turbo_method: :patch }, id: "editProfileForm", class: "edit-profile-form" do |f| %>
+  <div class="modal-body">
+    <div class="row">
+      <!-- Name Field -->
+      <div class="col-md-6">
+        <div class="form-group mb-3">
+          <%= f.label :name, class: "form-label fw-bold" %>
+          <span class="text-danger">*</span>
+          <%= f.text_field :name, class: "form-control", placeholder: t(".name_placeholder") %>
+          <div class="invalid-feedback"></div>
+        </div>
+      </div>
+
+      <!-- Email Field -->
+      <div class="col-md-6">
+        <div class="form-group mb-3">
+          <%= f.label :email, class: "form-label fw-bold" %>
+          <span class="text-danger">*</span>
+          <%= f.email_field :email, class: "form-control", placeholder: t(".email_placeholder"), disabled: true %>
+          <div class="invalid-feedback"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <!-- Birthday Field -->
+      <div class="col-md-6">
+        <div class="form-group mb-3">
+          <%= f.label :birthday, class: "form-label fw-bold" %>
+          <%= f.date_field :birthday, class: "form-control" %>
+          <div class="invalid-feedback"></div>
+        </div>
+      </div>
+
+      <!-- Gender Field -->
+      <div class="col-md-6">
+        <div class="form-group mb-3">
+          <%= f.label :gender, class: "form-label fw-bold" %>
+          <%= f.select :gender,
+                options_for_select(user_gender_options, @user_supervisor.gender),
+                {},
+                {class: "form-select"} %>
+          <div class="invalid-feedback"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <%= f.submit t(".save_changes"), class: "btn btn-success", id: "saveProfileBtn" %>
+  </div>
+<% end %>
