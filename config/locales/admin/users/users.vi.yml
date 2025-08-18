@@ -15,6 +15,7 @@ vi:
         no_supervisors_found: "Không tìm thấy giám sát viên"
         no_supervisors_description: "Không có giám sát viên nào phù hợp với tiêu chí lọc hiện tại. Hãy thử điều chỉnh các tham số tìm kiếm."
         showing_results: "Hiển thị kết quả đã lọc"
+        add_supervisor: "Thêm Giám sát viên"
 
       show:
         actions: "Hành động"
@@ -99,7 +100,7 @@ vi:
         edit_profile_title: "Chỉnh sửa hồ sơ"
 
       edit_profile_form:
-        name_placeholder: "Nhập họ và tên"
+        name_placeholder: "Nhập họ và tên đầy đủ"
         email_placeholder: "Nhập địa chỉ email"
         save_changes: "Lưu thay đổi"
 
@@ -115,3 +116,29 @@ vi:
         course_all: "Tất cả khóa học"
         apply: "Áp dụng bộ lọc"
         reset_filters: "Đặt lại bộ lọc"
+
+      new_supervisor:
+        add_supervisor: "Thêm Giám sát viên"
+        cancel: "Hủy"
+        search_trainee_label: "Tìm kiếm học viên"
+        search: "Tìm kiếm"
+        placeholder: "Nhập tên học viên..."
+        search_help_text: "Nhấn vào học viên để chọn. Có thể chọn nhiều học viên."
+        add_button: "Thêm Giám sát viên"
+        update_success: "Cập nhật giám sát viên thành công."
+        update_failed: "Cập nhật giám sát viên thất bại."
+        supervisor_no_selection: "Vui lòng chọn ít nhất một học viên."
+        bulk_statuses_success: "Đã cập nhật %{count} giám sát viên thành công."
+        bulk_statuses_failed: "Cập nhật giám sát viên thất bại."
+        delete_success: "Xóa thành công."
+        delete_failed: "Xóa thất bại."
+        course:
+          not_found: "Không tìm thấy khóa học."
+        supervisor:
+          not_found: "Không tìm thấy giám sát viên."
+
+      add_role_supervisor:
+        add_success: "Thêm giám sát viên thành công."
+        add_failed: "Thêm giám sát viên thất bại."
+        supervisor:
+          not_found: "Không tìm thấy giám sát viên."

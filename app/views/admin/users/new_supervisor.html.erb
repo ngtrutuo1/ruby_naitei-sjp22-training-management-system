@@ -1,0 +1,71 @@
+<div class="container py-4">
+  <div class="row mb-4">
+    <div class="col-12 d-flex justify-content-between align-items-center">
+      <h3 class="fw-bold mb-0">
+        <i class="fas fa-user-plus me-2"></i>
+        <%= t(".add_supervisor") %>
+      </h3>
+      <%= link_to t(".cancel"), admin_users_path, class: "btn btn-outline-secondary" %>
+    </div>
+  </div>
+
+  <div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <form id="addSupervisorForm">
+            <div class="mb-3">
+              <label for="traineeSearchInput" class="form-label fw-semibold">
+                <i class="fas fa-search me-2 text-success"></i>
+                <%= t(".search_trainee_label", default: "Search Trainee") %>
+              </label>
+              <%= form_with url: request.path, method: :get, local: true, html: {class: "mb-3 d-flex", id: "traineeSearchForm"} do %>
+                <%= text_field_tag :search, params[:search], class: "form-control me-2", id: "traineeSearchInput", placeholder: t(".placeholder") %>
+                <%= button_tag t(".search"), type: :submit, class: "btn btn-primary", id: "traineeSearchBtn" %>
+              <% end %>
+              <div class="form-text text-muted mt-2">
+                <i class="fas fa-info-circle me-1"></i>
+                <%= t(".search_help_text") %>
+              </div>
+            </div>
+
+
+            <% if @user_trainees.present? %>
+              <div class="search-results-container mb-3" id="traineeListContainer">
+                <div class="search-results border rounded-3 bg-light trainee-list-scroll">
+                  <% @user_trainees.each do |trainee| %>
+                    <div class="search-result-item d-flex align-items-center" data-trainee='<%= {id: trainee.id, name: trainee.name, email: trainee.email}.to_json %>'>
+                      <div class="trainee-avatar me-3"><%= trainee.name.first.upcase %></div>
+                      <div class="trainee-details">
+                        <div class="fw-bold"><%= trainee.name %></div>
+                        <div class="text-muted small"><%= trainee.email %></div>
+                      </div>
+                    </div>
+                  <% end %>
+                </div>
+              </div>
+            <% end %>
+
+            <div class="search-results-container d-none" id="searchResultsContainer">
+              <div class="search-results border rounded-3 bg-light trainee-list-scroll" id="searchResults"></div>
+            </div>
+
+            <div class="selected-trainee-section d-none" id="selectedTraineeSection">
+              <div class="alert alert-success" id="selectedTraineeInfo"></div>
+            </div>
+
+            <input type="hidden" id="selectedTraineeId" name="trainee_id" value="">
+
+            <div class="d-flex justify-content-end gap-2 mt-4">
+              <%= link_to t(".cancel"), admin_users_path, class: "btn btn-secondary btn-lg" %>
+              <button type="button" class="btn btn-success btn-lg" id="addSupervisorBtn" disabled>
+                <i class="fas fa-user-cog me-2"></i>
+                <%= t(".add_button") %>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

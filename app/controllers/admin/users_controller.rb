@@ -1,6 +1,7 @@
 class Admin::UsersController < Admin::BaseController
   before_action :load_supervisors, only: %i(index)
   before_action :load_courses, only: %i(index)
+  before_action :load_trainees, only: %i(new_supervisor add_role_supervisor)
   before_action :load_supervisor,
                 only: %i(update_status show update delete_user_course)
   before_action :set_css_class, only: %i(index show)
@@ -10,6 +11,9 @@ class Admin::UsersController < Admin::BaseController
   def index
     @pagy, @supervisors = pagy(@user_supervisors)
   end
+
+  # GET /admin/users/new_supervisor
+  def new_supervisor; end
 
   # PATCH /admin/users/:id/update_status
   def update_status
@@ -54,7 +58,18 @@ class Admin::UsersController < Admin::BaseController
     redirect_to admin_users_path
   end
 
+  # PATCH /admin/users/add_role_supervisor
+  def add_role_supervisor
+    flash[:success] = t(".add_success") if handle_add_role_supervisor?
+
+    redirect_to new_supervisor_admin_users_path
+  end
+
   private
+
+  def load_trainees
+    @user_trainees = User.trainee.filter_by_name(params[:search]).recent
+  end
 
   def load_user_course
     @user_course = @user_supervisor.course_supervisors
@@ -140,5 +155,18 @@ class Admin::UsersController < Admin::BaseController
 
   def set_css_class
     @page_class = Settings.page_classes.admin_users
+  end
+
+  def handle_add_role_supervisor?
+    return false if params[:supervisor_ids].blank?
+
+    begin
+      @user_trainees.where(id: params[:supervisor_ids])
+                    .update_all(role: :supervisor)
+    rescue StandardError
+      flash[:danger] = t(".add_failed")
+      false
+    end
+    true
   end
 end

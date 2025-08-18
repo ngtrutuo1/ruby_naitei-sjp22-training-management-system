@@ -80,6 +80,8 @@ Rails.application.routes.draw do
         end
         collection do
           patch :bulk_deactivate
+          get :new_supervisor
+          patch :add_role_supervisor
         end
       end
       resources :daily_reports, only: %i(index show)

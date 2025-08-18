@@ -14,6 +14,7 @@ en:
         actions: "Actions"
         no_supervisors_found: "No supervisors found"
         no_supervisors_description: "No supervisors match your current filter criteria. Try adjusting your search parameters."
+        add_supervisor: "Add Supervisor"
         showing_results: "Showing filtered results"
 
       show:
@@ -115,3 +116,29 @@ en:
         course_all: "All Courses"
         apply: "Apply Filters"
         reset_filters: "Reset Filters"
+
+      new_supervisor:
+        add_supervisor: "Add Supervisor"
+        cancel: "Cancel"
+        search_trainee_label: "Search Trainee"
+        search: "Search"
+        placeholder: "Enter trainee name..."
+        search_help_text: "Click a trainee to select. You can select multiple trainees."
+        add_button: "Add Supervisor"
+        update_success: "Supervisors updated successfully."
+        update_failed: "Failed to update supervisors."
+        supervisor_no_selection: "Please select at least one trainee."
+        bulk_statuses_success: "%{count} supervisors updated successfully."
+        bulk_statuses_failed: "Failed to update supervisors."
+        delete_success: "Delete successful."
+        delete_failed: "Delete failed."
+        course:
+          not_found: "Course not found."
+        supervisor:
+          not_found: "Supervisor not found."
+
+      add_role_supervisor:
+        add_success: "Supervisors added successfully."
+        add_failed: "Failed to add supervisors."
+        supervisor:
+          not_found: "Supervisor not found."
