@@ -60,6 +60,9 @@ vi:
           male: "Nam"
           female: "Nữ"
           other: "Khác"
+        view_profile: "Xem hồ sơ"
+        deactivate: "Hủy kích hoạt"
+        activate: "Kích hoạt"
 
       index:
         title: "Quản lý Học viên"
