@@ -39,7 +39,7 @@
     <%= link_to t(".cancel"),
       @category.persisted? ? supervisor_category_path(@category) : supervisor_categories_path,
       class: "btn btn-danger" %>
-    <%= f.submit submit_label, class: "btn btn-warning" %>
+    <%= f.submit submit_label, class: "btn btn-warning width-fit" %>
   </div>
 <% end %>
 

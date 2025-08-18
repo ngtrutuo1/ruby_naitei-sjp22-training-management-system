@@ -1,11 +1,12 @@
 class Supervisor::TasksController < Supervisor::BaseController
-  before_action :load_task, only: %i(destroy)
+  before_action :load_task, only: %i(destroy show edit update)
 
   # GET /supervisor/tasks
   def index
     @pagy, @tasks = pagy Task.for_taskable_type(Subject.name)
                              .includes(:taskable)
                              .recent
+                             .by_subject(params[:subject_id])
                              .search_by_name(params[:search]),
                          items: Settings.ui.items_per_page
   end
@@ -34,6 +35,23 @@ class Supervisor::TasksController < Supervisor::BaseController
       redirect_to supervisor_tasks_path
     else
       flash.now[:danger] = t(".create_fail")
+      render :new, status: :unprocessable_entity
+    end
+  end
+
+  # GET /supervisor/tasks/:id
+  def show; end
+
+  # GET /supervisor/tasks/:id/edit
+  def edit; end
+
+  # PATCH /supervisor/tasks/:id/
+  def update
+    if @task.update(task_params)
+      flash[:success] = t(".update_success")
+      redirect_to supervisor_tasks_path
+    else
+      flash.now[:danger] = t(".update_fail")
       render :new, status: :unprocessable_entity
     end
   end

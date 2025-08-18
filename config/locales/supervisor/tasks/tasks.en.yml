@@ -4,12 +4,20 @@ en:
       index:
         title: "All Tasks"
         add_task: "Add task"
+        select_subject_placeholder: "Select subject"
       new:
         title: "Add Task"
+        add: "Add"
+      edit:
+        title: "Update Task"
+        update: "Update"
+      update:
+        update_success: "Task was successfully updated."
+        update_fail: "Failed to update the task."
+      form:
         subject_name: "Subject name:"
         task_name: "Task name:"
         cancel: "Cancel"
-        add: "Add"
         choose_subject: "Choose subject"
       create:
         create_fail: "Failed to create task."
@@ -24,6 +32,12 @@ en:
         delete: "Delete"
         confirm_delete: "Are you sure you want to delete this item?"
       destroy:
-        task_deleted: "Bài tập đã được xóa thành công."
-        delete_failed: "Xóa bài tập thất bại."
+        task_deleted: "Task was successfully deleted."
+        delete_failed: "Failed to delete the task."
+      show:
+        title: "Task detail"
+        subject_name: "Subject name"
+        task_name: "Task name"
+        back: "Back"
+        edit: "Edit"
   not_found_task: "Không tìm thấy bài tập."

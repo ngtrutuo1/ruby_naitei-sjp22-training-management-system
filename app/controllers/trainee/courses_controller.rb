@@ -1,6 +1,6 @@
 class Trainee::CoursesController < Trainee::BaseController
   COURSE_SUBJECTS_PRELOAD = [
-    :subject,
+    {subject: [:image_attachment]},
     :tasks,
     {user_subjects: [:user, :comments]}
   ].freeze

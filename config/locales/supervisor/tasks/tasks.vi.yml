@@ -4,12 +4,20 @@ vi:
       index:
         title: "Tất cả các nhiệm vụ"
         add_task: "Thêm nhiệm vụ"
+        select_subject_placeholder: "Chọn môn học"
       new:
         title: "Thêm nhiệm vụ"
+        add: "Thêm"
+      edit:
+        title: "Cập nhật nhiệm vụ"
+        update: "Cập nhật"
+      update:
+        update_success: "Nhiệm đã được cập nhật thành công."
+        update_fail: "Cập nhật nhiệm vụ thất bại."
+      form:
         subject_name: "Tên môn học:"
         task_name: "Tên nhiệm vụ:"
         cancel: "Hủy"
-        add: "Thêm"
         choose_subject: "Chọn môn học"
       create:
         create_fail: "Thêm nhiệm vụ thất bại."
@@ -26,4 +34,10 @@ vi:
       destroy:
         task_deleted: "Xóa nhiệm vụ thành công"
         delete_failed: "Xóa nhiệm vụ thất bại"
+      show:
+        title: "Chi tiết nhiệm vụ"
+        subject_name: "Tên môn học"
+        task_name: "Tên nhiệm vụ"
+        back: "Trở lại"
+        edit: "Sửa"
   not_found_task: "Không tìm thấy nhiệm vụ"
