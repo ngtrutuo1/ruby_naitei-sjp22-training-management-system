@@ -1,0 +1,101 @@
+en:
+  common:
+    active: "Active"
+    inactive: "Inactive"
+    activate: "Activate"
+    add: "Add"
+    cancel: "Cancel"
+    not_available: "N/A"
+  time:
+    formats:
+      short: "%d-%m-%Y"
+  activerecord:
+    attributes:
+      user:
+        genders:
+          male: "Male"
+          female: "Female"
+          other: "Other"
+  admin:
+    admin_users:
+      index:
+        title: "All Admins"
+        add_admin_button: "+ Add Admin"
+        name: "Name"
+        email: "Email"
+        phone: "Phone Number"
+        gender: "Gender"
+        birthday: "Date of Birth"
+        address: "Address"
+        status: "Status"
+        actions: "Actions"
+        confirm_delete: "Are you sure?"
+        no_admins_found: "No admins found."
+        all_statuses: "All Statuses"
+        deactivate: "Deactivate"
+      new:
+        title: "Add New Admin"
+        add_new_admin: "Add new admin"
+        promote_supervisor: "Promote supervisor"
+      create:
+        admin_created_successfully: "New admin was successfully created."
+        creation_failed: "Failed to create admin. Please check the errors below."
+      show:
+        actions: "Actions"
+        edit_profile: "Edit Profile"
+      helpers:
+        submit:
+          user:
+            create: "Add"
+      filter_form:
+        apply_button: "Apply"
+        search_placeholder: "Search by name..."
+        search_by: "Search by"
+        enter_keyword: "Enter keyword..."
+        clear_filter_button: "Clear Filter"     
+        name: "Name"   
+        all_statuses: "All Statuses"
+      admins_table:
+        name: "Name"
+        email: "Email"
+        gender: "Gender"
+        birthday: "Date of Birth"
+        address: "Address"
+        status: "Status"
+        actions: "Actions"
+      admin:
+        view_profile: "View"
+        deactivate: "Deactivate"
+        delete: "Delete"
+        confirm_delete: "Are you sure to delete %{name} ?"
+      promote_form:
+        promote: "Promote"
+        choose_supervisor: "Choose Supervisor"
+        choose: "Choose"  
+      courses_table:
+        id: "ID"
+        course_name: "Course Name"
+        start_date: "Start Date"
+        end_date: "End Date"
+        trainees_count: "Trainees"
+        status: "Status"
+        actions: "Actions"
+        no_courses_found: "This admin is not supervising any courses yet."
+      admin_info:
+        email: "Email"
+        phone: "Phone"
+        address: "Address"
+        birthday: "Date of Birth"
+        gender: "Gender"      
+      activate:
+        admin_activated: "Admin has been activated."
+        activation_failed: "Failed to activate admin."
+      deactivate:
+        admin_deactivated: "Admin has been deactivated."
+        deactivation_failed: "Failed to deactivate admin."
+      destroy:
+        admin_deleted: "Admin was successfully deleted."
+        deletion_failed: "Failed to delete admin. It might have associated records."
+      promote:
+        promote_success: "Successfully promoted to administrator."
+        promote_failed: "Promotion failed. Please try again."

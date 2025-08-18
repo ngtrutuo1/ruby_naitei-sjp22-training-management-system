@@ -2,7 +2,10 @@ class Trainee::CoursesController < Trainee::BaseController
   COURSE_SUBJECTS_PRELOAD = [
     {subject: [:image_attachment]},
     :tasks,
-    {user_subjects: [:user, :comments]}
+     {user_subjects: [
+       :user,
+    {comments: :user}
+     ]}
   ].freeze
 
   USER_SJ_PRELOAD = [
@@ -31,7 +34,8 @@ class Trainee::CoursesController < Trainee::BaseController
 
   # GET /trainee/courses/:id/subjects
   def subjects
-    @course_subjects = @course.course_subjects.includes(COURSE_SUBJECTS_PRELOAD)
+    @course_subjects = @course.course_subjects
+                              .includes(COURSE_SUBJECTS_PRELOAD)
                               .ordered_by_position
     @subject_count = @course_subjects.count
     @trainee_count = @course.trainee_count

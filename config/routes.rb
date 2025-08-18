@@ -88,6 +88,16 @@ Rails.application.routes.draw do
           patch :add_role_supervisor
         end
       end
+      resources :admin_users, only: %i(index new create show destroy) do
+        member do
+          patch :activate
+          patch :deactivate
+        end
+        collection do
+          post :promote
+        end
+      end
+
       resources :daily_reports, only: %i(index show)
     end
   end

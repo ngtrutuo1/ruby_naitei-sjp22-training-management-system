@@ -1,0 +1,57 @@
+<%= form_with model: model_object, url: submit_url, method: method, 
+              local: true, html: {class: "form-horizontal"} do |f| %>
+
+  <%= render "shared/error_messages", object: f.object %>
+
+  <div class="form-group">
+    <%= f.label :name, class: "col-sm-3 control-label" %>
+    <div class="col-sm-9">
+      <%= f.text_field :name, class: "form-control", placeholder: t("activerecord.attributes.user.name") %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :email, class: "col-sm-3 control-label" %>
+    <div class="col-sm-9">
+      <%= f.email_field :email, class: "form-control" %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :password, class: "col-sm-3 control-label" %>
+    <div class="col-sm-9">
+      <%= f.password_field :password, class: "form-control" %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :password_confirmation, class: "col-sm-3 control-label" %>
+    <div class="col-sm-9">
+      <%= f.password_field :password_confirmation, class: "form-control" %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :birthday, class: "col-sm-3 control-label" %>
+    <div class="col-sm-9">
+      <%= f.date_field :birthday, class: "form-control" %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :gender, class: "col-sm-3 control-label" %>
+    <div class="col-sm-9">
+      <%= f.select :gender,
+        User.genders.keys.map {|g| [t("activerecord.attributes.user.genders.#{g}", default: g.humanize), g]},
+        {include_blank: t("common.choose")},
+        class: "form-control" %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="col-sm-offset-3 col-sm-9 text-right width-fit">
+      <%= link_to t("common.cancel"), admin_admin_users_path, class: "btn btn-default" %>
+      <%= f.submit submit_text, class: "btn btn-primary width-fit" %>
+    </div>
+  </div>
+<% end %>

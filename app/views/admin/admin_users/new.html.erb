@@ -1,0 +1,28 @@
+<% provide :title, t(".title") %>
+
+<div class="content-container">
+  <h1 class="page-title"><%= t(".title") %></h1>
+
+  <ul class="nav nav-tabs">
+    <li class="<%= params[:tab] != Settings.promote ? Settings.active : "" %>">
+      <a href="?tab=new"><%= t(".add_new_admin") %></a>
+    </li>
+    <li class="<%= params[:tab] == Settings.promote ? Settings.active : "" %>">
+      <a href="?tab=promote"><%= t(".promote_supervisor") %></a>
+    </li>
+  </ul>
+
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <% if params[:tab] == Settings.promote %>
+        <%= render "promote_form" %>
+      <% else %>
+        <%= render "form",
+                   model_object: @supervisor,
+                   submit_url: admin_admin_users_path,
+                   method: :post,
+                   submit_text: t("common.add") %>
+      <% end %>
+    </div>
+  </div>
+</div>

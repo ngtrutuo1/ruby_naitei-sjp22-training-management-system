@@ -1,0 +1,18 @@
+<%= form_with url: promote_admin_admin_users_path, method: :post, local: true, html: {class: "form-horizontal"} do |f| %>
+  <div class="form-group">
+    <%= label_tag :supervisor_id, t(".choose_supervisor"), class: "col-sm-3 control-label" %>
+    <div class="col-sm-9">
+      <%= select_tag :supervisor_id,
+          options_from_collection_for_select(User.supervisor.sort_by_name, :id, :name),
+          include_blank: t(".choose"),
+          class: "form-control" %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="col-sm-offset-3 col-sm-9 text-right width-fit">
+      <%= link_to t("common.cancel"), admin_admin_users_path, class: "btn btn-default width-fit" %>
+      <%= f.submit t(".promote"), class: "btn btn-success width-fit" %>
+    </div>
+  </div>
+<% end %>

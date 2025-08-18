@@ -2,6 +2,8 @@ allowed_pagy: 1
 percentage: 100
 avatar: "Avatar"
 name: "name"
+active: "active"
+promote: "promote"
 
 completion_rate:
   zero: 0

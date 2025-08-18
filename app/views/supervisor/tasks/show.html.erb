@@ -1,8 +1,10 @@
 <% provide(:title, t(".title")) %>
 
 <div class="flex-container space-between align-center height-fit">
-  <h2 class="mt-15 mb-15"><%= t(".title") %></h2>
-  <%= link_to t(".edit"), edit_supervisor_task_path(@task), class: "btn btn-warning" %>
+  <h3 class="page-header"><%= t(".title") %></h3>
+  <%= link_to edit_supervisor_task_path(@task), class: "btn btn-primary pull-right" do %>
+    <i class="fa fa-pencil"></i> <%= t(".edit") %>
+  <% end %>
 </div>
 
 <div class="container-fluid">
