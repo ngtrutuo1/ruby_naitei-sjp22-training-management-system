@@ -115,7 +115,7 @@ class Supervisor::UsersController < Supervisor::BaseController
   def toggle_trainees_status trainees
     updated_count = 0
     trainees.each do |trainee|
-      new_status = trainee.active? ? :inactive : :active
+      new_status = trainee.activated? ? false : true
       updated_count += 1 if trainee.update(activated: new_status)
     end
     updated_count
