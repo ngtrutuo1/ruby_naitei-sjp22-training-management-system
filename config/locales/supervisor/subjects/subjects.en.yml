@@ -19,7 +19,7 @@ en:
         max_score: "Max Score:"
         estimated_time_days: "Estimated Time (days):"
       create:
-        create_fail: "Failed to create subject."
+        create_failed: "Failed to create subject."
         create_success: "Subject was successfully created."
       show:
         days: "Days"

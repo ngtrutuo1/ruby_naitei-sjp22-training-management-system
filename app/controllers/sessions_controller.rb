@@ -4,7 +4,8 @@ class SessionsController < ApplicationController
   before_action :check_authentication, only: :create
   before_action :check_activation, only: :create
   before_action :logged_out_user, only: %i(new create)
-  skip_before_action :logged_in_user, only: %i(new create)
+  skip_before_action :logged_in_user, only: %i(new create create_from_google)
+  skip_before_action :store_user_location, only: %i(create_from_google)
 
   REMEMBER_ME = "1".freeze
 
@@ -23,7 +24,43 @@ class SessionsController < ApplicationController
     redirect_to login_url, status: :see_other
   end
 
+  # POST /auth/google_oauth2/callback
+  def create_from_google
+    auth = request.env["omniauth.auth"]
+    if auth.nil?
+      return redirect_to(login_path,
+                         alert: t("sessions.google_auth_failed"))
+    end
+
+    user = find_or_create_user_from_google(auth)
+    handle_successful_login(user)
+  end
+
   private
+
+  def find_or_create_user_from_google auth
+    user = User.find_or_initialize_by(email: auth.info.email)
+    return user unless user.new_record?
+
+    user.assign_attributes(
+      name: auth.info.name,
+      password: SecureRandom.hex(15),
+      activated: true,
+      activated_at: Time.zone.now,
+      from_google_oauth: true,
+      role: :trainee
+    )
+
+    unless user.save
+      flash[:danger] = t(
+        "sessions.google_create_failed",
+        errors: user.errors.full_messages.join(", ")
+      )
+      redirect_to login_path and return
+    end
+
+    user
+  end
 
   def validate_session_params
     if params.dig(:session, :email).present? &&

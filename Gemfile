@@ -9,6 +9,10 @@ gem "bullet"
 
 gem "i18n-js", "~> 4.2"
 
+gem "omniauth"
+gem "omniauth-google-oauth2"
+gem "omniauth-rails_csrf_protection"
+
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "paranoia"
 gem "rails", "~> 7.0.5"

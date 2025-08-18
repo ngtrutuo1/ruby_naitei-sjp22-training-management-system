@@ -19,7 +19,7 @@ vi:
         max_score: "Điểm tối đa:"
         estimated_time_days: "Thời gian ước tính (ngày):"
       create:
-        create_fail: "Thêm môn học thất bại."
+        create_failed: "Thêm môn học thất bại."
         create_success: "Thêm môn học thành công."
       show:
         days: "Ngày"

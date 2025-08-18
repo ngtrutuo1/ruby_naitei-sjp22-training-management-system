@@ -8,9 +8,9 @@
 #    Hãy chắc chắn bạn đã thêm `gem 'faker'` vào Gemfile của mình.
 #
 # 2. File ảnh mẫu:
-#    Để seed thành công, bạn CẦN tạo một file ảnh mẫu tại đường dẫn:
-#    `app/assets/images/default_user_image.png`
-#    File này sẽ được dùng làm ảnh đại diện mặc định cho các khóa học và người dùng.
+#    Để seed thành công, bạn CẦN tạo các file ảnh mẫu tại đường dẫn:
+#    - `app/assets/images/default_user_image.png`
+#    - `app/assets/images/default_course_image.png`
 #
 # 3. Thời gian thực thi:
 #    Quá trình seed này tạo ra một lượng lớn dữ liệu (~40 khóa học và hàng chục nghìn
@@ -51,74 +51,73 @@ class CourseSeederService
         subject:, position: index + 1,
         start_date: cs_start, finish_date: cs_finish
       )
-
-      # 1. Clone tasks từ Subject gốc (template) sang CourseSubject
-      subject.tasks.each do |original_task|
-        cloned_attributes = original_task.attributes.except("id", "taskable_id", "taskable_type", "created_at", "updated_at", "deleted_at")
-        course_subject.tasks.create!(cloned_attributes)
-      end
-
-      # 2. Tạo thêm các task mới chỉ dành riêng cho CourseSubject này
-      rand(1..3).times do |i|
-        # ==========================================================================
-        # FIX TRIỆT ĐỂ: Tạo tên task theo cấu trúc đơn giản, ngắn gọn và
-        # AN TOÀN TUYỆT ĐỐI để không bao giờ bị trùng.
-        # Cấu trúc: [Tiền tố] + [ID của CourseSubject] + [Chỉ số] + [Chuỗi ngẫu nhiên]
-        # ==========================================================================
-        course_subject.tasks.create!(
-          name: "CourseTask-CS#{course_subject.id}-#{i + 1}-#{SecureRandom.hex(4)}"
-        )
-      end
     end
     @course.reload
   end
 
-  # Tạo học viên và tất cả dữ liệu liên quan (user_subjects, user_tasks, daily_reports)
+  # Tạo học viên và tất cả dữ liệu liên quan
+  # LƯU Ý: Việc tạo UserCourse sẽ kích hoạt callback để tự động tạo UserSubject và UserTask
   def seed_trainees_and_all_related_data
     trainees_for_course = @all_trainees.sample(rand(20..30))
     trainees_for_course.each do |trainee|
       next if @course.users.exists?(trainee.id)
 
+      # Bước 1: Tạo UserCourse. Hành động này sẽ kích hoạt callback `after_create`
+      # trong model UserCourse để tự động tạo ra các UserSubject và UserTask mặc định.
       user_course = @course.user_courses.create!(user: trainee, joined_at: @course.start_date, status: @course.status)
-      seed_user_subjects_and_tasks_for(user_course)
+
+      # Bước 2: Cập nhật các bản ghi vừa được tạo với dữ liệu thực tế hơn.
+      update_user_subjects_and_tasks_for(user_course)
+
+      # Bước 3: Tạo các báo cáo hàng ngày.
       seed_daily_reports_for(user_course)
     end
   end
 
-  # Tạo user_subjects và user_tasks cho một học viên trong khóa học
-  def seed_user_subjects_and_tasks_for(user_course)
-    trainee = user_course.user
-    user_course.course.course_subjects.each do |cs|
-      status, started_at, completed_at = determine_user_subject_status_and_dates(cs)
+  # ==========================================================================
+  # FIX DỨT ĐIỂM: Thay đổi toàn bộ logic của phương thức này.
+  # Thay vì TẠO MỚI (gây xung đột với callback), chúng ta sẽ TÌM VÀ CẬP NHẬT
+  # các bản ghi UserSubject/UserTask đã được callback tự động tạo ra.
+  # ==========================================================================
+  def update_user_subjects_and_tasks_for(user_course)
+    finished_statuses = [
+      Settings.user_subject.status.finished_early,
+      Settings.user_subject.status.finished_ontime,
+      Settings.user_subject.status.finished_but_overdue
+    ]
 
-      finished_statuses = [
-        Settings.user_subject.status.finished_early,
-        Settings.user_subject.status.finished_ontime,
-        Settings.user_subject.status.finished_but_overdue
-      ]
+    # Lấy tất cả các UserSubject vừa được callback tạo ra để cập nhật chúng
+    user_course.user_subjects.includes(:course_subject, :user_tasks).each do |user_subject|
+      cs = user_subject.course_subject
+      status, started_at, completed_at = determine_user_subject_status_and_dates(cs)
       score = finished_statuses.include?(status) ? rand(5.0..10.0).round(1) : nil
 
-      user_subject = user_course.user_subjects.create!(
-        user: trainee, course_subject: cs, status:,
-        score:, started_at:, completed_at:
+      # Cập nhật UserSubject
+      user_subject.update!(
+        status:,
+        score:,
+        started_at:,
+        completed_at:
       )
 
       next if user_subject.not_started?
 
-      cs.tasks.each do |task|
-        task_status = if finished_statuses.include?(user_subject.status_before_type_cast)
-                        Settings.user_task.status.done
-                      else
-                        [Settings.user_task.status.not_done, Settings.user_task.status.done].sample
-                      end
-        user_subject.user_tasks.create!(user: trainee, task:, status: task_status)
+      # Cập nhật các UserTask liên quan
+      if finished_statuses.include?(user_subject.status_before_type_cast)
+        # Nếu môn học đã xong, đánh dấu tất cả task là "done"
+        user_subject.user_tasks.update_all(status: Settings.user_task.status.done)
+      else
+        # Nếu môn học đang diễn ra, cập nhật trạng thái task một cách ngẫu nhiên
+        user_subject.user_tasks.each do |user_task|
+          task_status = [Settings.user_task.status.not_done, Settings.user_task.status.done].sample
+          user_task.update!(status: task_status)
+        end
       end
     end
   end
 
-  # Logic phức tạp để xác định trạng thái và ngày tháng cho UserSubject dựa trên trạng thái của Khóa học
+  # Logic để xác định trạng thái và ngày tháng cho UserSubject
   def determine_user_subject_status_and_dates(cs)
-    # Trường hợp 1: Khóa học chưa bắt đầu HOẶC môn học chưa tới ngày bắt đầu
     if @course.not_started? || @today < cs.start_date
       return [Settings.user_subject.status.not_started, nil, nil]
     end
@@ -130,7 +129,6 @@ class CourseSeederService
                    else cs.finish_date + rand(1..5).days
                    end
 
-    # Trường hợp 2: Khóa học đã kết thúc
     if @course.finished?
       return [Settings.user_subject.status.overdue_and_not_finished, started_at, nil] if rand < 0.05
       status = if completed_at < cs.finish_date
@@ -143,8 +141,6 @@ class CourseSeederService
       return [status, started_at, completed_at]
     end
 
-    # Trường hợp 3: Khóa học đang diễn ra
-    # 3a: Môn học cũng đang trong thời gian diễn ra
     if @today.between?(cs.start_date, cs.finish_date)
       if rand < 0.2
         possible_completion_date = cs.finish_date - rand(1..3).days
@@ -155,7 +151,6 @@ class CourseSeederService
       return [Settings.user_subject.status.in_progress, started_at, nil]
     end
 
-    # 3b: Môn học đã qua deadline nhưng khóa học vẫn đang chạy
     if @today > cs.finish_date
        return [Settings.user_subject.status.overdue_and_not_finished, started_at, nil] if rand < 0.1
        status = if completed_at < cs.finish_date
@@ -168,7 +163,6 @@ class CourseSeederService
       return [status, started_at, completed_at]
     end
 
-    # Fallback default
     [Settings.user_subject.status.in_progress, started_at, nil]
   end
 
@@ -181,8 +175,8 @@ class CourseSeederService
     return if start_day > end_day
 
     (start_day..end_day).each do |date|
-      next if date.saturday? || date.sunday? # Bỏ qua cuối tuần
-      next if rand > 0.85 # Bỏ qua một vài ngày để dữ liệu thực tế hơn
+      next if date.saturday? || date.sunday?
+      next if rand > 0.85
 
       report_status = rand > 0.2 ? Settings.daily_report.status.submitted : Settings.daily_report.status.draft
       DailyReport.create!(
@@ -202,10 +196,11 @@ puts "======================================================"
 puts "=> Bắt đầu quá trình seeding dữ liệu..."
 
 # --- Bước 0: Chuẩn bị và kiểm tra ---
-image_path = Rails.root.join("app", "assets", "images", "default_user_image.png")
-unless File.exist?(image_path)
-  puts "\n\n!!! LỖI: Không tìm thấy file ảnh mẫu tại #{image_path}"
-  puts "Vui lòng tạo file ảnh và chạy lại `rails db:seed`.\n\n"
+user_image_path = Rails.root.join("app", "assets", "images", "default_user_image.png")
+course_image_path = Rails.root.join("app", "assets", "images", "default_course_image.png")
+unless File.exist?(user_image_path) && File.exist?(course_image_path)
+  puts "\n\n!!! LỖI: Không tìm thấy file ảnh mẫu."
+  puts "Vui lòng tạo 'default_user_image.png' và 'default_course_image.png' trong 'app/assets/images/' và chạy lại.\n\n"
   exit
 end
 
@@ -213,143 +208,146 @@ ActiveRecord::Base.transaction do
   # --- Bước 1: Tạo các dữ liệu lõi (Users, Categories) ---
   puts "-> Đang tạo Users (Admins, Supervisors, Trainees)..."
   5.times do |n|
-    User.create!(name: "Admin User #{n+1}", email: "admin-#{n + 1}@example.com", password: "password", password_confirmation: "password",
-                 role: Settings.user.roles.admin, gender: Settings.user.genders.male, birthday: 30.years.ago, activated: true, activated_at: Time.zone.now)
+    User.find_or_create_by!(email: "admin-#{n + 1}@example.com") do |user|
+      user.name = "Admin User #{n+1}"
+      user.password = "password"
+      user.password_confirmation = "password"
+      user.role = Settings.user.roles.admin
+      user.gender = Settings.user.genders.male
+      user.birthday = 30.years.ago
+      user.activated = true
+      user.activated_at = Time.zone.now
+    end
   end
   20.times do |n|
-    User.create!(name: "Supervisor #{n + 1}", email: "supervisor-#{n + 1}@example.com", password: "password", password_confirmation: "password",
-                 role: Settings.user.roles.supervisor, gender: User.genders.keys.sample, birthday: Faker::Date.birthday(min_age: 28, max_age: 50),
-                 activated: true, activated_at: Time.zone.now)
+    User.find_or_create_by!(email: "supervisor-#{n + 1}@example.com") do |user|
+      user.name = "Supervisor #{n + 1}"
+      user.password = "password"
+      user.password_confirmation = "password"
+      user.role = Settings.user.roles.supervisor
+      user.gender = User.genders.keys.sample
+      user.birthday = Faker::Date.birthday(min_age: 28, max_age: 50)
+      user.activated = true
+      user.activated_at = Time.zone.now
+    end
   end
   200.times do |n|
-    User.create!(name: Faker::Name.name, email: "trainee-#{n + 1}@example.com", password: "password", password_confirmation: "password",
-                 role: Settings.user.roles.trainee, gender: User.genders.keys.sample, birthday: Faker::Date.birthday(min_age: 20, max_age: 24),
-                 activated: true, activated_at: Time.zone.now)
+    User.find_or_create_by!(email: "trainee-#{n + 1}@example.com") do |user|
+      user.name = Faker::Name.name
+      user.password = "password"
+      user.password_confirmation = "password"
+      user.role = Settings.user.roles.trainee
+      user.gender = User.genders.keys.sample
+      user.birthday = Faker::Date.birthday(min_age: 20, max_age: 24)
+      user.activated = true
+      user.activated_at = Time.zone.now
+    end
   end
   supervisors = User.supervisor.to_a
   trainees = User.trainee.to_a
-  puts "   + Đã tạo: #{User.admin.count} Admins, #{supervisors.count} Supervisors, #{trainees.count} Trainees."
+  puts "   + Đã tạo/cập nhật: #{User.admin.count} Admins, #{supervisors.count} Supervisors, #{trainees.count} Trainees."
 
   puts "-> Đang tạo Categories và Subjects..."
-  categories = 10.times.map { Category.create!(name: Faker::Educator.unique.subject.capitalize) }
+  categories = 10.times.map { |i| Category.find_or_create_by!(name: "Category #{i}: #{Faker::Educator.unique.subject.capitalize}") }
   category_positions = Hash.new(0)
-  subjects = 100.times.map do
-    subject = Subject.new(name: "#{Faker::ProgrammingLanguage.name}: #{Faker::Educator.course_name}",
-                              max_score: Settings.subject.default_max_score, estimated_time_days: rand(5..15))
-    subject.image.attach(io: File.open(image_path), filename: "default_subject_image.png")
-    subject.save!
+  subjects = 100.times.map do |i|
+    subject_name = "Subject #{i}: #{Faker::ProgrammingLanguage.name}: #{Faker::Educator.course_name}"
+    subject = Subject.with_deleted.find_or_create_by!(name: subject_name) do |s|
+      s.max_score = Settings.subject.default_max_score
+      s.estimated_time_days = rand(5..15)
+    end
+    subject.restore if subject.deleted?
+    unless subject.image.attached?
+      subject.image.attach(io: File.open(user_image_path), filename: "default_subject_image.png")
+    end
+    
     selected_categories = categories.sample(rand(1..3))
     selected_categories.each do |category|
       category_positions[category.id] += 1
-      subject.subject_categories.create!(category: category, position: category_positions[category.id])
+      SubjectCategory.find_or_create_by!(subject: subject, category: category) do |sc|
+        sc.position = category_positions[category.id]
+      end
     end
     subject
   end
-  puts "   + Đã tạo: #{categories.count} Categories, #{subjects.count} Subjects."
+  puts "   + Đã tạo/cập nhật: #{categories.count} Categories, #{subjects.count} Subjects."
 
-  # --- Bước 2: Tạo Task Template cho mỗi Subject ---
   puts "-> Đang tạo các Task Template cho mỗi Subject..."
   subjects.each do |subject|
-    rand(4..10).times do |i|
-      subject.tasks.create!(
-        name: "Template Task ##{i + 1} for Subject #{subject.id}: #{Faker::Hacker.verb.capitalize} the #{Faker::Hacker.adjective} module"
-      )
+    if subject.tasks.empty?
+      rand(4..10).times do |i|
+        subject.tasks.create!(
+          name: "Template Task ##{i + 1} for Subject #{subject.id}: #{Faker::Hacker.verb.capitalize} the #{Faker::Hacker.adjective} module"
+        )
+      end
     end
   end
-  puts "   + Đã tạo: #{Task.where(taskable_type: "Subject").count} task templates."
+  puts "   + Tổng cộng: #{Task.where(taskable_type: "Subject").count} task templates."
 
-  # --- Bước 3: Tạo các Khóa học và dữ liệu liên quan chi tiết ---
   puts "\n-> Đang tạo các Khóa học và dữ liệu liên quan..."
 
-  # 3.1. Tạo các khóa học ĐÃ KẾT THÚC
+  # Tạo các khóa học ĐÃ KẾT THÚC
   puts "\n  -> Tạo 10 khóa học ĐÃ KẾT THÚC..."
   10.times.each_with_index do |_, i|
-    finish_date = Faker::Date.between(from: 8.months.ago, to: 1.week.ago)
-    start_date = finish_date - rand(3..4).months
-    course = Course.new(user: supervisors.sample, name: "#{Faker::Company.industry.capitalize} (Finished) #{i + 1}",
-                           start_date: start_date, finish_date: finish_date, status: Settings.course.status.finished,
-                           link_to_course: "https://www.#{Faker::Internet.domain_name}",
-                           supervisors: supervisors.sample(rand(1..2)))
-    course.image.attach(
-      io: File.open(Rails.root.join("app", "assets", "images", "default_course_image.png")),
-      filename: "default_course_image.png",
-      content_type: "image/png"
-    )
-    course.save!
+    course_name = "#{Faker::Company.industry.capitalize} (Finished) #{i + 1}"
+    course = Course.find_or_create_by!(name: course_name) do |c|
+      c.user = supervisors.sample
+      c.finish_date = Faker::Date.between(from: 8.months.ago, to: 1.week.ago)
+      c.start_date = c.finish_date - rand(3..4).months
+      c.status = Settings.course.status.finished
+      c.link_to_course = "https://www.#{Faker::Internet.domain_name}"
+      c.supervisors = supervisors.sample(rand(1..2))
+      c.image.attach(io: File.open(course_image_path), filename: "default_course_image.png")
+    end
     CourseSeederService.new(course, trainees).seed!
   end
 
-  # 3.2. Tạo các khóa học ĐANG DIỄN RA
+  # Tạo các khóa học ĐANG DIỄN RA
   puts "\n  -> Tạo 20 khóa học ĐANG DIỄN RA..."
   20.times.each_with_index do |_, i|
-    start_date = Faker::Date.between(from: 3.months.ago, to: 2.weeks.ago)
-    finish_date = Faker::Date.between(from: 1.week.from_now, to: 4.months.from_now)
-    course = Course.new(user: supervisors.sample, name: "#{Faker::Company.industry.capitalize} (In-Progress) #{i + 1}",
-                           start_date: start_date, finish_date: finish_date, status: Settings.course.status.in_progress,
-                           link_to_course: "https://www.#{Faker::Internet.domain_name}",
-                           supervisors: supervisors.sample(rand(1..2)))
-    course.image.attach(
-      io: File.open(Rails.root.join("app", "assets", "images", "default_course_image.png")),
-      filename: "default_course_image.png",
-      content_type: "image/png"
-    )
-    course.save!
+    course_name = "#{Faker::Company.industry.capitalize} (In-Progress) #{i + 1}"
+    course = Course.find_or_create_by!(name: course_name) do |c|
+      c.user = supervisors.sample
+      c.start_date = Faker::Date.between(from: 3.months.ago, to: 2.weeks.ago)
+      c.finish_date = Faker::Date.between(from: 1.week.from_now, to: 4.months.from_now)
+      c.status = Settings.course.status.in_progress
+      c.link_to_course = "https://www.#{Faker::Internet.domain_name}"
+      c.supervisors = supervisors.sample(rand(1..2))
+      c.image.attach(io: File.open(course_image_path), filename: "default_course_image.png")
+    end
     CourseSeederService.new(course, trainees).seed!
   end
 
-  # 3.3. Tạo các khóa học CHƯA BẮT ĐẦU
+  # Tạo các khóa học CHƯA BẮT ĐẦU
   puts "\n  -> Tạo 8 khóa học CHƯA BẮT ĐẦU..."
   8.times.each_with_index do |_, i|
-    start_date = Faker::Date.between(from: 1.week.from_now, to: 2.months.from_now)
-    finish_date = start_date + rand(3..4).months
-    course = Course.new(user: supervisors.sample, name: "#{Faker::Company.industry.capitalize} (Pending) #{i + 1}",
-                           start_date: start_date, finish_date: finish_date, status: Settings.course.status.not_started,
-                           link_to_course: "https://www.#{Faker::Internet.domain_name}",
-                           supervisors: supervisors.sample(rand(1..2)))
-    course.image.attach(
-      io: File.open(Rails.root.join("app", "assets", "images", "default_course_image.png")),
-      filename: "default_course_image.png",
-      content_type: "image/png"
-    )
-    course.save!
+    course_name = "#{Faker::Company.industry.capitalize} (Pending) #{i + 1}"
+    course = Course.find_or_create_by!(name: course_name) do |c|
+      c.user = supervisors.sample
+      c.start_date = Faker::Date.between(from: 1.week.from_now, to: 2.months.from_now)
+      c.finish_date = c.start_date + rand(3..4).months
+      c.status = Settings.course.status.not_started
+      c.link_to_course = "https://www.#{Faker::Internet.domain_name}"
+      c.supervisors = supervisors.sample(rand(1..2))
+      c.image.attach(io: File.open(course_image_path), filename: "default_course_image.png")
+    end
     CourseSeederService.new(course, trainees).seed!
   end
 
   # --- Bước 4: Tạo dữ liệu tương tác (Comments) ---
-  puts "\n-> Đang tạo Comments với logic nghiệp vụ..."
-  finished_or_overdue_user_subjects = UserSubject.where.not(status: [
-    Settings.user_subject.status.not_started,
-    Settings.user_subject.status.in_progress
-  ])
-
-  finished_or_overdue_user_subjects.each do |user_subject|
+  puts "\n-> Đang tạo Comments..."
+  UserSubject.where.not(status: [Settings.user_subject.status.not_started, Settings.user_subject.status.in_progress]).each do |user_subject|
+    next if user_subject.comments.any?
     supervisor = user_subject.user_course.course.supervisors.sample
     next unless supervisor
     comment_content = case user_subject.status
-                      when Settings.user_subject.status.finished_early
-                        "Excellent work! Finished well ahead of schedule. Keep it up!"
-                      when Settings.user_subject.status.finished_ontime
-                        "Good job, completed on time. Solid performance."
-                      when Settings.user_subject.status.finished_but_overdue
-                        "Completed, but please pay more attention to deadlines next time."
-                      when Settings.user_subject.status.overdue_and_not_finished
-                        "This subject is overdue and still not finished. Please complete it as soon as possible."
-                      else "General feedback on your progress."
+                      when "finished_early" then "Excellent work! Finished well ahead of schedule."
+                      when "finished_ontime" then "Good job, completed on time."
+                      when "finished_but_overdue" then "Completed, but please mind deadlines."
+                      when "overdue_and_not_finished" then "This is overdue. Please complete it ASAP."
+                      else "General feedback."
                       end
     user_subject.comments.create!(user: supervisor, content: comment_content)
-  end
-
-  in_progress_items = UserSubject.in_progress.sample(150) + UserCourse.in_progress.sample(80)
-  in_progress_items.each do |item|
-    course = item.is_a?(UserCourse) ? item.course : item.user_course.course
-    # Comment từ supervisor
-    if rand < 0.7 && (supervisor = course.supervisors.sample)
-      item.comments.create!(user: supervisor, content: "Just checking in on your progress. Let me know if you need any help.")
-    end
-    # Comment từ trainee
-    if rand < 0.3
-      item.comments.create!(user: item.user, content: Faker::Lorem.sentence(word_count: rand(8..20)))
-    end
   end
   puts "   + Đã tạo: #{Comment.count} comments."
 end
