@@ -56,6 +56,10 @@ course:
     finished: 2
   allowed_image_types: ["image/jpeg", "image/png"]
   max_image_size: 10 # in MB
+  display_status:
+    not_started: "not_started"
+    in_progress: "in_progress"
+    finished: "finished"
 
 subject:
   max_name_length: 150
@@ -183,6 +187,7 @@ formats:
   date: "%d/%m/%Y"
   datetime: "%d/%m/%Y %H:%M:%S"
   decimal_places: 1
+  date_for_edit_form: "%Y-%m-%d"
 
 params:
   date: "%Y-%m-%d"
