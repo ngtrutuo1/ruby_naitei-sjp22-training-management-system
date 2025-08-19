@@ -4,6 +4,7 @@ avatar: "Avatar"
 name: "name"
 active: "active"
 promote: "promote"
+google_oauth2_path: "/auth/google_oauth2"
 
 completion_rate:
   zero: 0

@@ -1,6 +1,7 @@
 en:
   admin:
     sidebar:
+      dashboard: "Dashboard"
       my_courses: "My Courses"
       daily_report: "Daily Report"
       report_history: "Report History"

@@ -1,5 +1,6 @@
 class User < ApplicationRecord
-  attr_accessor :remember_token, :session_token, :activation_token, :reset_token
+  attr_accessor :remember_token, :session_token, :activation_token,
+                :reset_token, :from_google_oauth
 
   has_secure_password
 
@@ -68,13 +69,15 @@ gender).freeze
             length: {maximum: Settings.user.max_email_length},
             format: {with: VALID_EMAIL_REGEX},
             uniqueness: {case_sensitive: false}
-  validates :birthday, presence: true
-  validates :gender, presence: true
+  validates :birthday, presence: true, unless: :from_google_oauth
+  validates :gender, presence: true, unless: :from_google_oauth
   validates :role, presence: true
-  validate :birthday_within_valid_years
+  validate :birthday_within_valid_years,
+           unless: -> {from_google_oauth || birthday.nil?}
   validates :password, presence: true,
             length: {minimum: Settings.user.min_password_length},
-            allow_nil: true
+            allow_nil: true,
+            if: :password_required?
 
   def self.digest string
     cost = if ActiveModel::SecurePassword.min_cost
@@ -146,6 +149,11 @@ gender).freeze
 
   private
 
+  def password_required?
+    !from_google_oauth &&
+      (password.present? || password_confirmation.present? || new_record?)
+  end
+
   def birthday_within_valid_years
     return if birthday.nil?
 
@@ -170,6 +178,8 @@ gender).freeze
   end
 
   def create_activation_digest
+    return if from_google_oauth
+
     self.activation_token = User.new_token
     self.activation_digest = User.digest(activation_token)
   end

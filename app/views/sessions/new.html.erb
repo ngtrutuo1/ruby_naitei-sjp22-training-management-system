@@ -14,6 +14,7 @@
       <% end %>
       <%= f.submit t(".submit_button"), class: "btn btn-primary" %>
     <% end %>
+    <%= link_to t(".login_with_google"), Settings.google_oauth2_path, method: :post, data: { turbo: false } %>
     <p><%= t(".new_user_text") %><%= link_to t(".sign_up_link"), signup_path %></p>
   </div>
 </div>

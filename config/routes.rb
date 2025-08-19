@@ -3,6 +3,11 @@
 Rails.application.routes.draw do
   scope "(:locale)", locale: /vi|en/ do
     root "static_pages#home"
+    
+    # google login
+    post "/auth/google_oauth2", as: :google_login
+    get "/auth/google_oauth2/callback", to: "sessions#create_from_google"
+    get "/auth/failure", to: redirect("/login") 
 
     # --- Authentication & User Management ---
     get "/signup", to: "users#new"
