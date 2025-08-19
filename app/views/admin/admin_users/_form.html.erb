@@ -42,7 +42,7 @@
     <%= f.label :gender, class: "col-sm-3 control-label" %>
     <div class="col-sm-9">
       <%= f.select :gender,
-        User.genders.keys.map {|g| [t("activerecord.attributes.user.genders.#{g}", default: g.humanize), g]},
+        User.genders.keys.map {|g| [t("activerecord.attributes.user.genders.#{g}"), g]},
         {include_blank: t("common.choose")},
         class: "form-control" %>
     </div>

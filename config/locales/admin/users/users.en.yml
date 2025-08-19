@@ -98,6 +98,8 @@ en:
 
       modal_edit_profile:
         edit_profile_title: "Edit Profile"
+      new_supervisor:
+        search_trainee_label: "Search Trainee"
 
       edit_profile_form:
         name_placeholder: "Enter full name"

@@ -41,6 +41,20 @@ vi:
       confirm_leave: "Bạn có chắc chắn?"
       access_denied: "Bạn không có quyền truy cập khóa học này"
       course_not_found: "Không tìm thấy khóa học"
+      add_members_title: "Thêm thành viên"
+      add_trainees_title: "Thêm học viên mới"
+      add_trainers_title: "Thêm huấn luyện viên mới"
+      search_placeholder: "Tìm kiếm người dùng..."
+      add_trainees_button: "Thêm Học viên"
+      add_trainers_button: "Thêm Huấn luyện viên"
+      cancel_button: "Hủy"
+      add_button: "Thêm"
+    user_courses:
+      failed_to_add_trainee: "Không thể thêm học viên %{name}"
+      unexpected_error: "Đã xảy ra lỗi không mong muốn"
+    supervisors:
+      failed_to_add_trainer: "Không thể thêm huấn luyện viên %{name}"
+      unexpected_error: "Đã xảy ra lỗi không mong muốn"
     subjects:
       subjects_list: "Danh sách môn học"
       actions: "Hành động"

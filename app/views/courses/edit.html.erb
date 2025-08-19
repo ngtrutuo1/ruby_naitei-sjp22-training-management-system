@@ -30,7 +30,7 @@
         <div class="image-upload">
           <%= form.file_field :image, class: "form-control", accept: "image/*" %>
           <small class="form-text text-muted">
-            <%= t("courses.edit.image_help", default: "Upload a new image or leave empty to keep current") %>
+            <%= t("courses.edit.image_help") %>
           </small>
         </div>
       </div>
@@ -59,7 +59,7 @@
               <%= @course.supervisors.count %> <%= t("courses.show.trainer_count") %>
             </span>
             <small class="form-text text-muted">
-              <%= t("courses.edit.trainers_help", default: "Trainer management is handled separately") %>
+              <%= t("courses.edit.trainers_help") %>
             </small>
           </div>
         </div>

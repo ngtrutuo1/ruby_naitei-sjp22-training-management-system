@@ -4,6 +4,12 @@
     <%= t("courses.members.trainee_list") %> (<%= trainee_count %>)
   </h2>
 
+  <% if admin_role? || current_user&.supervisor? %>
+    <button type="button" class="btn btn-primary mb-3" id="open-add-trainees-modal" data-member-type="trainee">
+      + <%= t("courses.members.add_trainees_button") %>
+    </button>
+  <% end %>
+
   <div class="trainee-table-container">
     <table class="table trainee-table">
       <thead>

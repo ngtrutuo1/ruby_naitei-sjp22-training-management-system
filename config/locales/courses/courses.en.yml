@@ -41,6 +41,20 @@ en:
       confirm_leave: "Are you sure?"
       access_denied: "You don't have permission to access this course"
       course_not_found: "Course not found"
+      add_members_title: "Add members"
+      add_trainees_title: "Add new trainees"
+      add_trainers_title: "Add new trainers"
+      search_placeholder: "Search users..."
+      add_trainees_button: "Add Trainees"
+      add_trainers_button: "Add Trainers"
+      cancel_button: "Cancel"
+      add_button: "Add"
+    user_courses:
+      failed_to_add_trainee: "Failed to add trainee %{name}"
+      unexpected_error: "An unexpected error occurred"
+    supervisors:
+      failed_to_add_trainer: "Failed to add trainer %{name}"
+      unexpected_error: "An unexpected error occurred"
     subjects:
       subjects_list: "Subjects list"
       actions: "Actions"

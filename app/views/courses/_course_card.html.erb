@@ -16,7 +16,7 @@
             <div class="card-header-v2">
               <div class="meta-line">
                 <span><%= l(course.start_date, format: :short) %></span>
-                <span class="status-badge-v2"><%= t("#{course.status}", default: course.status.humanize) %></span>
+                <span class="status-badge-v2"><%= t("enums.course.status.#{course.status}") %></span>
               </div>
               <%= gravatar_for(course, size: Settings.ui.gravatar.list_size) %>
               <h2 class="course-title-v2"><%= course.name %></h2>

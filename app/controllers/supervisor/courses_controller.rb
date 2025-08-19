@@ -10,13 +10,24 @@ class Supervisor::CoursesController < Supervisor::BaseController
   SUPERVISORS_INCLUDES = [:user_courses].freeze
   COURSE_PRELOAD = {course_subjects: [:subject, :tasks, :user_subjects]}.freeze
 
+  # Member type constants
+  MEMBER_TYPE_TRAINER = "trainer".freeze
+  MEMBER_TYPE_TRAINEE = "trainee".freeze
+
+  # Template constants
+  TEMPLATE_COURSES_EDIT = "courses/edit".freeze
+
+  # Error message constants
+  ERROR_ADD_SUBJECT_FAILED = "add_subject failed: %<class>s: %<message>s".freeze
+
   before_action :load_course,
-                only: %i(show members subjects supervisors leave edit update
- add_subject)
+                only: %i(show members subjects supervisors leave search_members
+                        edit update add_subject)
   before_action :load_subject_to_add, only: [:add_subject]
   before_action :validate_subject_for_add, only: [:add_subject]
   before_action :authorize_supervisor_access!,
-                only: %i(show members subjects supervisors leave index)
+                only: %i(show members subjects supervisors leave search_members
+                        index)
   before_action :ensure_multiple_supervisors, only: [:leave]
   before_action :set_courses_page_class
   before_action :check_supervisor_role
@@ -64,6 +75,12 @@ class Supervisor::CoursesController < Supervisor::BaseController
     render template: Settings.templates.courses.subjects
   end
 
+  # GET /supervisor/courses/:id/search_members
+  def search_members
+    users = find_available_users
+    render json: users.select(:id, :name, :email)
+  end
+
   # GET /supervisor/courses/:id/supervisors
   def supervisors
     @trainers = @course.supervisors.includes SUPERVISORS_INCLUDES
@@ -106,7 +123,7 @@ class Supervisor::CoursesController < Supervisor::BaseController
   def edit
     @subjects = @course.course_subjects.includes(EAGER_LOAD_SUBJECTS)
                        .ordered_by_position
-    render template: "courses/edit"
+    render template: TEMPLATE_COURSES_EDIT
   end
 
   # PATCH /supervisor/courses/:id
@@ -117,7 +134,7 @@ class Supervisor::CoursesController < Supervisor::BaseController
     else
       reload_subjects_for_edit
       flash[:danger] = t(".course_update_failed")
-      render template: "courses/edit", status: :unprocessable_entity
+      render template: TEMPLATE_COURSES_EDIT, status: :unprocessable_entity
     end
   end
 
@@ -147,12 +164,41 @@ class Supervisor::CoursesController < Supervisor::BaseController
       message: t(".subject_added_successfully", subject_name: @subject.name)
     }
   rescue StandardError => e
-    Rails.logger.error("add_subject failed: #{e.class}: #{e.message}")
+    Rails.logger.error(format(ERROR_ADD_SUBJECT_FAILED,
+                              class: e.class, message: e.message))
     render json: {success: false, message: t(".failed_to_add_subject")},
            status: :unprocessable_entity
   end
 
   private
+
+  def find_available_users
+    member_type = determine_member_type
+    users = User.where(role: User.roles[member_type])
+    existing_ids = existing_user_ids?(member_type)
+    users = users.where.not(id: existing_ids)
+    users = apply_search_filter(users)
+    users.sort_by_name.limit(20)
+  end
+
+  def determine_member_type
+    params[:type] == MEMBER_TYPE_TRAINER ? :supervisor : :trainee
+  end
+
+  def existing_user_ids? member_type
+    if member_type == :trainee
+      @course.users.where(role: :trainee).pluck(:id)
+    else
+      @course.supervisors.pluck(:id)
+    end
+  end
+
+  def apply_search_filter users
+    query = params[:q].to_s
+    return users if query.blank?
+
+    users.filter_by_name(query)
+  end
 
   def copy_subject_tasks_to_course_subject subject, course_subject
     subject.tasks.each do |subject_task|
