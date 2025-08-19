@@ -1,0 +1,25 @@
+<div class="task-item modern-task-item">
+  <div class="task-number">
+    <%= index + Settings.digits.digit_one %>
+  </div>
+  <div class="task-name">
+    <h6 class="mb-0"><%= task.name %></h6>
+  </div>
+  <div class="task-status">
+    <% user_task = task.user_tasks.find_by(user_subject: @user_subject) %>
+    <% if user_task&.done? %>
+      <span class="badge badge-success">
+        <i class="fas fa-check-circle me-1"></i><%= t(".completed") %>
+      </span>
+    <% else %>
+      <span class="badge badge-warning">
+        <i class="fas fa-clock me-1"></i><%= t(".not_started") %>
+      </span>
+    <% end %>
+  </div>
+  <div class="task-actions">
+    <button class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#editTaskModal<%= task.id %>">
+      <i class="fas fa-edit me-1"></i><%= t(".edit") %>
+    </button>
+  </div>
+</div>

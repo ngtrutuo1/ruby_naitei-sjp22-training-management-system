@@ -63,6 +63,16 @@ Rails.application.routes.draw do
         end
       end
       resources :courses, only: %i(index show new create edit update) do
+        resources :subject_details, only: %i(show) do
+          member do
+            post :create_task
+            patch :update_task
+            patch :update_score
+            post :create_comment
+            delete :destroy_comment
+            patch :update_comment
+          end
+        end
         member do
           get :members
           get :subjects

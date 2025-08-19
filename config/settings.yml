@@ -1,3 +1,10 @@
+ui_limits:
+  subject_tasks_preview_count: 3
+  comment_preview_count: 3
+  score_circle_size: 120
+  score_font_size: 36
+  subject_search_limit: 10
+  trainee_manager: "trainee-manager-page"
 allowed_pagy: 1
 percentage: 100
 avatar: "Avatar"
@@ -194,6 +201,7 @@ page_classes:
   admin_users: "admin-users-page"
   trainee_manager: "trainee-manager-page"
   supervisor_users: "supervisor-users-page"
+  admin_subjects: "admin-subjects-page"
 
 scope:
   admin: "admin"
