@@ -26,11 +26,9 @@ class Supervisor::CoursesController < Supervisor::BaseController
   before_action :load_subject_to_add, only: [:add_subject]
   before_action :validate_subject_for_add, only: [:add_subject]
   before_action :authorize_supervisor_access!,
-                only: %i(show members subjects supervisors leave search_members
-                        index)
+                only: %i(show members subjects supervisors leave search_members)
   before_action :ensure_multiple_supervisors, only: [:leave]
   before_action :set_courses_page_class
-  before_action :check_supervisor_role
 
   # GET /supervisor/courses
   def index
