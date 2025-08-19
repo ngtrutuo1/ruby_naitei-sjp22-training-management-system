@@ -5,7 +5,6 @@ class Supervisor::UsersController < Supervisor::BaseController
   update_user_course_status delete_user_course update)
   before_action :set_css_class, only: %i(index show)
   before_action :require_manager
-  skip_before_action :check_supervisor_role
   before_action :load_user_course,
                 only: %i(update_user_course_status delete_user_course)
 
