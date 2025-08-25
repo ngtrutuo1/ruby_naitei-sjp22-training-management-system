@@ -15,13 +15,7 @@ class Supervisor::UsersController < Supervisor::BaseController
 
   # GET /supervisor/users/:id
   def show
-    @trainee_courses = @user_trainee.courses
-                                    .includes([:supervisors])
-                                    .includes(user_courses: [:user_subjects])
-                                    .by_user_course_status(params[:status])
-                                    .search_by_name(params[:search])
-                                    .by_course(params[:course]).recent
-    @pagy, @trainee_courses = pagy(@trainee_courses)
+    load_trainee_courses
   end
 
   # PATCH /supervisor/users/:id/update_status
@@ -32,7 +26,8 @@ class Supervisor::UsersController < Supervisor::BaseController
 
   # PATCH /supervisor/users/bulk_deactivate
   def bulk_deactivate
-    handle_bulk_statuses
+    return unless handle_bulk_statuses
+
     redirect_to supervisor_users_path
   end
 
@@ -57,11 +52,22 @@ class Supervisor::UsersController < Supervisor::BaseController
       redirect_to supervisor_user_path(@user_trainee)
     else
       flash[:danger] = t(".update_failed")
+      load_trainee_courses
       render :show
     end
   end
 
   private
+
+  def load_trainee_courses
+    @trainee_courses = @user_trainee.courses
+                                    .includes([:supervisors])
+                                    .includes(user_courses: [:user_subjects])
+                                    .by_user_course_status(params[:status])
+                                    .search_by_name(params[:search])
+                                    .by_course(params[:course]).recent
+    @pagy, @trainee_courses = pagy(@trainee_courses)
+  end
 
   def load_trainees
     @user_trainees = User.trainee.filter_by_name(params[:search])
@@ -95,12 +101,16 @@ class Supervisor::UsersController < Supervisor::BaseController
   def handle_bulk_statuses
     trainee_ids = params[:trainee_ids]
 
-    return flash_no_selection if trainee_ids.blank?
+    if trainee_ids.blank?
+      flash_no_selection
+      return false
+    end
 
     trainees = User.where(id: trainee_ids)
     updated_count = toggle_trainees_status(trainees)
-
     flash_bulk_status_result(updated_count)
+
+    true
   end
 
   def flash_bulk_status_result updated_count
@@ -114,8 +124,8 @@ class Supervisor::UsersController < Supervisor::BaseController
   def toggle_trainees_status trainees
     updated_count = 0
     trainees.each do |trainee|
-      new_status = trainee.activated? ? false : true
-      updated_count += 1 if trainee.update(activated: new_status)
+      new_status = !trainee.activated?
+      updated_count += 1 if trainee.update_column(:activated, new_status)
     end
     updated_count
   end

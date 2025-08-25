@@ -71,6 +71,7 @@ class ApplicationController < ActionController::Base
   def store_user_location
     return unless request.get?
     return if request.xhr? # Skip AJAX requests
+    return if request.path =~ %r{^/auth}
 
     session[:forwarding_url] = request.fullpath
   end

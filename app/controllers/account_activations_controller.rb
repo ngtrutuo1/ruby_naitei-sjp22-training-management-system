@@ -1,6 +1,7 @@
 class AccountActivationsController < ApplicationController
   before_action :load_user_by_email
   before_action :check_authentication, only: %i(edit)
+  skip_before_action :logged_in_user
 
   # GET /account_activations/:id/edit?email=:email
   def edit

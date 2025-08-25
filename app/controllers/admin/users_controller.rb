@@ -24,14 +24,7 @@ class Admin::UsersController < Admin::BaseController
 
   # GET /admin/users/:id
   def show
-    @supervisor_courses = @user_supervisor.supervised_courses
-                                          .includes(:users)
-                                          .by_user_course_status(
-                                            params[:status]
-                                          )
-                                          .search_by_name(params[:search])
-                                          .by_course(params[:course_id]).recent
-    @pagy, @supervisor_courses = pagy(@supervisor_courses)
+    load_supervisor_courses
   end
 
   # PATCH /admin/users/:id
@@ -41,6 +34,7 @@ class Admin::UsersController < Admin::BaseController
       redirect_to admin_user_path(@user_supervisor)
     else
       flash[:danger] = t(".update_failed")
+      load_supervisor_courses
       render :show
     end
   end
@@ -66,6 +60,19 @@ class Admin::UsersController < Admin::BaseController
   end
 
   private
+
+  def load_supervisor_courses
+    @supervisor_courses = @user_supervisor.supervised_courses
+                                          .includes(:users)
+                                          .by_user_course_status(
+                                            params[:status]
+                                          )
+                                          .search_by_name(params[:search])
+                                          .by_course(params[:course_id]).recent
+    return unless @supervisor_courses
+
+    @pagy, @supervisor_courses = pagy(@supervisor_courses)
+  end
 
   def load_trainees
     @user_trainees = User.trainee.filter_by_name(params[:search]).recent

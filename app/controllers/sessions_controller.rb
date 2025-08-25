@@ -5,7 +5,7 @@ class SessionsController < ApplicationController
   before_action :check_activation, only: :create
   before_action :logged_out_user, only: %i(new create)
   skip_before_action :logged_in_user, only: %i(new create create_from_google)
-  skip_before_action :store_user_location, only: %i(create_from_google)
+  # skip_before_action :store_user_location, only: %i(create_from_google)
 
   REMEMBER_ME = "1".freeze
 
