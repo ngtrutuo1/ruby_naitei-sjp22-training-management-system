@@ -50,7 +50,7 @@ gender).freeze
     joins(:courses).where(courses: {id: course_ids})
   end)
   scope :filter_by_status, (lambda do |status|
-    return all if status.blank?
+    return all if status.to_s.blank? && !status.is_a?(FalseClass)
 
     where(activated: status)
   end)
