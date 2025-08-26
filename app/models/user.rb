@@ -1,6 +1,7 @@
 class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
-         :validatable, :confirmable, :recoverable
+         :validatable, :confirmable, :recoverable, :omniauthable,
+         omniauth_providers: [:google_oauth2]
 
   # Constants
   PERMITTED_ATTRIBUTES = %i(name email password password_confirmation birthday
@@ -64,14 +65,42 @@ gender).freeze
             length: {maximum: Settings.user.max_email_length},
             format: {with: VALID_EMAIL_REGEX},
             uniqueness: {case_sensitive: false}
-  validates :birthday, presence: true
-  validates :gender, presence: true
+  validates :birthday, presence: true, unless: -> {provider.present?}
+  validates :gender, presence: true, unless: -> {provider.present?}
   validates :role, presence: true
   validate :birthday_within_valid_years
   validates :password, presence: true,
             length: {minimum: Settings.user.min_password_length},
             allow_nil: true,
             if: :password_required?
+
+  class << self
+    def from_omniauth auth
+      where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
+        user.email = auth.info.email
+        generate_user_password(user)
+        user.name = auth.info.name
+        user.confirmed_at = Time.zone.now
+        user_avatar_google(auth, user)
+      end
+    end
+
+    def generate_user_password user
+      user.password = Devise.friendly_token
+                            .first(Settings.user.max_password_length)
+    end
+
+    def user_avatar_google auth, user
+      return if auth.info.image.blank?
+
+      res = Faraday.get(auth.info.image)
+      user.image.attach(
+        io: StringIO.new(res.body),
+        filename: "#{user.name.parameterize}_avatar.jpg",
+        content_type: res.headers["content-type"] || "image/jpeg"
+      )
+    end
+  end
 
   private
 
