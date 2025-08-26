@@ -1,6 +1,10 @@
 Devise.setup do |config|
-  config.mailer_sender = 'please-change-me-at-config-initializers-devise@example.com'
-  require 'devise/orm/active_record'
+  config.mailer_sender = "please-change-me-at-config-initializers-devise@example.com"
+  require "devise/orm/active_record"
+  config.omniauth :google_oauth2, ENV["GOOGLE_CLIENT_ID"], ENV["GOOGLE_CLIENT_SECRET"],
+                  scope: "userinfo.email,userinfo.profile",
+                  prompt: "select_account",
+                  access_type: "online"
   config.case_insensitive_keys = [:email]
   config.strip_whitespace_keys = [:email]
   config.skip_session_storage = [:http_auth]

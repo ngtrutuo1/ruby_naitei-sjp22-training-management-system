@@ -47,6 +47,8 @@ vi:
     omniauth_callbacks:
       failure: 'Không thể xác thực bạn từ %{kind} vì "%{reason}".'
       success: "Xác thực thành công từ tài khoản %{kind}."
+      google_oauth2:
+        google_auth_failed: "Xác thực Google thất bại, vui lòng thử lại."
     passwords:
       new:
         title: "Quên mật khẩu?"
@@ -99,6 +101,7 @@ vi:
       signed_out: "Đăng xuất thành công."
       already_signed_out: "Bạn đã đăng xuất."
       new:
+        google_sign_in: "Đăng nhập với Google"
         heading: "Đăng nhập"
         email_label: "Email"
         password_label: "Mật khẩu"
@@ -107,6 +110,7 @@ vi:
         sign_up_link: "Đăng ký"
         title: "Đăng nhập"
         forgot_your_password: "Quên mật khẩu?"
+        login_with_google: "Đăng nhập với Google"
     unlocks:
       send_instructions: "Bạn sẽ nhận được email với hướng dẫn mở khóa tài khoản trong vài phút."
       send_paranoid_instructions: "Nếu tài khoản tồn tại, bạn sẽ nhận được email hướng dẫn mở khóa trong vài phút."

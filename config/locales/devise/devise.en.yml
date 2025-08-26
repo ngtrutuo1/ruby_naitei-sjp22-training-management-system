@@ -47,6 +47,8 @@ en:
     omniauth_callbacks:
       failure: 'Could not authenticate you from %{kind} because "%{reason}".'
       success: "Successfully authenticated from %{kind} account."
+      google_oauth2:
+        google_auth_failed: "Authentication with Google failed. Please try again."
     passwords:
       new:
         title: "Forgot your password?"
@@ -99,6 +101,7 @@ en:
       signed_out: "Signed out successfully."
       already_signed_out: "Signed out successfully."
       new:
+        google_sign_in: "Sign in with Google"
         heading: "Log in"
         email_label: "Email"
         password_label: "Password"
@@ -107,6 +110,7 @@ en:
         sign_up_link: "Sign up"
         title: "Log in"
         forgot_your_password: "Forgot your password?"
+        login_with_google: "Login with Google"
     unlocks:
       send_instructions: "You will receive an email with instructions for how to unlock your account in a few minutes."
       send_paranoid_instructions: "If your account exists, you will receive an email with instructions for how to unlock it in a few minutes."

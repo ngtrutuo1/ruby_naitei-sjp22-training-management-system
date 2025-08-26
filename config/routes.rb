@@ -1,17 +1,15 @@
 # config/routes.rb
 
 Rails.application.routes.draw do
+  devise_for :users, only: :omniauth_callbacks, controllers: {
+    omniauth_callbacks: 'users/omniauth_callbacks'
+  }
+
   scope "(:locale)", locale: /vi|en/ do
     root "static_pages#home"
-    
-    # google login
-    post "/auth/google_oauth2", as: :google_login
-    get "/auth/google_oauth2/callback", to: "sessions#create_from_google"
-    get "/auth/failure", to: redirect("/login") 
-
     # Devise
-    devise_for :users, only: %i(sessions registrations confirmations passwords), controllers: {
-      registrations: "users/registrations"
+    devise_for :users, only: %i(sessions registrations confirmations passwords ), controllers: {
+      registrations: "users/registrations",
     }
 
     resources :users, only: %i(show edit update)
@@ -22,7 +20,7 @@ Rails.application.routes.draw do
     # --- Trainee Namespace ---
     namespace :trainee do
       resources :daily_reports, only: %i(index show new create edit update destroy)
-
+      
       resources :courses, only: %i(show) do
         member do
           get :members

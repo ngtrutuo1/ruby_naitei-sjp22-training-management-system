@@ -31,6 +31,7 @@ user:
   max_email_length: 255
   birthday_valid_years: 100
   min_password_length: 6
+  max_password_length: 20
   roles:
     trainee: 0
     supervisor: 1
