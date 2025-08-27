@@ -6,6 +6,7 @@ class Admin::UsersController < Admin::BaseController
                 only: %i(update_status show update delete_user_course)
   before_action :set_css_class, only: %i(index show)
   before_action :load_user_course, only: %i(delete_user_course)
+  authorize_resource
 
   # GET /admin/users
   def index
@@ -93,7 +94,7 @@ class Admin::UsersController < Admin::BaseController
 
   def load_supervisors
     @user_supervisors = User.supervisor.filter_by_name(params[:search])
-                            .filter_by_status(params[:status])
+                            .filter_by_status(params[:confirmed_at])
                             .by_course(params[:course])
                             .recent
   end
@@ -111,13 +112,8 @@ class Admin::UsersController < Admin::BaseController
   end
 
   def update_status?
-    if params[:activated].present? &&
-       @user_supervisor.update(activated: params[:activated])
-      return true
-    end
-
-    flash[:danger] = t(".update_failed")
-    false
+    @user_supervisor.update(confirmed_at: params[:confirmed_at])
+    true
   end
 
   def handle_bulk_statuses
@@ -142,8 +138,10 @@ class Admin::UsersController < Admin::BaseController
   def toggle_supervisors_status supervisors
     updated_count = 0
     supervisors.each do |supervisor|
-      new_status = supervisor.activated? ? false : true
-      updated_count += 1 if supervisor.update(activated: new_status)
+      new_status = supervisor.confirmed_at? ? false : true
+      if supervisor.update(confirmed_at: new_status ? Time.current : nil)
+        updated_count += 1
+      end
     end
     updated_count
   end

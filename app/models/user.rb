@@ -46,10 +46,10 @@ gender).freeze
 
     joins(:courses).where(courses: {id: course_ids})
   end)
-  scope :filter_by_status, (lambda do |status|
-    return all if status.blank?
+  scope :filter_by_status, (lambda do |confirmed_at|
+    return all if confirmed_at.blank?
 
-    where(activated: status)
+    where(confirmed_at: confirmed_at == "true" ? ..Time.current : nil)
   end)
   scope :filter_by_name, (lambda do |search|
     return all if search.blank?

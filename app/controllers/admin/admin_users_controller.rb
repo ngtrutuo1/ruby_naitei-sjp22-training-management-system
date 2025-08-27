@@ -1,6 +1,7 @@
 class Admin::AdminUsersController < Admin::BaseController
   before_action :load_admin, only: %i(show destroy activate deactivate)
   before_action :load_supervisor, only: :promote
+  authorize_resource class: User
 
   # GET /admin/admin_users
   def index
@@ -40,7 +41,7 @@ class Admin::AdminUsersController < Admin::BaseController
 
   # PATCH /admin/admin/users/:id/activate
   def activate
-    if @admin.activate
+    if @admin.update(confirmed_at: Time.current)
       flash[:success] = t(".admin_activated")
     else
       flash[:danger] = t(".activation_failed")
@@ -50,7 +51,7 @@ class Admin::AdminUsersController < Admin::BaseController
 
   # PATCH /admin/admin/users/:id/deactivate
   def deactivate
-    if @admin.update(activated: false)
+    if @admin.update(confirmed_at: nil)
       flash[:success] = t(".admin_deactivated")
     else
       flash[:danger] = t(".deactivation_failed")
