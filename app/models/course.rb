@@ -77,7 +77,6 @@ class Course < ApplicationRecord
   scope :upcoming, -> {where(start_date: Date.current.next_day..)}
   scope :completed, -> {where(finish_date: ..Date.current.prev_day)}
   scope :ordered_by_start_date, -> {order(:start_date)}
-  scope :by_status, ->(status) {where(status:) if status.present?}
   scope :supervised_by, ->(user_id) {where(supervisor_id: user_id)}
   scope :with_counts, (lambda do
     select(
@@ -173,7 +172,16 @@ class Course < ApplicationRecord
   def subjects_count
     Course.subjects.count
   end
+  class << self
+    def ransackable_attributes _auth_object = nil
+      %w(status name start_date finish_date created_at updated_at
+  user_id)
+    end
 
+    def ransackable_associations _auth_object = nil
+      %w(user)
+    end
+  end
   private
 
   def finish_date_after_start_date

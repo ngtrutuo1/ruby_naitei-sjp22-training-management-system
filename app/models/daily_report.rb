@@ -25,19 +25,18 @@ class DailyReport < ApplicationRecord
   # Scopes
   scope :completed, -> {where(is_done: true)}
   scope :pending, -> {where(is_done: false)}
-  scope :recent, -> {order(updated_at: :desc)}
   scope :by_user, ->(user_id) {where(user_id:) if user_id.present?}
   scope :by_course, ->(course) {where(course:)}
   scope :by_courses, ->(course_ids) {where(course_ids:)}
-  scope :on_day, (lambda do |date|
-    return if date.blank?
+  class << self
+    def ransackable_attributes _auth_object = nil
+      %w(course_id updated_at created_at)
+    end
 
-    processed_date = Date.strptime(date, Settings.params.date)
-    where(created_at: processed_date.all_day)
-  end)
-  scope :by_course_filter, (lambda do |course_id|
-    where(course_id:) if course_id.present?
-  end)
+    def ransackable_associations _auth_object = nil
+      %w(course)
+    end
+  end
 
   private
 
