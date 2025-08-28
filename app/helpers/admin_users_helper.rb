@@ -21,8 +21,8 @@ module AdminUsersHelper
   def user_status_filter_options
     [
       [t("admin.admin_users.index.all_statuses"), ""],
-      [t("common.active"), true],
-      [t("common.inactive"), false]
+      [t("common.active"), false],
+      [t("common.inactive"), true]
     ]
   end
 

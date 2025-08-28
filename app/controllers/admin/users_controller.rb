@@ -25,13 +25,11 @@ class Admin::UsersController < Admin::BaseController
 
   # GET /admin/users/:id
   def show
-    @supervisor_courses = @user_supervisor.supervised_courses
-                                          .includes(:users)
-                                          .by_user_course_status(
-                                            params[:status]
-                                          )
-                                          .search_by_name(params[:search])
-                                          .by_course(params[:course_id]).recent
+    @q = @user_supervisor.supervised_courses
+                         .ransack(params[:q])
+    @supervisor_courses = @q.result(distinct: true)
+                            .includes(:users)
+                            .recent
     @pagy, @supervisor_courses = pagy(@supervisor_courses)
   end
 
@@ -69,7 +67,8 @@ class Admin::UsersController < Admin::BaseController
   private
 
   def load_trainees
-    @user_trainees = User.trainee.filter_by_name(params[:search]).recent
+    @q = User.trainee.ransack(params[:q])
+    @user_trainees = @q.result(distinct: true).recent
   end
 
   def load_user_course
@@ -93,10 +92,8 @@ class Admin::UsersController < Admin::BaseController
   end
 
   def load_supervisors
-    @user_supervisors = User.supervisor.filter_by_name(params[:search])
-                            .filter_by_status(params[:confirmed_at])
-                            .by_course(params[:course])
-                            .recent
+    @q = User.supervisor.ransack(params[:q])
+    @user_supervisors = @q.result(distinct: true).recent
   end
 
   def load_courses
