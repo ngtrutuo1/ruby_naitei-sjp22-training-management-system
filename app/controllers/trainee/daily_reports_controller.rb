@@ -11,10 +11,8 @@ commit).freeze
 
   # GET /daily_reports
   def index
-    all_reports = DailyReport.accessible_by(current_ability)
-                             .recent.includes(:course)
-                             .by_course_filter(params[:course_id])
-                             .on_day(params[:filter_date])
+    @q = DailyReport.accessible_by(current_ability).ransack(params[:q])
+    all_reports = @q.result.includes(:course)
 
     @pagy, @daily_reports = pagy(all_reports)
   end
