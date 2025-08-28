@@ -5,10 +5,9 @@ class Admin::AdminUsersController < Admin::BaseController
 
   # GET /admin/admin_users
   def index
-    admins_scope = User.admin
-                       .sort_by_name
-                       .filter_by_name(params[:search])
-                       .filter_by_status(params[:status])
+    @q = User.admin.ransack(params[:q])
+    admins_scope = @q.result(distinct: true)
+                     .sort_by_name
 
     @pagy, @admins = pagy admins_scope, limit: Settings.ui.items_per_page
   end
