@@ -112,7 +112,8 @@ class Admin::UsersController < Admin::BaseController
 
   def update_status?
     if params[:activated].present? &&
-       @user_supervisor.update(activated: params[:activated])
+       @user_supervisor.update(confirmed_at:
+              params[:activated] == "true" ? Time.current : nil)
       return true
     end
 
@@ -142,8 +143,13 @@ class Admin::UsersController < Admin::BaseController
   def toggle_supervisors_status supervisors
     updated_count = 0
     supervisors.each do |supervisor|
-      new_status = supervisor.activated? ? false : true
-      updated_count += 1 if supervisor.update(activated: new_status)
+      new_status = supervisor.confirmed? ? false : true
+      if supervisor.update(confirmed_at: new_status ? Time.current : nil)
+        updated_count += 1
+      end
+      # new_status = supervisor.activated? ? false : true --- IGNORE ---
+      # updated_count += 1 if supervisor.update(activated: new_status)
+      #  --- IGNORE ---
     end
     updated_count
   end

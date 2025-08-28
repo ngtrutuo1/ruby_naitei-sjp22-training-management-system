@@ -1,23 +1,16 @@
 # config/routes.rb
 
 Rails.application.routes.draw do
+  devise_for :users, only: :omniauth_callbacks, controllers: { omniauth_callbacks: "users/omniauth_callbacks" }
+
   scope "(:locale)", locale: /vi|en/ do
     root "static_pages#home"
-    
-    # google login
-    post "/auth/google_oauth2", as: :google_login
-    get "/auth/google_oauth2/callback", to: "sessions#create_from_google"
-    get "/auth/failure", to: redirect("/login") 
 
-    # --- Authentication & User Management ---
-    get "/signup", to: "users#new"
-    post "/signup", to: "users#create"
-    get "/login", to: "sessions#new"
-    post "/login", to: "sessions#create"
-    delete "/logout", to: "sessions#destroy"
+    # Devise
+    devise_for :users, only: %i(sessions registrations confirmations passwords), controllers: {
+      registrations: "users/registrations"
+    }
 
-    resources :account_activations, only: :edit
-    resources :password_resets, only: %i(new create edit update)
     resources :users, only: %i(show edit update)
 
     # Subject search API (accessible to all authenticated users)

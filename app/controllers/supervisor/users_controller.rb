@@ -84,7 +84,8 @@ class Supervisor::UsersController < Supervisor::BaseController
 
   def handle_update_status?
     if params[:activated].present? &&
-       @user_trainee.update(activated: params[:activated])
+       @user_trainee.update(confirmed_at:
+              params[:activated] == "true" ? Time.current : nil)
       return true
     end
 
@@ -114,8 +115,10 @@ class Supervisor::UsersController < Supervisor::BaseController
   def toggle_trainees_status trainees
     updated_count = 0
     trainees.each do |trainee|
-      new_status = trainee.activated? ? false : true
-      updated_count += 1 if trainee.update(activated: new_status)
+      new_status = trainee.confirmed? ? false : true
+      if trainee.update(confirmed_at: new_status ? Time.current : nil)
+        updated_count += 1
+      end
     end
     updated_count
   end

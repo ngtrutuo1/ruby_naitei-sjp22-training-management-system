@@ -1,0 +1,169 @@
+# Additional translations at https://github.com/heartcombo/devise/wiki/I18n
+
+vi:
+  devise:
+    confirmations:
+      confirmed: "Xác nhận email thành công."
+      send_instructions: "Bạn sẽ nhận được email hướng dẫn xác nhận tài khoản trong vài phút nữa."
+      send_paranoid_instructions: "Nếu email của bạn có trong hệ thống, bạn sẽ nhận được hướng dẫn xác nhận tài khoản trong vài phút nữa."
+      new:
+        resend_confirmation_instructions: "Gửi lại hướng dẫn xác nhận"   
+    failure:
+      already_authenticated: "Bạn đã đăng nhập."
+      inactive: "Tài khoản của bạn chưa được kích hoạt."
+      invalid: "%{authentication_keys} hoặc mật khẩu không hợp lệ."
+      locked: "Tài khoản của bạn đã bị khóa."
+      last_attempt: "Bạn còn một lần thử đăng nhập nữa trước khi tài khoản bị khóa."
+      not_found_in_database: "%{authentication_keys} hoặc mật khẩu không hợp lệ."
+      timeout: "Phiên đăng nhập đã hết hạn, vui lòng đăng nhập lại."
+      unauthenticated: "Bạn cần đăng nhập hoặc đăng ký trước khi tiếp tục."
+      unconfirmed: "Bạn cần xác nhận email trước khi tiếp tục."
+    mailer:
+      confirmation_instructions:
+        subject: "Hướng dẫn xác nhận tài khoản"
+        welcome: "Chào mừng %{email}!"
+        confirm_instruction: "Bạn có thể xác nhận tài khoản email thông qua liên kết dưới đây:"
+        confirm_link: "Xác nhận tài khoản của tôi"
+      reset_password_instructions:
+        subject: "Hướng dẫn đặt lại mật khẩu"
+        greeting: "Xin chào %{email}!"
+        request_message: "Ai đó đã yêu cầu liên kết để thay đổi mật khẩu của bạn. Bạn có thể thực hiện việc này thông qua liên kết dưới đây."
+        change_password_link: "Thay đổi mật khẩu của tôi"
+        ignore_message: "Nếu bạn không yêu cầu điều này, vui lòng bỏ qua email này."
+        no_changes_message: "Mật khẩu của bạn sẽ không thay đổi cho đến khi bạn truy cập liên kết trên và tạo mật khẩu mới."
+      unlock_instructions:
+        subject: "Hướng dẫn mở khóa tài khoản"
+        greeting: "Xin chào %{email}!"
+        message: "Tài khoản của bạn đã bị khóa do có quá nhiều lần đăng nhập không thành công."
+        instruction: "Nhấp vào liên kết dưới đây để mở khóa tài khoản của bạn:"
+        action: "Mở khóa tài khoản của tôi"
+      email_changed:
+        subject: "Email đã được thay đổi"
+        greeting: "Xin chào %{email}"
+        changing_email: "Chúng tôi liên hệ để thông báo rằng email của bạn đang được thay đổi thành %{email}."
+        changed_email: "Chúng tôi liên hệ để thông báo rằng email của bạn đã được thay đổi thành %{email}."
+      password_change:
+        subject: "Mật khẩu đã được thay đổi"
+        greeting: "Xin chào %{email}!"
+        password_change_notification: "Chúng tôi liên hệ để thông báo rằng mật khẩu của bạn đã được thay đổi."
+    omniauth_callbacks:
+      failure: "Không thể đăng nhập qua tài khoản %{kind} vì \"%{reason}\"."
+      success: "Đăng nhập thành công bằng tài khoản %{kind}."
+    passwords:
+      no_token: "Bạn không thể truy cập trang này nếu không đến từ email đặt lại mật khẩu. Nếu bạn đến từ email đặt lại mật khẩu, xin hãy chắc chắn rằng bạn dùng đường dẫn đầy đủ."
+      send_instructions: "Bạn sẽ nhận được email hướng dẫn đặt lại mật khẩu trong vài phút nữa."
+      send_paranoid_instructions: "Nếu email của bạn có trong hệ thống, bạn sẽ nhận được đường dẫn khôi phục mật khẩu trong vài phút nữa."
+      updated: "Đổi mật khẩu thành công. Bạn đã được đăng nhập."
+      updated_not_active: "Mật khẩu đã được thay đổi thành công."
+      edit:
+        change_your_password: "Thay đổi mật khẩu"
+        new_password: "Mật khẩu mới"
+        minimum_characters: "(Tối thiểu %{count} ký tự)"
+        confirm_new_password: "Xác nhận mật khẩu mới"
+        change_my_password: "Thay đổi mật khẩu của tôi"
+      new:
+        forgot_password: "Quên mật khẩu?"
+        send_reset_instructions: "Gửi cho tôi hướng dẫn đặt lại mật khẩu"
+    registrations:
+      destroyed: "Tạm biệt! Tài khoản của bạn đã được hủy thành công. Chúng tôi hy vọng sẽ sớm gặp lại bạn."
+      signed_up: "Chào mừng! Bạn đã đăng ký thành công."
+      signed_up_but_inactive: "Bạn đã đăng ký thành công. Tuy nhiên, bạn cần kích hoạt tài khoản trước khi có thể đăng nhập được."
+      signed_up_but_locked: "Bạn đã đăng ký thành công. Tuy nhiên, tài khoản của bạn đang bị khóa nên không thể đăng nhập được."
+      signed_up_but_unconfirmed: "Một email chứa đường dẫn xác nhận tài khoản đã được gửi cho bạn. Vui lòng click vào đường dẫn để kích hoạt tài khoản."
+      update_needs_confirmation: "Cập nhật tài khoản thành công, nhưng bạn cần xác nhận email mới. Vui lòng kiểm tra email và click vào đường dẫn xác nhận để hoàn tất việc thay đổi email."
+      updated: "Cập nhật tài khoản thành công."
+      updated_but_not_signed_in: "Tài khoản của bạn đã được cập nhật thành công, nhưng do mật khẩu đã thay đổi, bạn cần đăng nhập lại."
+      new:
+        sign_up: "Đăng ký"
+        create_my_account: "Tạo tài khoản của tôi"
+        select_gender: "Chọn giới tính"
+      show:
+        email: "Email"
+        birthday: "Ngày sinh"
+        gender: "Giới tính"
+        member_since: "Thành viên từ"
+        last_updated: "Cập nhật lần cuối"
+        user_not_found: "Không tìm thấy người dùng"
+        system_error: "Có lỗi xảy ra. Vui lòng thử lại sau"
+      create:
+        signup_success: "Đăng ký thành công! Chào mừng bạn đến với Hệ thống huấn luyện."
+        activation_email_sent: "Vui lòng kiểm tra email để kích hoạt tài khoản của bạn."
+        signup_failure: "Có lỗi trong form đăng ký của bạn. Vui lòng sửa chúng và thử lại."
+        system_error: "Có lỗi xảy ra trong quá trình đăng ký. Vui lòng thử lại sau"
+      edit:
+        edit_user: "Chỉnh sửa người dùng"
+        save_change: "Lưu thay đổi"
+        update_profile: "Cập nhật hồ sơ của bạn"
+        change: "thay đổi"
+        title: "Chỉnh sửa người dùng"
+        name_label: "Tên"
+        email_label: "Email"
+        password_label: "Mật khẩu"
+        password_confirmation_label: "Xác nhận mật khẩu"
+        save_changes: "Lưu thay đổi"
+        gravatar_change: "thay đổi"
+        user_not_found: "Không tìm thấy người dùng!"
+        login_required: "Vui lòng đăng nhập để truy cập trang này."
+        not_authorized: "Bạn không có quyền chỉnh sửa người dùng này."
+      update:
+        profile_updated: "Hồ sơ đã được cập nhật thành công"
+        update_failed: "Cập nhật hồ sơ không thành công. Vui lòng thử lại"
+        login_required: "Vui lòng đăng nhập để truy cập trang này."
+        not_authorized: "Bạn không có quyền chỉnh sửa người dùng này."
+      form:
+        name_label: "Tên"
+        email_label: "Email"
+        birthday_label: "Ngày sinh"
+        gender_label: "Giới tính"
+        password_label: "Mật khẩu"
+        password_confirmation_label: "Xác nhận mật khẩu"
+        select_gender: "Chọn giới tính"
+        save_changes: "Lưu thay đổi"
+    sessions:
+      signed_in: "Đăng nhập thành công."
+      signed_out: "Đăng xuất thành công."
+      already_signed_out: "Đã đăng xuất thành công."
+      new:
+        title: "Đăng nhập"
+        heading: "Đăng nhập"
+        email_label: "Email"
+        password_label: "Mật khẩu"
+        forgot_password_link: "(quên mật khẩu)"
+        remember_me_label: "Ghi nhớ tôi trên máy tính này"
+        submit_button: "Đăng nhập"
+        new_user_text: "Người dùng mới? "
+        sign_up_link: "Đăng ký ngay!"
+        login_with_google: "Đăng nhập với tài khoản google"
+      create:
+        login_success: "Chào mừng bạn trở lại!"
+        login_failed: "Email/mật khẩu không đúng"
+        account_not_activated: "Tài khoản chưa được kích hoạt. Vui lòng kiểm tra email để lấy liên kết kích hoạt."
+        missing_credentials: "Vui lòng nhập cả email và mật khẩu"
+        system_error: "Có lỗi xảy ra. Vui lòng thử lại sau"
+      destroy:
+        logout_success: "Bạn đã đăng xuất thành công"
+      create_from_google:
+        login_success: "Chào mừng bạn trở lại!"
+        login_failed: "Email/mật khẩu không đúng"
+    shared:
+      links:
+        log_in: "Đăng nhập"
+        sign_up: "Đăng ký"
+        forgot_password: "Quên mật khẩu?"
+        resend_confirmation: "Không nhận được hướng dẫn xác nhận?"
+        resend_unlock: "Không nhận được hướng dẫn mở khóa?"
+        sign_in_with_google: "Đăng nhập với Google"
+    unlocks:
+      send_instructions: "Bạn sẽ nhận được email hướng dẫn mở khóa tài khoản trong vài phút nữa."
+      send_paranoid_instructions: "Nếu tài khoản của bạn tồn tại, bạn sẽ nhận được email hướng dẫn mở khóa trong vài phút nữa."
+      unlocked: "Tài khoản của bạn đã được mở khóa thành công. Vui lòng đăng nhập để tiếp tục."
+  errors:
+    messages:
+      already_confirmed: "đã được xác nhận, vui lòng đăng nhập"
+      confirmation_period_expired: "cần được xác nhận trong %{period}, vui lòng yêu cầu mã mới"
+      expired: "đã hết hạn, vui lòng yêu cầu mã mới"
+      not_found: "không tìm thấy"
+      not_locked: "không bị khóa"
+      not_saved:
+        one: "1 lỗi khiến %{resource} này không lưu được:"
+        other: "%{count} lỗi khiến %{resource} này không lưu được:"

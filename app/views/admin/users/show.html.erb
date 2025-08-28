@@ -15,7 +15,7 @@
           <% end %>
         </li>
         <li>
-          <% if @user_supervisor.activated? %>
+          <% if @user_supervisor.confirmed? %>
             <%= link_to update_status_admin_user_path(@user_supervisor, activated: false), class: "dropdown-item", data: {turbo_method: :patch} do %>
               <i class="fas fa-ban mr-2"></i><%= t(".deactivate_account") %>
             <% end %>
