@@ -1,35 +1,39 @@
-<%# app/views/admin/users/_filter_form.html.erb %>
-<%= form_with url: admin_admin_users_path, method: :get, class: "filter-form", role: "form" do %>
-  <div class="row">
-    <div class="col-md-7">
-      <div class="form-group">
-        <label for="search_type"><%= t(".search_by") %></label>
-        <div class="input-group">
-          <span class="input-group-addon"><%= t(".name") %></span>
-          <%= text_field_tag :search, params[:search],
-                             class: "form-control",
-                             placeholder: t(".search_placeholder") %>
-        </div>
-      </div>
-    </div>
+<%= search_form_for @q, url: admin_admin_users_path, method: :get, html: {class: "filter-form row g-3 align-items-end"} do |f| %>
 
-    <div class="col-md-2">
-      <div class="form-group">
-        <label for="status"><%= t(".status") %></label>
-        <%= select_tag :status,
-                       options_for_select(user_status_filter_options, params[:status]),
-                       class: "form-control" %>
-      </div>
-    </div>
-
-    <div class="col-md-3">
-      <div class="form-group filter-action-buttons-group">
-        <label>&nbsp;</label>
-        <div class="filter-action-buttons">
-          <%= submit_tag t(".apply_button"), class: "btn btn-primary width-fit" %>
-          <%= link_to t(".clear_filter_button"), admin_admin_users_path, class: "btn btn-default" %>
-        </div>
+  <!-- Search by name/email -->
+  <div class="col-md-7">
+    <div class="form-group">
+      <label class="form-label"><%= t(".search_by") %></label>
+      <div class="input-group">
+        <span class="input-group-text"><%= t(".name") %></span>
+        <%= f.search_field :name_or_email_cont,
+                           class: "form-control",
+                           placeholder: t(".search_placeholder") %>
       </div>
     </div>
   </div>
+
+  <!-- Status filter -->
+  <div class="col-md-2">
+    <div class="form-group">
+      <label class="form-label"><%= t(".status") %></label>
+      <%= f.select :confirmed_at_null,
+          options_for_select([
+            [t(".status_all"), nil],
+            [t(".status_inactive"), true],
+            [t(".status_active"), false]
+          ], params.dig(:q, :confirmed_at_null)),
+          {},
+          {class: "form-select"} %>
+    </div>
+  </div>
+
+  <!-- Action buttons -->
+  <div class="col-md-3 d-flex justify-content-start gap-2">
+    <div class="form-group">
+      <%= f.submit t(".apply_button"), class: "btn btn-primary" %>
+      <%= link_to t(".clear_filter_button"), admin_admin_users_path, class: "btn btn-outline-secondary" %>
+    </div>
+  </div>
+
 <% end %>
