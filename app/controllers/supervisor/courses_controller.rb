@@ -30,6 +30,8 @@ class Supervisor::CoursesController < Supervisor::BaseController
   before_action :ensure_multiple_supervisors, only: [:leave]
   before_action :set_courses_page_class
 
+  authorize_resource
+
   # GET /supervisor/courses
   def index
     @statuses = build_statuses
