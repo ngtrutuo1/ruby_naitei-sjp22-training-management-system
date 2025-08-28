@@ -8,19 +8,19 @@
       <%= link_to t(".add_course_button"), new_supervisor_course_path, class: "btn btn-success height-fit" %>
     </div>
 
-    <%= form_with url: supervisor_courses_path, method: :get, class: "filter-form", role: "form" do |f| %>
-
+    <%= search_form_for @q, url: supervisor_courses_path, method: :get, class: "filter-form", local: true do |f| %>
       <div class="row">
         <div class="col-md-7">
           <div class="form-group">
-            <label for="search_type"><%= t(".search_by") %></label>
+            <label for="search_query"><%= t(".search_by") %></label>
             <div class="input-group unified-search-group">
               <span class="input-group-btn">
                 <%= select_tag :search_type,
                                options_for_select(search_type_options, params[:search_type]),
                                class: "form-control search-type-select" %>
               </span>
-              <%= text_field_tag :search_query, params[:search_query],
+              <%= f.search_field :name_cont, 
+                                 value: params.dig(:q, :name_cont),
                                  class: "form-control",
                                  placeholder: t(".search_placeholder") %>
             </div>
@@ -30,10 +30,7 @@
         <div class="col-md-2">
           <div class="form-group">
             <label for="status"><%= Course.human_attribute_name(:status) %></label>
-            <%= f.select :status,
-                           options_for_select(status_filter_options, params[:status]),
-                           {},
-                           class: "form-control" %>
+            <%= f.select :status_eq, status_filter_options, {}, class: "form-control" %>
           </div>
         </div>
 
@@ -41,7 +38,7 @@
           <div class="form-group filter-action-buttons-group">
             <label>&nbsp;</label>
             <div class="filter-action-buttons">
-              <%= submit_tag t(".apply_button"), class: "btn btn-primary width-fit" %>
+              <%= f.submit t(".apply_button"), class: "btn btn-primary width-fit" %>
               <%= link_to t(".clear_filter_button"), supervisor_courses_path, class: "btn btn-default" %>
             </div>
           </div>
@@ -51,16 +48,15 @@
       <div class="row filter-row-secondary">
         <div class="col-md-5">
           <div class="form-group">
-            <label for="start_date_from"><%= t(".start_date_range") %></label>
+            <label for="start_date"><%= t(".start_date_range") %></label>
             <div class="input-group">
-              <%= date_field_tag :start_date_from, params[:start_date_from], class: "form-control" %>
+              <%= f.date_field :start_date_gteq, value: params.dig(:q, :start_date_gteq), class: "form-control" %>
               <span class="input-group-addon">-</span>
-              <%= date_field_tag :start_date_to, params[:start_date_to], class: "form-control" %>
+              <%= f.date_field :finish_date_lteq, value: params.dig(:q, :finish_date_lteq), class: "form-control" %>
             </div>
           </div>
         </div>
       </div>
-
     <% end %>
   </div>
 

@@ -1,4 +1,4 @@
-<%= form_with url: supervisor_users_path, method: :get, data: {turbo: false}, local: true, class: "filter-form" do |form| %>
+<%= search_form_for @q, url: supervisor_users_path, method: :get, data: { turbo: false }, class: "filter-form" do |f| %>
   <div class="row g-3">
     <!-- Search Input -->
     <div class="col-lg-4 col-md-6">
@@ -8,11 +8,10 @@
           <%= t(".search_label") %>
         </label>
         <div class="input-group">
-          <%= form.text_field :search,
-              placeholder: t(".search_placeholder"),
-              value: params[:search],
-              class: "form-control search-input" %>
-          <% if params[:search].present? %>
+          <%= f.search_field :name_or_email_cont,
+                placeholder: t(".search_placeholder"),
+                class: "form-control search-input" %>
+          <% if params.dig(:q, :name_or_email_cont).present? %>
             <button type="button" class="btn btn-outline-secondary clear-search" title="<%= t(".clear_search") %>">
               <i class="fas fa-times"></i>
             </button>
@@ -24,30 +23,20 @@
     <!-- Status Filter -->
     <div class="col-lg-3 col-md-6">
       <div class="form-group">
-        <label class="form-label">
-          <i class="fas fa-toggle-on me-1"></i>
-          <%= t(".status_label") %>
-        </label>
-        <%= form.select :confirmed_at,
-            options_for_select(user_status_options, params[:confirmed_at]),
-            {},
-            {class: "form-select status-select"} %>
+        <label class="form-label"><i class="fas fa-toggle-on me-1"></i><%= t(".status_label") %></label>
+        <%= f.select :confirmed_at_null,
+            options_for_select(user_status_options, params.dig(:q, :confirmed_at_null)),
+            {}, {class: "form-select status-select"} %>
       </div>
     </div>
 
     <!-- Course Filter -->
     <div class="col-lg-3 col-md-6">
       <div class="form-group">
-        <label class="form-label">
-          <i class="fas fa-graduation-cap me-1"></i>
-          <%= t(".course_label") %>
-        </label>
-        <%= form.select :course,
-            options_for_select([
-              [t(".course_all"), nil]
-            ] + @courses.map {|course| [course.name, course.id]}, params[:course]),
-            {},
-            {class: "form-select course-select"} %>
+        <label class="form-label"><i class="fas fa-graduation-cap me-1"></i><%= t(".course_label") %></label>
+        <%= f.select :user_courses_course_id_in,
+            options_for_select([[t(".course_all"), nil]] + @courses.map {|course| [course.name, course.id]}, params.dig(:q, :user_courses_course_id_in)),
+            {}, {class: "form-select course-select"} %>
       </div>
     </div>
 
@@ -56,12 +45,9 @@
       <div class="form-group">
         <label class="form-label d-block">&nbsp;</label>
         <div class="btn-group w-100" role="group">
-          <%= form.submit t(".apply"),
-              class: "btn btn-primary apply-btn" %>
-          <% if params[:search].present? || params[:status].present? || params[:course].present? %>
-            <%= link_to supervisor_users_path,
-                class: "btn btn-outline-secondary reset-btn",
-                title: t(".reset_filters") do %>
+          <%= f.submit t(".apply"), class: "btn btn-primary apply-btn" %>
+          <% if params[:q].present? %>
+            <%= link_to supervisor_users_path, class: "btn btn-outline-secondary reset-btn", title: t(".reset_filters") do %>
               <i class="fas fa-undo"></i>
             <% end %>
           <% end %>

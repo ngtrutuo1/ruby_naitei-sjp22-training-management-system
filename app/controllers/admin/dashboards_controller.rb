@@ -26,10 +26,10 @@ class Admin::DashboardsController < ApplicationController
   end
 
   def active_courses
-    Course.in_progress
-          .includes(:user)
-          .with_counts
-          .search_by_name(params[:search])
-          .order(created_at: :desc)
+    @q = Course.ransack(params[:q])
+    @q.result.in_progress
+      .includes(:user)
+      .with_counts
+      .order(created_at: :desc)
   end
 end

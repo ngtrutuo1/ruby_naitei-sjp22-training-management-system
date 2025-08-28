@@ -24,18 +24,22 @@ class Task < ApplicationRecord
   # Scopes
   scope :ordered_by_name, -> {order(:name)}
   scope :for_taskable_type, ->(type) {where(taskable_type: type)}
-  scope :search_by_name, (lambda do |query|
-                            if query.present?
-                              where("name LIKE ?",
-                                    "%#{sanitize_sql_like(query)}%")
-                            end
-                          end)
   scope :recent, -> {order(created_at: :desc)}
   scope :by_subject, (lambda do |taskable_id|
     if taskable_id.present?
       where(taskable_type: Subject.name, taskable_id: taskable_id)
     end
   end)
+
+  class << self
+    def ransackable_attributes _auth_object = nil
+      %w(name)
+    end
+
+    def ransackable_associations _auth_object = nil
+      %w(taskable)
+    end
+  end
 
   private
 

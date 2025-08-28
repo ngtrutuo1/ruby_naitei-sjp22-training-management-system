@@ -4,11 +4,10 @@ class Supervisor::TasksController < Supervisor::BaseController
 
   # GET /supervisor/tasks
   def index
-    @pagy, @tasks = pagy Task.for_taskable_type(Subject.name)
-                             .includes(:taskable)
-                             .recent
-                             .by_subject(params[:subject_id])
-                             .search_by_name(params[:search]),
+    @q = Task.accessible_by(current_ability).for_taskable_type(Subject.name)
+             .by_subject(params[:subject_id])
+             .ransack(params[:q])
+    @pagy, @tasks = pagy @q.result(distinct: true).includes(:taskable).recent,
                          items: Settings.ui.items_per_page
   end
 

@@ -23,6 +23,7 @@ class DailyReport < ApplicationRecord
             if: -> {course_id.present?}
 
   # Scopes
+  scope :recent, -> {order(created_at: :desc)}
   scope :completed, -> {where(is_done: true)}
   scope :pending, -> {where(is_done: false)}
   scope :by_user, ->(user_id) {where(user_id:) if user_id.present?}
@@ -30,11 +31,11 @@ class DailyReport < ApplicationRecord
   scope :by_courses, ->(course_ids) {where(course_ids:)}
   class << self
     def ransackable_attributes _auth_object = nil
-      %w(course_id updated_at created_at)
+      %w(course_id updated_at created_at user_id filter_date)
     end
 
     def ransackable_associations _auth_object = nil
-      %w(course)
+      %w(course user)
     end
   end
 

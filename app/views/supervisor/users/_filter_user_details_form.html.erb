@@ -1,40 +1,38 @@
-<%= form_with url: supervisor_user_path(@user_trainee), 
-        method: :get, 
-        local: true, 
-        data: { turbo: false }, 
-        class: "filter-form" do |f| %>
+<%= search_form_for @q, url: supervisor_user_path(@user_trainee), method: :get, data: { turbo: false }, class: "filter-form" do |f| %>
   <div class="row g-3">
-  <div class="col-md-3">
-    <%= f.text_field :search, 
-             value: params[:search], 
-             placeholder: t(".search_placeholder"), 
-             class: "form-control search-input" %>
-  </div>
-  
-  <div class="col-md-2">
-    <%= f.select :status, 
-           options_for_select(user_course_status_options, params[:status]), 
-           {}, 
-           {class: "form-select status-select"} %>
-  </div>
-  
-  <div class="col-md-3">
-    <%= f.select :course, 
-           options_for_select([
-           [t(".course_all"), ""]
-           ] + Course.recent.map {|course| [course.name, course.id]}, params[:course]), 
-           {},
-           {class: "form-select course-select"} %>
-  </div>
-  
-  <div class="col-md-2">
-    <%= f.submit t(".apply"), class: "btn btn-primary apply-btn w-100" %>
-  </div>
-  
-  <div class="col-md-2">
-    <%= link_to t(".reset_filters"), 
-          supervisor_user_path(@user_trainee), 
-          class: "btn btn-outline-secondary reset-btn w-100" %>
-  </div>
+
+    <!-- Search Course by name -->
+    <div class="col-md-3">
+      <%= f.search_field :name_cont, 
+           placeholder: t(".search_placeholder"), 
+           class: "form-control search-input" %>
+    </div>
+
+    <!-- Filter by UserCourse status -->
+    <div class="col-md-2">
+      <%= f.select :user_courses_status_eq, 
+             options_for_select(user_course_status_options, params.dig(:q, :user_courses_status_eq)), 
+             {include_blank: t(".status_all") }, 
+             {class: "form-select status-select"} %>
+    </div>
+
+    <!-- Filter by Course -->
+    <div class="col-md-3">
+      <%= f.select :id_eq, 
+             options_for_select([[t(".course_all"), nil]] + @user_trainee.courses.map {|c| [c.name, c.id]}, params.dig(:q, :id_eq)),
+             {},
+             {class: "form-select course-select"} %>
+    </div>
+
+    <!-- Apply Button -->
+    <div class="col-md-2">
+      <%= f.submit t(".apply"), class: "btn btn-primary apply-btn w-100" %>
+    </div>
+
+    <!-- Reset Button -->
+    <div class="col-md-2">
+      <%= link_to t(".reset_filters"), supervisor_user_path(@user_trainee), class: "btn btn-outline-secondary reset-btn w-100" %>
+    </div>
+
   </div>
 <% end %>

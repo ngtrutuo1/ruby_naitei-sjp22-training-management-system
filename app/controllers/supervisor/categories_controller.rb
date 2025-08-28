@@ -4,9 +4,9 @@ class Supervisor::CategoriesController < Supervisor::BaseController
   authorize_resource
   # GET /supervisor/categories
   def index
-    @pagy, @categories = pagy Category.includes(:subjects)
-                                      .recent
-                                      .search_by_name(params[:search]),
+    @q = Category.ransack(params[:q])
+    @pagy, @categories = pagy @q.result(distinct: true).includes(:subjects)
+                                .recent,
                               items: Settings.ui.items_per_page
   end
 

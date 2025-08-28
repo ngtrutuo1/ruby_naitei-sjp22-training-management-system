@@ -5,9 +5,8 @@ class Supervisor::SubjectsController < Supervisor::BaseController
 
   # GET /supervisor/subjects
   def index
-    @pagy, @subjects = pagy Subject.includes(:tasks)
-                                   .recent
-                                   .search_by_name(params[:search]),
+    @q = Subject.accessible_by(current_ability).ransack(params[:q])
+    @pagy, @subjects = pagy @q.result(distinct: true).includes(:tasks).recent,
                             items: Settings.ui.items_per_page
   end
 
