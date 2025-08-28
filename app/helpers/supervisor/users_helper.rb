@@ -39,17 +39,17 @@ module Supervisor::UsersHelper
   def user_course_status_options
     [
       [t(".status_all"), ""],
-      [t(".status_not_started"), :not_started],
-      [t(".status_in_progress"), :in_progress],
-      [t(".status_finished"), :finished]
+      [t(".status_not_started"), Settings.course.status.not_started],
+      [t(".status_in_progress"), Settings.course.status.in_progress],
+      [t(".status_finished"), Settings.course.status.finished]
     ]
   end
 
   def user_status_options
     [
       [t(".status_all"), nil],
-      [t(".status_active"), true],
-      [t(".status_inactive"), false]
+      [t(".status_active"), false],
+      [t(".status_inactive"), true]
     ]
   end
 end

@@ -100,6 +100,14 @@ gender).freeze
         content_type: res.headers["content-type"] || "image/jpeg"
       )
     end
+
+    def ransackable_attributes _auth_object = nil
+      %w(name email confirmed_at)
+    end
+
+    def ransackable_associations _auth_object = nil
+      %w(courses user_courses daily_reports)
+    end
   end
 
   private

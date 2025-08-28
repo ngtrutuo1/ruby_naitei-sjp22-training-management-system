@@ -92,12 +92,6 @@ class Course < ApplicationRecord
     )
   end)
   scope :recent, -> {order(created_at: :desc)}
-  scope :search_by_name, (lambda do |query|
-    if query.present?
-      where("name LIKE ?",
-            "%#{sanitize_sql_like(query)}%")
-    end
-  end)
   scope :search_by_trainer_name, (lambda do |query|
     if query.present?
       joins(:supervisors)
@@ -117,24 +111,6 @@ class Course < ApplicationRecord
       joins(:course_supervisors)
         .where(course_supervisors: {user_id: trainer_id})
     end
-  end)
-  scope :filter_by_params, (lambda do |params|
-    relation = self
-
-    search_query = params[:search_query]
-    if search_query.present?
-      relation = if params[:search_type] == Settings.course.creators
-                   relation.search_by_trainer_name(search_query)
-                 else
-                   relation.search_by_name(search_query)
-                 end
-    end
-
-    relation = relation.by_status(params[:status])
-                       .by_start_date_from(params[:start_date_from])
-                       .by_start_date_to(params[:start_date_to])
-
-    relation
   end)
   scope :by_course, (lambda do |course_ids|
     where(id: course_ids) if course_ids.present?
@@ -174,12 +150,13 @@ class Course < ApplicationRecord
   end
   class << self
     def ransackable_attributes _auth_object = nil
-      %w(status name start_date finish_date created_at updated_at
+      %w(id status name start_date finish_date created_at updated_at
   user_id)
     end
 
     def ransackable_associations _auth_object = nil
-      %w(user)
+      %w(users user_courses course_supervisors course_subjects user
+daily_reports)
     end
   end
   private

@@ -31,13 +31,11 @@ class Supervisor::CoursesController < Supervisor::BaseController
 
   # GET /supervisor/courses
   def index
-    @statuses = build_statuses
-
-    courses_query = accessible_courses
-                    .includes(:user)
-                    .with_counts
-                    .filter_by_params(params)
-                    .ordered_by_start_date
+    @q = Course.ransack(params[:q])
+    courses_query = @q.result(distinct: true)
+                      .includes(:user)
+                      .with_counts
+                      .ordered_by_start_date
 
     @pagy, @courses = pagy courses_query, limit: Settings.ui.items_per_page
   end

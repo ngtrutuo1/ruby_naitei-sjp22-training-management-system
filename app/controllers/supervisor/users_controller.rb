@@ -15,12 +15,10 @@ class Supervisor::UsersController < Supervisor::BaseController
 
   # GET /supervisor/users/:id
   def show
-    @trainee_courses = @user_trainee.courses
-                                    .includes([:supervisors])
-                                    .includes(user_courses: [:user_subjects])
-                                    .by_user_course_status(params[:status])
-                                    .search_by_name(params[:search])
-                                    .by_course(params[:course]).recent
+    @q = Course.joins(:user_courses)
+               .where(user_courses: {user_id: @user_trainee.id})
+               .ransack(params[:q])
+    @trainee_courses = @q.result(distinct: true).recent
     @pagy, @trainee_courses = pagy(@trainee_courses)
   end
 
@@ -64,10 +62,8 @@ class Supervisor::UsersController < Supervisor::BaseController
   private
 
   def load_trainees
-    @user_trainees = User.trainee.filter_by_name(params[:search])
-                         .filter_by_status(params[:confirmed_at])
-                         .by_course(params[:course])
-                         .recent
+    @q = User.accessible_by(current_ability).ransack(params[:q])
+    @user_trainees = @q.result(distinct: true).recent
   end
 
   def load_courses

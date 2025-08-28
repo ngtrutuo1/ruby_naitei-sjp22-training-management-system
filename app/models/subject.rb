@@ -53,11 +53,15 @@ class Subject < ApplicationRecord
 
   # Scopes
   scope :ordered_by_name, -> {order(:name)}
-  scope :search_by_name, (lambda do |query|
-                            if query.present?
-                              where("name LIKE ?",
-                                    "%#{sanitize_sql_like(query)}%")
-                            end
-                          end)
   scope :recent, -> {order(created_at: :desc)}
+
+  class << self
+    def ransackable_attributes _auth_object = nil
+      %w(name max_score estimated_time_days)
+    end
+
+    def ransackable_associations _auth_object = nil
+      %w(tasks)
+    end
+  end
 end

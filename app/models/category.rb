@@ -19,13 +19,17 @@ class Category < ApplicationRecord
 
   # Scopes
   scope :ordered_by_name, -> {order(:name)}
-  scope :search_by_name, (lambda do |query|
-                            if query.present?
-                              where("name LIKE ?",
-                                    "%#{sanitize_sql_like(query)}%")
-                            end
-                          end)
   scope :recent, -> {order(created_at: :desc)}
+
+  class << self
+    def ransackable_attributes _auth_object = nil
+      %w(name)
+    end
+
+    def ransackable_associations _auth_object = nil
+      %w(subject_categories)
+    end
+  end
 
   private
 

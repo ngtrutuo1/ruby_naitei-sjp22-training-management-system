@@ -1,8 +1,8 @@
 module Supervisor
   module CoursesHelper
     def build_statuses
-      Course.statuses.map do |key, _value|
-        [t(key, scope: "courses.statuses"), key.to_sym]
+      Course.statuses.map do |key, value|
+        [t("courses.statuses.#{key}"), value]
       end
     end
 
@@ -14,8 +14,7 @@ module Supervisor
     end
 
     def status_filter_options
-      all_option = [[t(".all_statuses"), ""]]
-      all_option + build_statuses
+      [[t(".all_statuses").to_s, ""]] + build_statuses
     end
   end
 end
