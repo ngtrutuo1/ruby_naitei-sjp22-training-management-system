@@ -1,5 +1,4 @@
 class Admin::UsersController < Admin::BaseController
-  before_action :load_supervisors, only: %i(index)
   before_action :load_courses, only: %i(index)
   before_action :load_trainees, only: %i(new_supervisor add_role_supervisor)
   before_action :load_supervisor,
@@ -10,7 +9,8 @@ class Admin::UsersController < Admin::BaseController
 
   # GET /admin/users
   def index
-    @pagy, @supervisors = pagy(@user_supervisors)
+    @q = User.supervisor.ransack(params[:q])
+    @pagy, @supervisors = pagy(@q.result(distinct: true))
   end
 
   # GET /admin/users/new_supervisor
@@ -56,7 +56,6 @@ class Admin::UsersController < Admin::BaseController
   # PATCH /admin/users/bulk_deactivate
   def bulk_deactivate
     handle_bulk_statuses
-    redirect_to admin_users_path
   end
 
   # PATCH /admin/users/add_role_supervisor
@@ -90,13 +89,6 @@ class Admin::UsersController < Admin::BaseController
 
   def user_params
     params.require(:user).permit(User::PERMITTED_UPDATE_ATTRIBUTES)
-  end
-
-  def load_supervisors
-    @user_supervisors = User.supervisor.filter_by_name(params[:search])
-                            .filter_by_status(params[:status])
-                            .by_course(params[:course])
-                            .recent
   end
 
   def load_courses
@@ -144,20 +136,15 @@ class Admin::UsersController < Admin::BaseController
   def toggle_supervisors_status supervisors
     updated_count = 0
     supervisors.each do |supervisor|
-      new_status = supervisor.confirmed? ? false : true
-      if supervisor.update(confirmed_at: new_status ? Time.current : nil)
-        updated_count += 1
-      end
-      # new_status = supervisor.activated? ? false : true --- IGNORE ---
-      # updated_count += 1 if supervisor.update(activated: new_status)
-      #  --- IGNORE ---
+      new_status = supervisor.confirmed? ? nil : Time.zone.now
+      updated_count += 1 if supervisor.update(confirmed_at: new_status)
     end
     updated_count
   end
 
   def flash_no_selection
     flash[:danger] = t(".supervisor_no_selection")
-    redirect_to admin_users_path
+    redirect_to admin_users_path and return
   end
 
   def set_css_class
@@ -170,10 +157,10 @@ class Admin::UsersController < Admin::BaseController
     begin
       @user_trainees.where(id: params[:supervisor_ids])
                     .update_all(role: :supervisor)
+      true
     rescue StandardError
       flash[:danger] = t(".add_failed")
       false
     end
-    true
   end
 end

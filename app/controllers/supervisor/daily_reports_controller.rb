@@ -4,16 +4,12 @@ class Supervisor::DailyReportsController < Supervisor::BaseController
 
   # GET supervisor/daily_reports
   def index
-    supervised_course_ids = current_user.supervised_courses.pluck(:id)
+    @q = DailyReport.accessible_by(current_ability)
+                    .recent
+                    .includes(DailyReport::EAGER_LOADING_PARAMS)
+                    .ransack(params[:q])
 
-    all_reports = DailyReport.accessible_by(current_ability)
-                             .recent.includes(DailyReport::EAGER_LOADING_PARAMS)
-                             .by_course(supervised_course_ids)
-                             .by_course_filter(params[:course_id])
-                             .on_day(params[:filter_date])
-                             .by_user(params[:user_id])
-
-    @pagy, @daily_reports = pagy(all_reports)
+    @pagy, @daily_reports = pagy(@q.result(distinct: true))
   end
 
   # GET supervisor/daily_reports/:id
