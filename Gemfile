@@ -9,6 +9,7 @@ gem "bullet"
 
 gem "i18n-js", "~> 4.2"
 
+gem "devise"
 gem "omniauth"
 gem "omniauth-google-oauth2"
 gem "omniauth-rails_csrf_protection"
