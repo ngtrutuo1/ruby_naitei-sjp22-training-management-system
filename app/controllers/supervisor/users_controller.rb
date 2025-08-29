@@ -7,6 +7,7 @@ class Supervisor::UsersController < Supervisor::BaseController
   before_action :require_manager
   before_action :load_user_course,
                 only: %i(update_user_course_status delete_user_course)
+  authorize_resource
 
   # GET supervisor/users
   def index

@@ -8,6 +8,9 @@ class ApplicationController < ActionController::Base
   before_action :authenticate_user!
   before_action :store_user_location
 
+  include CanCan::ControllerAdditions
+  rescue_from CanCan::AccessDenied, with: :user_not_authorized
+
   protected
 
   attr_accessor :page_class
@@ -56,5 +59,10 @@ class ApplicationController < ActionController::Base
     return if request.xhr? # Skip AJAX requests
 
     session[:forwarding_url] = request.fullpath
+  end
+
+  def user_not_authorized _exception
+    flash[:danger] = t("shared.not_authorized")
+    redirect_to(request.referer || root_path)
   end
 end

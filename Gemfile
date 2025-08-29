@@ -14,6 +14,8 @@ gem "omniauth"
 gem "omniauth-google-oauth2"
 gem "omniauth-rails_csrf_protection"
 
+gem "cancancan"
+
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "paranoia"
 gem "rails", "~> 7.0.5"

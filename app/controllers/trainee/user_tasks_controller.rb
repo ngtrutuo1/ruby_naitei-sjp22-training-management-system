@@ -1,51 +1,55 @@
 class Trainee::UserTasksController < Trainee::BaseController
-  before_action :load_user_task,
-                only: %i(update_document update_status update_spent_time
-destroy_document)
+  before_action :load_user_task, only: %i(
+    update_document update_status update_spent_time destroy_document
+  )
+  before_action :load_course_and_subject_id, only: %i(
+    update_document update_status update_spent_time destroy_document
+  )
+  authorize_resource
 
   # PATCH /trainee/user_tasks/:id/document
   def update_document
     if update_document?
-      make_subject_in_progress
       flash[:success] = t(".document_updated")
+      make_subject_in_progress
     end
 
-    redirect_to trainee_course_subject_path(@course_id, @subject_id)
+    safe_redirect_to_course_subject
   end
 
   # PATCH /trainee/user_tasks/:id/status
   def update_status
     if update_status?
-      make_subject_in_progress
       flash[:success] = t(".status_updated")
+      make_subject_in_progress
     end
-    redirect_to trainee_course_subject_path(@course_id, @subject_id)
+    safe_redirect_to_course_subject
   end
 
   # PATCH /trainee/user_tasks/:id/spent_time
   def update_spent_time
     if update_spent_time?
-      make_subject_in_progress
       flash[:success] = t(".spent_time_updated")
+      make_subject_in_progress
     end
 
-    redirect_to trainee_course_subject_path(@course_id, @subject_id)
+    safe_redirect_to_course_subject
   end
 
   # Delete /trainee/user_tasks/:id/document
   def destroy_document
     flash[:success] = t(".document_destroyed") if destroy_document?
 
-    redirect_to trainee_course_subject_path(@course_id, @subject_id)
+    safe_redirect_to_course_subject
   end
 
   private
 
   def load_user_task
-    @user_task = current_user.user_tasks.find_or_create_by(
+    @user_task = UserTask.find_or_create_by(
       task_id: params[:task_id], user_subject_id: params[:user_subject_id]
     ) do |user_task|
-      user_task.status = Settings.user_task.status.not_done
+      user_task.status = :not_done
       user_task.spent_time = nil
     end
     attachments = @user_task.documents.attachments
@@ -65,10 +69,14 @@ destroy_document)
     redirect_to trainee_courses_path
   end
 
-  def extract_course_and_subject_id user_task
-    user_subject = user_task&.user_subject
-    course_subject = user_subject&.course_subject
-    [course_subject&.course_id, course_subject&.subject_id]
+  def safe_redirect_to_course_subject
+    if @course_id && @subject_id
+      redirect_to trainee_course_subject_path(@course_id, @subject_id)
+    elsif @course_id
+      redirect_to trainee_course_path(@course_id)
+    else
+      redirect_to root_path
+    end
   end
 
   def update_document?
@@ -82,7 +90,11 @@ destroy_document)
   def update_status?
     return false if params[:status].blank?
 
-    new_status = params[:status].to_s == "1" ? :done : :not_done
+    new_status = if params[:status].to_i == Settings.user_task.status.done
+                   :done
+                 else
+                   :not_done
+                 end
     return true if @user_task.update(status: new_status)
 
     flash[:danger] = t(".status_not_updated")
@@ -109,17 +121,16 @@ destroy_document)
     user_subject = @user_task.user_subject
     return unless user_subject
 
-    unless user_subject.status == Settings.user_subject.status.not_started
-      return
-    end
+    return unless user_subject.not_started?
 
     # Set started_at and move to in_progress at first learner interaction
     unless user_subject.update(
       started_at: user_subject.started_at || Time.zone.today,
-      status: Settings.user_subject.status.in_progress
+      status: :in_progress
     )
       flash[:danger] = t(".subject_in_progress_failed")
-      redirect_to trainee_courses_path
+      return false
     end
+    true
   end
 end
